@@ -25,7 +25,7 @@ export default function NavLinks() {
                             key={link.name}
                             to={link.href}
                             className={`flex w-full h-[48px] items-center justify-start gap-2 text-sm font-medium p-4 
-                                ${location.pathname === link.href ? 'bg-black underline text-gray-50' : 'hover:underline'}`}
+                                ${location.pathname === link.href ? 'bg-stone-200 underline' : 'hover:underline'}`}
                         >
                             <LinkIcon />
                             <p className="block">{link.name}</p>

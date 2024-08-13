@@ -20,7 +20,7 @@ export default function Login() {
                     </div>
                     <div>
                         <InfoLabel className="block">Contraseña</InfoLabel>
-                        <Input appearance="underline"/>
+                        <Input appearance="underline" type="password" />
                     </div>
                 </div>
                 <CardFooter className="mt-[30px]">
