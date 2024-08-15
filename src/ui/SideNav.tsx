@@ -6,7 +6,7 @@ export default function SideNav() {
     return (
         <aside className="flex h-full flex-col border-e border-e-gray-200">
             {/**Cabecera */}
-            <div className="flex flex-row items-end justify-center bg-sky-900 p-4">
+            <div className="flex flex-row items-end justify-center -bg--color-3 p-4">
                 <h1 className="w-32 text-xl uppercase font-semibold text-white">
                     areteo
                 </h1>

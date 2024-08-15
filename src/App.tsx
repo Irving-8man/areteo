@@ -8,6 +8,7 @@ import Analiticas from './dashboard/Analiticas';
 import Instrumentos from './dashboard/Instrumentos';
 import Plantillas from './dashboard/Plantillas';
 import Inicio from './dashboard/Inicio';
+import RegistrarPaciente from './dashboard/Pacientes/RegistrarPaciente';
 
 
 export function Greet() {
@@ -31,7 +32,9 @@ export default function App() {
         <Route path='/dashboard' element={<Dashboard />}>
           <Route index element={<Inicio />} />
           <Route path='analiticas' element={<Analiticas />} />
-          <Route path='pacientes' element={<Pacientes />} />
+          <Route path='pacientes' element={<Pacientes />} >
+            <Route path='registrar-paciente' element={<RegistrarPaciente />}/>
+          </Route>
           <Route path='instrumentos' element={<Instrumentos />} />
           <Route path='plantillas' element={<Plantillas />} />
         </Route>
