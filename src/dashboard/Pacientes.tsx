@@ -5,7 +5,7 @@ export default function Pacientes() {
             <header className="sticky top-0 border-orange-600 border bg-black text-white z-[2] py-4">
                 <ul className="flex flex-row gap-10 px-[10px]">
                     <li> 
-                        <Link to="/dashboard/pacientes/registrar-paciente">Nuevo paciente</Link>
+                        <Link to="/dashboard/pacientes/registrar-paciente">Nuevo Paciente</Link>
                     </li>
                 </ul>
             </header>

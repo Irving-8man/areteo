@@ -13,20 +13,22 @@ export default function NavLinks() {
 
     const links = [
         { name: 'Inicio', href: `/dashboard`, icon: AccessTimeRegular },
-        { name: 'Analiticas', href: `/dashboard/analiticas`, icon: AccessTimeRegular },
         { name: 'Pacientes', href: `/dashboard/pacientes`, icon: AccessTimeRegular },
         { name: 'Instrumentos', href: `/dashboard/instrumentos`, icon: AccessTimeRegular },
         { name: 'Plantillas', href: `/dashboard/plantillas`, icon: AccessTimeRegular },
+        { name: 'Analiticas', href: `/dashboard/analiticas`, icon: AccessTimeRegular },
+        { name: 'Almacenamiento', href: `/dashboard/almacenamiento`, icon: AccessTimeRegular },
     ];
 
     return (
         <>
             {links.map((link) => {
                 const LinkIcon = link.icon;
-                // Verificar si la ruta coincide exactamente o si es una ruta anidada
                 const isActive = 
-                    normalizedPathName === link.href || 
-                    normalizedPathName.startsWith(link.href + '/');
+                    // Verificar si es exactamente la ruta del enlace
+                    normalizedPathName === link.href ||
+                    // Si no es el dashboard principal, verifica si es una subruta de la misma
+                    (link.href !== '/dashboard' && normalizedPathName.startsWith(link.href + '/'));
 
                 return (
                     <Button key={link.name} appearance='transparent' style={{ width: "100%", margin: "0", padding: "0", border: "0", borderRadius: "0" }}>

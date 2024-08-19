@@ -9,7 +9,9 @@ import Instrumentos from './dashboard/Instrumentos';
 import Plantillas from './dashboard/Plantillas';
 import Inicio from './dashboard/Inicio';
 import RegistrarPaciente from './dashboard/Pacientes/RegistrarPaciente';
-
+import ListaPlantillas from './dashboard/Plantillas/ListaPlantillas';
+import CargarPlantilla from './dashboard/Plantillas/CargarPlantilla';
+import CrearPlantilla from './dashboard/Plantillas/CrearPlantilla';
 
 export function Greet() {
   const [greeting, setGreeting] = useState('');
@@ -36,7 +38,11 @@ export default function App() {
             <Route path='registrar-paciente' element={<RegistrarPaciente />}/>
           </Route>
           <Route path='instrumentos' element={<Instrumentos />} />
-          <Route path='plantillas' element={<Plantillas />} />
+          <Route path='plantillas' element={<Plantillas />} >
+            <Route index element={<ListaPlantillas />} />
+            <Route path='crear-plantilla' element={<CrearPlantilla />} />
+            <Route path='cargar-plantilla' element={<CargarPlantilla />} />
+          </Route>
         </Route>
       </Routes>
     </>
