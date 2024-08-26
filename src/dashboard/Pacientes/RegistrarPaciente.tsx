@@ -1,4 +1,4 @@
-import { Field, Input, Label, Select, useId, InfoLabel } from "@fluentui/react-components";
+import { Field, Input, Label, Select, useId, InfoLabel, Textarea } from "@fluentui/react-components";
 import { ChangeEvent, useState } from "react";
 
 
@@ -14,21 +14,35 @@ const ESTADOCIVIL = [
 export default function RegistrarPaciente() {
     const inputId = useId('firstNameLabel-');
     const selectId = useId();
+    const [tieneAntece, setTieneAntece] = useState(0);
+    const [tieneEdu, setTieneEdu] = useState(0);
     const [tratInyect, setTratInyect] = useState(0);
     const [tratOral, setTratOral] = useState(0);
+    const SiTieneTrat = 1;
+    const SiTieneAntece = 1;
+    const OtroEduc = 5;
 
-    const handleSelectChangeInyect = (e:ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleSelectChangeAnte = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setTieneAntece(Number(e.target.value));
+    };
+
+
+    const handleSelectChangeEdu = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setTieneEdu(Number(e.target.value));
+    };
+
+    const handleSelectChangeInyect = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setTratInyect(Number(e.target.value));
     };
 
-    const handleSelectChangeOral = (e:ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleSelectChangeOral = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setTratOral(Number(e.target.value));
     };
 
 
 
     return (
-        <section className="border border-pink-500 min-h-screen p-[20px] z-[3]">
+        <section className="border border-pink-500 min-h-screen p-[20px] z-[3] font-medium">
             <ul className="flex flex-col gap-[40px]">
                 <li>
                     <div className="flex flex-col max-w-[400px]">
@@ -64,14 +78,23 @@ export default function RegistrarPaciente() {
                     </div>
                 </li>
                 <li>
-                    <div className="flex flex-col max-w-[400px]">
+                    <div className="flex flex-col gap-[20px] max-w-[400px]">
                         <Field label={
                             <InfoLabel info="mmHg">
                                 <Label htmlFor={inputId} required>Presión arterial, en 0 min.</Label>
                             </InfoLabel>
                         }>
+                            <div className="flex flex-row gap-[20px]">
+                                <div className="flex flex-col gap-2 items-center">
+                                    <Input min={0} max={999} step={0.001} type="number" id={inputId} />
+                                    <span>PAS</span>
+                                </div>
 
-                            <Input min={0} max={200} step={0.01} type="number" id={inputId} />
+                                <div className="flex flex-col gap-2 items-center">
+                                    <Input min={0} max={999} step={0.001} type="number" id={inputId} />
+                                    <span>PAD</span>
+                                </div>
+                            </div>
                         </Field>
 
                         <Field label={
@@ -80,7 +103,17 @@ export default function RegistrarPaciente() {
                             </InfoLabel>
                         }>
 
-                            <Input min={0} max={200} step={0.01} type="number" id={inputId} />
+                            <div className="flex flex-row gap-[20px]">
+                                <div className="flex flex-col gap-2 items-center">
+                                    <Input min={0} max={999} step={0.001} type="number" id={inputId} />
+                                    <span>PAS</span>
+                                </div>
+
+                                <div className="flex flex-col gap-2 items-center">
+                                    <Input min={0} max={999} step={0.001} type="number" id={inputId} />
+                                    <span>PAD</span>
+                                </div>
+                            </div>
                         </Field>
                     </div>
                 </li>
@@ -92,7 +125,7 @@ export default function RegistrarPaciente() {
                             </InfoLabel>
                         }>
 
-                            <Input min={0} max={100} step={0.01} type="number" id={inputId} />
+                            <Input min={0} max={99} step={0.01} type="number" id={inputId} />
                         </Field>
                     </div>
                 </li>
@@ -107,12 +140,24 @@ export default function RegistrarPaciente() {
                     </div>
                 </li>
                 <li>
-                    <div className="flex flex-col max-w-[400px]">
-                        <Label htmlFor={selectId} required>Antecedentes familiares de infarto o muerte cardiovascular de los padres a edades menores de 60 años</Label>
-                        <Select id={selectId} >
-                            <option value={0}>No</option>
-                            <option value={1}>Si</option>
-                        </Select>
+                    <div className="flex flex-row min-w-[400px] max-w-[800px] gap-10">
+                        <div className="flex flex-col max-w-[400px]">
+                            <Label htmlFor={selectId} required>Antecedentes familiares de infarto o muerte cardiovascular de los padres a edades menores de 60 años</Label>
+                            <Select id={selectId} value={tieneAntece} onChange={handleSelectChangeAnte}>
+                                <option value={0}>No</option>
+                                <option value={1}>Si</option>
+                                <option value={3}>Desconozco</option>
+                            </Select>
+                        </div>
+                        {
+                            tieneAntece === SiTieneAntece && (
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Descripción</Label>
+                                    <Textarea></Textarea>
+                                </div>
+                            )
+                        }
+
                     </div>
                 </li>
                 <li>
@@ -121,7 +166,7 @@ export default function RegistrarPaciente() {
                             <Label htmlFor={inputId} required>HDL, ultimos 6 meses</Label>
                         }>
 
-                            <Input min={0} max={100} step={0.01} type="number" id={inputId} />
+                            <Input min={0} max={99} step={0.01} type="number" id={inputId} />
                         </Field>
                     </div>
                 </li>
@@ -130,21 +175,32 @@ export default function RegistrarPaciente() {
                         <Field label={
                             <Label htmlFor={inputId} required>TGG, ultimos 6 meses</Label>
                         }>
-                            <Input min={0} max={100} step={0.01} type="number" id={inputId} />
+                            <Input min={0} max={999} step={0.01} type="number" id={inputId} />
                         </Field>
                     </div>
                 </li>
                 <li>
+                <div className="flex flex-row  min-w-[400px] max-w-[800px] gap-10">
                     <div className="flex flex-col max-w-[400px]">
-                        <Label htmlFor={selectId} required>Nivel de educación</Label>
-                        <Select id={selectId} >
-                            {
-                                NIVLESESTUDIO.map((estudio, idx) => (
-                                    <option key={idx}>{estudio}</option>
-                                ))
-                            }
-                        </Select>
+                            <Label htmlFor={selectId} required>Nivel de educación</Label>
+                            <Select id={selectId} value={tieneEdu} onChange={handleSelectChangeEdu}>
+                                {
+                                    NIVLESESTUDIO.map((estudio, idx) => (
+                                        <option key={idx} value={idx}>{estudio}</option>
+                                    ))
+                                }
+                            </Select>
                     </div>
+                    {
+                            tieneEdu === OtroEduc && (
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>¿Cuál otra educación?</Label>
+                                    <Textarea></Textarea>
+                                </div>
+                            )
+                        }
+                </div>
+                    
                 </li>
                 <li>
                     <div className="flex flex-col max-w-[400px]">
@@ -152,7 +208,7 @@ export default function RegistrarPaciente() {
                         <Select id={selectId} >
                             {
                                 ESTADOCIVIL.map((estado, idx) => (
-                                    <option key={idx}>{estado}</option>
+                                    <option key={idx} value={idx}>{estado}</option>
                                 ))
                             }
                         </Select>
@@ -160,59 +216,59 @@ export default function RegistrarPaciente() {
                 </li>
                 <li>
                     <div className="flex flex-row min-w-[400px] max-w-[800px] gap-10">
-                            <div className="flex flex-col max-w-[400px]">
-                                <Label htmlFor={selectId} required>Utiliza tratamiento inyectable</Label>
-                                <Select id={selectId} value={tratInyect} onChange={handleSelectChangeInyect}>
-                                    <option value={0}>No</option>
-                                    <option value={1}>Sí</option>
-                                </Select>
-                            </div>
-                            {tratInyect === 1 && (
-                                <div className="flex flex-row gap-5 max-w-[400px]">
-                                    <div className="flex flex-col max-w-[400px]">
-                                        <Label htmlFor="desde-cuando" required>Desde cuándo</Label>
-                                        <Input id="desde-cuando" type="text" />
-                                    </div>
-                                    <div className="flex flex-col max-w-[400px]">
-                                        <Label htmlFor="desde-cuando" required>Dosis</Label>
-                                        <Input id="desde-cuando" type="text" />
-                                    </div>
-                                    <div className="flex flex-col max-w-[400px]">
-                                        <Label htmlFor="desde-cuando" required>Tipo o nombre</Label>
-                                        <Input id="desde-cuando" type="text" />
-                                    </div>
-
-                                </div>
-                            )}
+                        <div className="flex flex-col max-w-[400px]">
+                            <Label htmlFor={selectId} required>Utiliza tratamiento inyectable</Label>
+                            <Select id={selectId} value={tratInyect} onChange={handleSelectChangeInyect}>
+                                <option value={0}>No</option>
+                                <option value={1}>Sí</option>
+                            </Select>
                         </div>
+                        {tratInyect === SiTieneTrat && (
+                            <div className="flex flex-row gap-5 max-w-[400px]">
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Desde cuándo</Label>
+                                    <Textarea></Textarea>
+                                </div>
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Dosis</Label>
+                                    <Textarea></Textarea>
+                                </div>
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Tipo o nombre</Label>
+                                    <Textarea></Textarea>
+                                </div>
+
+                            </div>
+                        )}
+                    </div>
                 </li>
                 <li>
                     <div className="flex flex-row min-w-[400px] max-w-[800px] gap-10">
-                            <div className="flex flex-col max-w-[400px]">
-                                <Label htmlFor={selectId} required>Utiliza tratamiento inyectable</Label>
-                                <Select id={selectId} value={tratOral} onChange={handleSelectChangeOral}>
-                                    <option value={0}>No</option>
-                                    <option value={1}>Sí</option>
-                                </Select>
-                            </div>
-                            {tratOral === 1 && (
-                                <div className="flex flex-row gap-5 max-w-[400px]">
-                                    <div className="flex flex-col max-w-[400px]">
-                                        <Label htmlFor="desde-cuando" required>Desde cuándo</Label>
-                                        <Input id="desde-cuando" type="text" />
-                                    </div>
-                                    <div className="flex flex-col max-w-[400px]">
-                                        <Label htmlFor="desde-cuando" required>Dosis</Label>
-                                        <Input id="desde-cuando" type="text" />
-                                    </div>
-                                    <div className="flex flex-col max-w-[400px]">
-                                        <Label htmlFor="desde-cuando" required>Nombre del medicamento</Label>
-                                        <Input id="desde-cuando" type="text" />
-                                    </div>
-
-                                </div>
-                            )}
+                        <div className="flex flex-col max-w-[400px]">
+                            <Label htmlFor={selectId} required>Utiliza tratamiento oral</Label>
+                            <Select id={selectId} value={tratOral} onChange={handleSelectChangeOral}>
+                                <option value={0}>No</option>
+                                <option value={1}>Sí</option>
+                            </Select>
                         </div>
+                        {tratOral === 1 && (
+                            <div className="flex flex-row gap-5 max-w-[400px]">
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Desde cuándo</Label>
+                                    <Textarea></Textarea>
+                                </div>
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Dosis</Label>
+                                    <Textarea></Textarea>
+                                </div>
+                                <div className="flex flex-col max-w-[400px]">
+                                    <Label htmlFor="desde-cuando" required>Nombre del medicamento</Label>
+                                    <Textarea></Textarea>
+                                </div>
+
+                            </div>
+                        )}
+                    </div>
                 </li>
             </ul>
         </section>
