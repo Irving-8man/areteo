@@ -1,7 +1,7 @@
 export default function ListaPlantillas() {
     return(
         <div>
-             <h1>Lista Plantillas 2</h1>
+             <h1>Lista Plantillas prueba</h1>
         </div>
        
     
