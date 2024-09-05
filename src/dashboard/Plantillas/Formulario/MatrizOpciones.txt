@@ -1,0 +1,138 @@
+import { useState } from 'react';
+import { makeStyles } from '@fluentui/react-components';
+
+const useStyles = makeStyles({
+  container: {
+    marginBottom: '20px',
+  },
+  gridContainer: {
+    display: 'grid',
+    gap: '5px',
+    marginBottom: '10px',
+  },
+  gridInput: {
+    width: '100%',
+    padding: '8px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  },
+  gridRadio: {
+    width: '100%',
+    padding: '8px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  },
+  button: {
+    margin: '5px',
+    padding: '8px',
+    border: 'none',
+    borderRadius: '4px',
+    backgroundColor: '#0078d4',
+    color: 'white',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#005a9e',
+    },
+  },
+  header: {
+    marginBottom: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+});
+
+export default function MatrizOpciones() {
+  const styles = useStyles();
+  const [rows, setRows] = useState<number>(2);
+  const [columns, setColumns] = useState<number>(2);
+  const [columnLabels, setColumnLabels] = useState<string[]>(Array(columns).fill(''));
+  const [rowLabels, setRowLabels] = useState<string[]>(Array(rows).fill(''));
+
+  const handleAddRow = () => setRows(rows + 1);
+  const handleAddColumn = () => setColumns(columns + 1);
+
+  const handleRemoveRow = () => setRows(rows > 1 ? rows - 1 : rows);
+  const handleRemoveColumn = () => setColumns(columns > 1 ? columns - 1 : columns);
+
+  const handleColumnLabelChange = (index: number, label: string) => {
+    const newLabels = [...columnLabels];
+    newLabels[index] = label;
+    setColumnLabels(newLabels);
+  };
+
+  const handleRowLabelChange = (index: number, label: string) => {
+    const newLabels = [...rowLabels];
+    newLabels[index] = label;
+    setRowLabels(newLabels);
+  };
+
+  return (
+    <div className={styles.container}>
+      <div>
+        <button onClick={handleAddRow} className={styles.button}>Agregar Fila</button>
+        <button onClick={handleRemoveRow} className={styles.button}>Eliminar Fila</button>
+        <button onClick={handleAddColumn} className={styles.button}>Agregar Columna</button>
+        <button onClick={handleRemoveColumn} className={styles.button}>Eliminar Columna</button>
+      </div>
+      <div className={styles.header}>
+        <div>
+          <h3>Opciones de Filas:</h3>
+          {Array.from({ length: rows }).map((_, rowIndex) => (
+            <input
+              key={`row-label-${rowIndex}`}
+              type="text"
+              value={rowLabels[rowIndex] || ''}
+              onChange={(e) => handleRowLabelChange(rowIndex, e.target.value)}
+              placeholder={`Fila ${rowIndex + 1}`}
+              className={styles.gridInput}
+            />
+          ))}
+        </div>
+        <div>
+          <h3>Opciones de Columnas:</h3>
+          {Array.from({ length: columns }).map((_, columnIndex) => (
+            <input
+              key={`col-label-${columnIndex}`}
+              type="text"
+              value={columnLabels[columnIndex] || ''}
+              onChange={(e) => handleColumnLabelChange(columnIndex, e.target.value)}
+              placeholder={`Columna ${columnIndex + 1}`}
+              className={styles.gridInput}
+            />
+          ))}
+        </div>
+      </div>
+      <div
+        className={styles.gridContainer}
+        style={{
+          gridTemplateColumns: `repeat(${columns + 1}, 1fr)`,
+          gridTemplateRows: `repeat(${rows + 1}, auto)`,
+        }}
+      >
+        {/* Encabezado de las columnas */}
+        <div></div>
+        {Array.from({ length: columns }).map((_, index) => (
+          <div key={`col-header-${index}`}>{columnLabels[index] || `Columna ${index + 1}`}</div>
+        ))}
+
+        {/* Encabezado de las filas y opciones */}
+        {Array.from({ length: rows }).map((_, rowIndex) => (
+          <>
+            <div key={`row-header-${rowIndex}`}>{rowLabels[rowIndex] || `Fila ${rowIndex + 1}`}</div>
+            {Array.from({ length: columns }).map((_, columnIndex) => (
+              <div key={`cell-${rowIndex}-${columnIndex}`}>
+                <input
+                  type="radio"
+                  name={`row-${rowIndex}`}
+                  value={`col-${columnIndex}`}
+                  className={styles.gridRadio}
+                />
+              </div>
+            ))}
+          </>
+        ))}
+      </div>
+    </div>
+  );
+}

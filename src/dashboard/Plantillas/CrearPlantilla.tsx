@@ -2,26 +2,40 @@
 import { writeTextFile, BaseDirectory } from '@tauri-apps/api/fs';
 import { dialog } from '@tauri-apps/api';
 import { useState } from 'react';
-import Texto from './Formulario/Texto';
+import TextoCorto from './Formulario/TextoCorto';
+import TextoLargo from './Formulario/TextoLargo';
+import Numerico from './Formulario/Numerico';
 import Fecha from './Formulario/Fecha';
+import FechaHora from './Formulario/FechaHora';
+import Hora from './Formulario/Hora';
 import Desplegable from './Formulario/Desplegable';
 import OpcionM from './Formulario/OpcionM';
 import CasillaV from './Formulario/CasillasV';
 import Escala from './Formulario/Escala';
+import RangoCorto from './Formulario/RangoCorto';
+import RangoLargo from './Formulario/RangoLargo';
+import MatrizOpciones from './Formulario/MatrizOpciones';
 import Titulo from './Formulario/Titulo';
 import React from 'react';
 import { makeStyles } from '@fluentui/react-components';
 
 
-type QuestionType = 'Texto' | 'Fecha' | 'Desplegable' | 'OpcionM' | 'CasillaV' | 'Escala';
+type QuestionType = 'TextoCorto' | 'TextoLargo' | 'Numerico' | 'Fecha' | 'FechaHora' | 'Hora' | 'Desplegable' | 'OpcionM' | 'CasillaV' | 'Escala' | 'RangoCorto' | 'RangoLargo' | 'MatrizOpciones';
 
 const components: Record<QuestionType, React.FC> = {
-    Texto,
+    TextoCorto,
+    TextoLargo,
+    Numerico,
     Fecha,
+    Hora,
+    FechaHora,
     Desplegable,
     OpcionM,
     CasillaV,
-    Escala
+    Escala,
+    RangoCorto,
+    RangoLargo,
+    MatrizOpciones,
 };
 
 const useStyles = makeStyles({
@@ -100,11 +114,11 @@ const useStyles = makeStyles({
 
 export default function CrearPlantilla() {
     const [questions, setQuestions] = useState<{ type: QuestionType, text: string }[]>([
-        { type: 'Texto', text: '' }
+        { type: 'TextoCorto', text: '' } 
     ]);
     
     const addQuestion = () => {
-        setQuestions([...questions, { type: 'Texto', text: '' }]);
+        setQuestions([...questions, { type: 'TextoCorto', text: '' }]); 
     };
 
     const removeQuestion = (index: number) => {
@@ -162,12 +176,19 @@ export default function CrearPlantilla() {
                                     value={questions[index].type}
                                     style={{ marginBottom: '10px' }}
                                 >
-                                    <option value="Texto">Texto</option>
+                                    <option value="TextoCorto">Texto Corto</option>
+                                    <option value="TextoLargo">Texto Largo</option>
+                                    <option value="Numerico">Numerico</option>
+                                    <option value="FechaHora">Fecha y Hora</option>
                                     <option value="Fecha">Fecha</option>
+                                    <option value="Hora">Hora</option>
                                     <option value="Desplegable">Desplegable</option>
                                     <option value="OpcionM">Opción Múltiple</option>
                                     <option value="CasillaV">Casillas de Verificación</option>
                                     <option value="Escala">Escala</option>
+                                    <option value="RangoCorto">Rango Corto</option>
+                                    <option value="RangoLargo">Rango Largo</option>
+                                    <option value="MatrizOpciones">Matriz de Opciones</option>
                                 </select>
                             </div>
                         </div>

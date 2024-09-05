@@ -6,22 +6,18 @@ const useStyles = makeStyles({
     },
     input: {
         padding: '8px',
-        width: '100%',
         border: '1px solid #ccc',
         borderRadius: '4px',
+        width: '100%',
     },
 });
 
-export default function Texto() {
+export default function Hora() {
     const styles = useStyles();
 
     return (
         <div className={styles.container}>
-            <input
-                type="text"
-                placeholder="Escribe tu respuesta aquí"
-                className={styles.input}
-            />
+            <input type="time" className={styles.input} />
         </div>
     );
 }
