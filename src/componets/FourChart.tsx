@@ -9,12 +9,12 @@ import {
   ChartTooltipContent,
 } from "../ui/chart"
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "Enero", desktop: 186 },
+  { month: "Febrero", desktop: 305 },
+  { month: "Marzo", desktop: 237 },
+  { month: "Abril", desktop: 73 },
+  { month: "Mayo", desktop: 209 },
+  { month: "Junio", desktop: 214 },
 ]
 
 const chartConfig = {
@@ -29,7 +29,7 @@ export function FourChart() {
     <Card>
       <CardHeader>
         <p>Bar Chart - Label</p>
-        <p>January - June 2024</p>
+        <p>Enero - Junio 2024</p>
       </CardHeader>
       <div>
         <ChartContainer config={chartConfig}>
@@ -65,10 +65,10 @@ export function FourChart() {
       </div>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month
+          Pacientes
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Mostrar total de pacientes  en 6 meses
         </div>
       </CardFooter>
     </Card>

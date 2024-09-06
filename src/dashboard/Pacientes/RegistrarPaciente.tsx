@@ -78,6 +78,18 @@ export default function RegistrarPaciente() {
                     </div>
                 </li>
                 <li>
+                    <div className="flex flex-col max-w-[400px]">
+                    <Field label={
+                            <InfoLabel info="en cm">
+                                <Label htmlFor={inputId} required>Altura</Label>
+                            </InfoLabel>
+                        }>
+
+                            <Input min={0} max={300} type="number" id={inputId} />
+                        </Field>
+                    </div>
+                </li>
+                <li>
                     <div className="flex flex-col gap-[20px] max-w-[400px]">
                         <Field label={
                             <InfoLabel info="mmHg">
@@ -146,7 +158,7 @@ export default function RegistrarPaciente() {
                             <Select id={selectId} value={tieneAntece} onChange={handleSelectChangeAnte}>
                                 <option value={0}>No</option>
                                 <option value={1}>Si</option>
-                                <option value={3}>Desconozco</option>
+                                <option value={2}>Desconozco</option>
                             </Select>
                         </div>
                         {
