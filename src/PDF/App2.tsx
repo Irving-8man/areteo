@@ -6,7 +6,7 @@ function App2(){
         <div>
             <PDFDownloadLink document={<PDF/>} fileName="primerpdf.pdf">
             {
-                ({loading, url, error, blob}) => loading ? <button>
+                ({loading}) => loading ? <button>
                     cargando documento ...
                 </button> : <button> Descarga </button>
             }

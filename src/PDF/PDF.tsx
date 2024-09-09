@@ -1,5 +1,4 @@
-import{Document, Text, Page, StyleSheet, Image, View}from '@react-pdf/renderer'
-import  nextLogo from 'logo.png'
+import{Document, Text, Page, StyleSheet, View}from '@react-pdf/renderer'
 const styles = StyleSheet.create({
     page:{
         backgroundColor: "#E4E4E4E4"
@@ -36,7 +35,7 @@ function PDF() {
             <Page style={styles.page}>
                 <Text style={styles.title}>Section #2</Text>
                 <View style={styles.section}>   
-                <Image src={nextLogo}/>
+                
                 <Text>En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha
         mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga
         antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que
