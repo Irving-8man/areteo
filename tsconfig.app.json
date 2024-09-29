@@ -22,6 +22,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./", // Configura el directorio base
+    "paths": {
+      "@/*": ["src/*"] // Alias '@' para apuntar a 'src'
+    }
   },
   "include": ["src"]
 }

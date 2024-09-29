@@ -10,20 +10,21 @@ fn greet(name: &str) -> String {
 
 
 fn main() {
-    let migrations = vec![Migration {
+    let migrations = vec![
+    Migration {
         version: 1,
         description: "Crear tabla Administrador",
-        sql: "CREATE TABLE IF NOT EXISTS Administrador (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    nombre TEXT NOT NULL,
-                    contrasena TEXT
-                  );
-                  CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);
-                  INSERT INTO Administrador (nombre, contrasena)
-                  SELECT 'admin', '12345678'
-                  WHERE NOT EXISTS (SELECT 1 FROM Administrador WHERE nombre = 'admin');",
+        sql:"CREATE TABLE IF NOT EXISTS Administrador (
+    id TEXT PRIMARY KEY NOT NULL,
+    nombre TEXT NOT NULL,
+    contrasenia TEXT NOT NULL,
+    claveSegura TEXT NOT NULL,
+    entradaSegura TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
         kind: MigrationKind::Up,
-    }];
+    },
+    ];
 
     tauri::Builder::default()
         .setup(|app| {

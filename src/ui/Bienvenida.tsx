@@ -4,7 +4,7 @@ import { getAdmin } from "../services/db";
 import { useEffect, useState } from "react";
 import { Admin } from '../models/types'; // Importar la interfaz de Admin
 
-export default function Login() {
+export default function Bienvendida() {
     // Estado tipado con la interfaz Admin
     const [admin, setAdmin] = useState<Admin | null>(null);
 

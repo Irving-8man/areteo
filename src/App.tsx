@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
 //Home
-import Login from './ui/Login';
+import Bienvendida from './ui/Bienvenida';
 
 //Inicio
 import Dashboard from './dashboard/Dashboard';
@@ -45,7 +45,7 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/' element={<Bienvendida />} />
         <Route path='/dashboard' element={<Dashboard />}>
           <Route index element={<Inicio />} />
           <Route path='pacientes' element={<Pacientes />} >
