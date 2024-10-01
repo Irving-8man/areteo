@@ -17,13 +17,8 @@ export async function getAdmin() {
     // Consulta para obtener el administrador
     const admin: Admin[] = await db.select("SELECT * FROM Administrador WHERE nombre = 'admin'");
     
-    // Retorna el administrador si existe
-    if (admin.length > 0) {
-      return admin[0]; // Retorna el primer (y único) registro
-    } else {
-      console.log("No hay administrador registrado.");
-      return null;
-    }
+    admin.length > 0 ? admin : null;
+  
   } catch (error) {
     console.error("Error al consultar la base de datos:", error);
     return null;

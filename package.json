@@ -13,6 +13,7 @@
   "dependencies": {
     "@fluentui/react-components": "9.54.5",
     "@formkit/tempo": "0.1.2",
+    "@hookform/resolvers": "3.9.0",
     "@react-pdf/renderer": "3.4.4",
     "@tauri-apps/api": "1.6.0",
     "bcrypt": "5.1.1",
