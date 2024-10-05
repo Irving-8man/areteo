@@ -91,10 +91,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 900,
+        "height": 600,
         "resizable": true,
         "title": "ARETEO",
-        "width": 1280
+        "width": 1200,
+        "center": true,
+        "decorations": true
       }
     ]
   }

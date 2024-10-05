@@ -10,8 +10,6 @@ export async function getAdmin() {
   
   // Carga la base de datos
   const db = await Database.load('sqlite:' + dbPath);
-
-  console.log(dbPath)
   
   try {
     // Consulta para obtener el administrador

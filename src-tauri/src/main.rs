@@ -3,11 +3,6 @@
 
 use tauri_plugin_sql::{Migration, MigrationKind};
 
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}!", name)
-}
-
 
 fn main() {
     let migrations = vec![
@@ -17,9 +12,7 @@ fn main() {
         sql:"CREATE TABLE IF NOT EXISTS Administrador (
     id TEXT PRIMARY KEY NOT NULL,
     nombre TEXT NOT NULL,
-    contrasenia TEXT NOT NULL,
-    claveSegura TEXT NOT NULL,
-    entradaSegura TEXT NOT NULL
+    contrasenia TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
         kind: MigrationKind::Up,
@@ -27,8 +20,10 @@ CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
     ];
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
             let app_handle = app.handle();
+            //1. Configuracion de la db
             let app_data_dir = app.path_resolver().app_data_dir().unwrap();
             let db_path = app_data_dir.join("db.sqlite");
             let db_path_str = String::from("sqlite:") + db_path.to_str().unwrap();

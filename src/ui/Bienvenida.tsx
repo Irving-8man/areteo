@@ -1,4 +1,4 @@
-import { getAdmin } from "../services/db";
+import { getAdmin } from "@/services/AdminController";
 import { useEffect, useState } from "react";
 import { Admin } from "@/models/types";
 import RegistrarAdmin from "./ProcesarAdmin/RegistrarAdmin";
@@ -13,10 +13,7 @@ export default function Bienvendida() {
         getAdmin().then((admin) => {
             if (admin) {
                 setAdmin(admin);
-                console.log("Administrador encontrado:", admin);
-            } else {
-                console.log("No se encontró ningún administrador.");
-            }
+            } 
         });
     }, []);
 
