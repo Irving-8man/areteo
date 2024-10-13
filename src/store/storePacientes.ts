@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { invoke } from "@tauri-apps/api/tauri";
 import { PacienteRegistrado, Paciente } from "@/models/types";
-import { getPacientesRegistrados, registrarPaciente } from "@/services/PacienteController";
+import { getAllPacientesRegistrados, registrarPaciente } from "@/services/PacienteController";
 import { mockpacientesRegis } from "@/mocks/listPacientesRe";
 
 interface PacienteState {
@@ -11,11 +11,12 @@ interface PacienteState {
     eliminarPaciente: (id: string) => Promise<void>;
 }
 
+
 export const usePacienteStore = create<PacienteState>((set) => ({
     pacientes: [],
     cargarPacientes: async () => {
         try {
-            const pacientes: PacienteRegistrado[] = await getPacientesRegistrados();
+            const pacientes: PacienteRegistrado[] = await getAllPacientesRegistrados();
             if (pacientes.length<0) {
                 set({ pacientes:mockpacientesRegis });
             }

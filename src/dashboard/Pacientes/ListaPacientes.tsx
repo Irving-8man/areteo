@@ -1,10 +1,17 @@
-import { ListPacienteUI } from "@/ui/listPacienteUI"
+import Search from "@/componets/Search"
+import PacientesTabla from "@/ui/Table"
 
 export default function ListaPacientes() {
     return (
         <div>
             <div>
-                < ListPacienteUI />
+                <Search placeholder="Buscando ..." />
+            </div>
+
+            <div>
+                Tabla
+
+                <PacientesTabla />
             </div>
         </div>
     )

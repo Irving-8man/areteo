@@ -17,10 +17,9 @@ import {
     ToastTrigger,
     Link,
     Toaster,
-    SpinButton,
 } from "@fluentui/react-components";
 
-import { Add20Filled, Checkmark20Filled, Dismiss20Filled } from "@fluentui/react-icons";
+import { Add20Filled, Checkmark20Filled, Dismiss20Filled, SpinnerIos20Filled } from "@fluentui/react-icons";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -186,7 +185,7 @@ export default function DialogRegiPaciente() {
                                 <Button appearance="secondary" disabled={loading} icon={<Dismiss20Filled />}>Cerrar</Button>
                             </DialogTrigger>
                             <Button type="submit" appearance="primary" disabled={loading}
-                                icon={loading ? <SpinButton className="w-3 animate-spin" /> : <Checkmark20Filled />}
+                                icon={loading ? <SpinnerIos20Filled className="w-3 animate-spin" /> : <Checkmark20Filled />}
                             >
                                 Crear
                             </Button>

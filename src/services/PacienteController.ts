@@ -4,9 +4,10 @@ import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
+const PACIENTES_POR_PAGINA = 10
 
 //Recuperar administrador
-export async function getPacientesRegistrados() {
+export async function getAllPacientesRegistrados() {
     try {
         const db = await getDb;
         const pacientes: PacienteRegistrado[] = await db.select("SELECT * FROM Paciente");
@@ -22,7 +23,7 @@ export async function getPacientesRegistrados() {
 }
 
 // Registrar administrador
-export async function registrarPaciente(data: Paciente):Promise<PacienteRegistrado | null> {
+export async function registrarPaciente(data: Paciente): Promise<PacienteRegistrado | null> {
     try {
         const db = await getDb;
         const nuevoID = generarID();
@@ -42,7 +43,7 @@ export async function registrarPaciente(data: Paciente):Promise<PacienteRegistra
 
 
         const registrado = await db.execute(
-            "INSERT INTO Paciente (id, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaRegistro) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO Paciente (id, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaRegistro) VALUES ($1, $2, $3,$4,$5,$6,$7)",
             [
                 nuevoPaciente.id,
                 nuevoPaciente.primerNombre,
@@ -53,7 +54,7 @@ export async function registrarPaciente(data: Paciente):Promise<PacienteRegistra
                 nuevoPaciente.fechaRegistro,
             ]
         );
-    
+
 
         if (registrado) {
             return nuevoPaciente;
@@ -63,5 +64,26 @@ export async function registrarPaciente(data: Paciente):Promise<PacienteRegistra
     } catch (error) {
         console.error("Error en registrarAdmin:", error);
         return null;
+    }
+}
+
+
+export async function getPacientesFiltradoPaginado(query: string, currentPage: number) {
+    const offset = (currentPage - 1) * PACIENTES_POR_PAGINA;
+    const normalizedQuery = query.toLocaleLowerCase()
+    offset
+    console.log(normalizedQuery)
+
+    try {
+        const db = await getDb;
+        const query = `SELECT * FROM Paciente WHERE lower(primerNombre) LIKE "%${normalizedQuery}%"`
+        const queryAlter = "SELECT * FROM Paciente WHERE lower(primerNombre)  'Irving'"
+        queryAlter
+        const resultados:PacienteRegistrado[] = await db.select(query);
+        console.log(resultados)
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch pacientes.');
     }
 }
