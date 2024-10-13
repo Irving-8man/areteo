@@ -1,22 +1,12 @@
 import DialogRegiPaciente from "@/componets/DialogRegiPaciente"
-import { usePacienteStore } from "@/store/storePacientes";
-import { isRutaExacta } from "@/utils/identificarRutas";
-import { useEffect } from "react";
+import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 
 
 export default function Pacientes() {
     const location = useLocation();
     const pathName = location.pathname;
-    const { pacientes, cargarPacientes } = usePacienteStore((state) => ({
-        pacientes: state.pacientes,
-        cargarPacientes: state.cargarPacientes,
-    }));
 
-    // Cargar pacientes al iniciar el componente
-    useEffect(() => {
-        cargarPacientes();
-    }, [cargarPacientes]);
 
     return (
         <main className="min-h-full relative">
@@ -43,6 +33,7 @@ export default function Pacientes() {
             <div className="border px-[30px] py-[30px]">
                 <Outlet />
             </div>
+            {/** 
             <div>
                 <ul>
                     {
@@ -50,7 +41,7 @@ export default function Pacientes() {
 
                     pacientes.map((paciente) => (
                         <li key={paciente.id}>
-                            {paciente.primerNombre} {paciente.apellidoPaterno}
+                            {paciente.primerNombre}-{paciente.segundoNombre}-{paciente.apellidoPaterno}-{paciente.apellidoMaterno}
                         </li>
                     ))
                     
@@ -58,7 +49,7 @@ export default function Pacientes() {
                 
                 }
                 </ul>
-            </div>
+            </div>*/}
         </main>
     )
 }

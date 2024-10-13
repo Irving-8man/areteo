@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { AccessTimeRegular, Home24Regular, PeopleCommunity24Regular } from "@fluentui/react-icons";
 import { Button } from '@fluentui/react-components';
-import { isRutaActiva } from '@/utils/identificarRutas';
+import { isRutaActiva } from '@/utils/IdentificarRutas';
 
 const links = [
     { name: 'Inicio', href: `/dashboard`, icon: Home24Regular },

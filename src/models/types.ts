@@ -25,6 +25,10 @@ export interface PacienteRegistrado extends Paciente{
 }
 
 
+export interface PacienteRegistradoList extends PacienteRegistrado{
+    color:string;
+}
+
 
 
 
