@@ -3,6 +3,9 @@ import { Search20Filled } from "@fluentui/react-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDebouncedCallback } from 'use-debounce';
 
+
+const TIEMPO_CAMBIO = 400
+
 export default function Search({ placeholder }: { placeholder: string }) {
     // Para acceder y actualizar los query params
     const [searchParams] = useSearchParams();
@@ -16,8 +19,9 @@ export default function Search({ placeholder }: { placeholder: string }) {
             params.delete('query');
         }
         // Reemplazamos la URL actual con los nuevos parámetros
+        params.set('page', '1');
         navigate(`?${params.toString()}`, { replace: true });
-    }, 400)
+    }, TIEMPO_CAMBIO)
 
 
     return (

@@ -4,7 +4,7 @@ import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-const PACIENTES_POR_PAGINA = 10
+const PACIENTES_POR_PAGINA = 3
 
 //Recuperar administrador
 export async function getAllPacientesRegistrados() {
@@ -67,23 +67,57 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
     }
 }
 
-
 export async function getPacientesFiltradoPaginado(query: string, currentPage: number) {
-    const offset = (currentPage - 1) * PACIENTES_POR_PAGINA;
-    const normalizedQuery = query.toLocaleLowerCase()
-    offset
-    console.log(normalizedQuery)
+    const offset = (currentPage - 1) * PACIENTES_POR_PAGINA; // Define el offset
+    const normalizedQuery = query.toLowerCase(); // Normaliza la consulta
 
     try {
         const db = await getDb;
-        const query = `SELECT * FROM Paciente WHERE lower(primerNombre) LIKE "%${normalizedQuery}%"`
-        const queryAlter = "SELECT * FROM Paciente WHERE lower(primerNombre)  'Irving'"
-        queryAlter
-        const resultados:PacienteRegistrado[] = await db.select(query);
-        console.log(resultados)
+
+        // Usamos tu consulta y agregamos LIMIT y OFFSET
+        const sqlQuery = `
+            SELECT * 
+            FROM Paciente 
+            WHERE 
+                LOWER(primerNombre) LIKE "%${normalizedQuery}%" OR
+                LOWER(segundoNombre) LIKE "%${normalizedQuery}%" OR
+                LOWER(apellidoPaterno) LIKE "%${normalizedQuery}%" OR
+                LOWER(apellidoMaterno) LIKE "%${normalizedQuery}%"
+            ORDER BY fechaRegistro DESC
+            LIMIT $1 OFFSET $2
+        `;
+
+        // Ejecutar la consulta
+        const resultados: PacienteRegistrado[] = await db.select(sqlQuery, [PACIENTES_POR_PAGINA, offset]);
         return resultados;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch pacientes.');
+    }
+}
+
+
+export async function paginasPacientes(query: string) {
+    const normalizedQuery = query.toLowerCase();
+
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+        SELECT COUNT(*)
+        FROM Paciente
+        WHERE
+          lower(primerNombre) LIKE "%${normalizedQuery}%" OR
+          lower(segundoNombre) LIKE "%${normalizedQuery}%" OR
+          lower(apellidoPaterno) LIKE "%${normalizedQuery}%" OR
+          lower(apellidoMaterno) LIKE "%${normalizedQuery}%"
+      `;
+
+        // Ejecutar la consulta
+        const count = await db.select(sqlQuery);
+        const totalPag = Math.ceil(Number(count[0]['COUNT(*)']) / PACIENTES_POR_PAGINA);
+        return totalPag
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch total number of pacientes.');
     }
 }

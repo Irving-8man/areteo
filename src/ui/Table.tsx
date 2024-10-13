@@ -10,13 +10,13 @@ export default function PacientesTabla() {
     const [pacientes, setPacientes] = useState<PacienteRegistrado[]>([]);
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query') || '';
-    const currentPage =  1;
+    const currentPage =  Number(searchParams.get('page')) || 1;
 
     // Cada vez que cambian los searchParams, se ejecuta la búsqueda
     useEffect(() => {
         const fetchData = async () => {
-            const pacientes = await getPacientesFiltradoPaginado(query,1)
-            setPacientes(pacientes); // Para ver los datos en la consola
+            const pacientes = await getPacientesFiltradoPaginado(query,currentPage)
+            setPacientes(pacientes);
         };
 
         fetchData();
@@ -66,10 +66,10 @@ export default function PacientesTabla() {
                                         {paciente.apellidoPaterno}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-3">
-                                        pero la
+                                        pero
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-3">
-                                        aprendia tanto
+                                        tanto
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-3">
                                         Estadtus
