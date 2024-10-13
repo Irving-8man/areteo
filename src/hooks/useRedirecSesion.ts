@@ -3,8 +3,8 @@ import { useSesion } from "./useSesion";
 import { useEffect } from "react";
 
 
-export default function useRedirecSesion(){
-    const{isAutenticado} =  useSesion()
+export default function useRedirecSesion() {
+    const { isAutenticado } = useSesion()
     const navigate = useNavigate();
     useEffect(() => {
         if (isAutenticado) {

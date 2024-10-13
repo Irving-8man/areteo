@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from 'react';
-import { verificarAdmin } from '../services/AdminController'; // Asegúrate de que esta importación esté activa
+import { verificarAdmin } from '../services/AdminController';
 import { useNavigate } from 'react-router-dom';
 import { Admin, AdminRegistrado } from '@/models/types';
 
@@ -16,7 +16,7 @@ export const SesionContext = createContext<Sesion | undefined>(undefined);
 
 // Proveer el contexto, lo que ofrece la lógica
 export function SesionProvider({ children }: { children: ReactNode }) {
-    const [isAutenticado, setIsAutenticado] = useState<boolean>(false); 
+    const [isAutenticado, setIsAutenticado] = useState<boolean>(true); //Cambiar a true para acceder sin loguear
     const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null); 
     const navigate = useNavigate();
     const dataPrueba = 100;

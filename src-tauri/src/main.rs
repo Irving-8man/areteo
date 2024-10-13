@@ -17,6 +17,22 @@ fn main() {
 CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
         kind: MigrationKind::Up,
     },
+    Migration {
+        version: 2,
+        description: "Crear tabla Paciente",
+        sql:"CREATE TABLE IF NOT EXISTS Paciente (
+            id TEXT PRIMARY KEY NOT NULL,
+            primerNombre TEXT NOT NULL,
+            segundoNombre TEXT NULL,
+            apellidoPaterno TEXT NOT NULL,
+            apellidoMaterno TEXT NULL,
+            fechaNacimiento TEXT NOT NULL,
+            fechaRegistro TEXT NOT NULL
+    
+);
+CREATE INDEX IF NOT EXISTS index_id ON Paciente (id);",
+        kind: MigrationKind::Up,
+    },
     ];
 
     tauri::Builder::default()

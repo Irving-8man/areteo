@@ -31,7 +31,6 @@ export default function App() {
       <SesionProvider>
         <Routes>
           <Route path='/' element={<Bienvendida />} />
-          <Route path='/clave' element={<Bienvendida />} />
           <Route path='/dashboard' element={<RutaProtegida><Dashboard /></RutaProtegida>}>
             <Route index element={<Inicio />} />
             <Route path='pacientes' element={<Pacientes />} >

@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@fluentui/react-components";
 
 export default function Bienvendida() {
+    //Reconocer la existencia de un Admin en db
     const [admin, setAdmin] = useState<Admin | null>(null);
-
     useEffect(() => {
         getAdmin().then((admin) => {
             if (admin) {
@@ -22,15 +22,10 @@ export default function Bienvendida() {
             <div className="py-10">
                 <h1 className="text-4xl font-medium">Bienvenido a ARETEO</h1>
             </div>
-            {
-                admin ? (
-                    <Login />
-                ) : (
-                    <RegistrarAdmin />
-                )
-            }
-
+            {/**Renderizar el componente que sea necesario */}
+            { admin ? ( <Login />) : ( <RegistrarAdmin /> )}
             <Link to="/dashboard"><Button appearance="outline">Ir a Dashboard</Button></Link>
         </main>
     )
 }
+

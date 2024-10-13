@@ -1,10 +1,9 @@
 import { getDbInstance } from "./DatabaseSingleton";
 import { Admin, AdminRegistrado } from '../models/types';
-import { generarID } from "@/utils/generateID";
-import { hashPass, verificarContrasenia } from "@/utils/credenciales";
+import { generarID } from "@/utils/GenerarID";
+import { hashPass, verificarContrasenia } from "@/utils/ProcesCredenciales";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-
 
 //Recuperar administrador
 export async function getAdmin() {

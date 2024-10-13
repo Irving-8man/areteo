@@ -1,3 +1,4 @@
+//Administrador
 export interface Admin {
     nombre:string;
     contrasenia:string;
@@ -8,9 +9,29 @@ export interface AdminRegistrado extends Admin{
 }
 
 
+//Paciente
 export interface Paciente{
+    primerNombre: string;
+    segundoNombre?: string;  // Opcional
+    apellidoPaterno: string;
+    apellidoMaterno?: string; // Opcional
+    fechaNacimiento:string;
+}
+
+
+export interface PacienteRegistrado extends Paciente{
     id: string;
-    fechaRegistro: Date;
+    fechaRegistro:string;
+}
+
+
+
+
+
+
+
+
+export interface RegistroMedico{
     edad: number;
     sexo: string;
     peso: number;

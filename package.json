@@ -22,6 +22,7 @@
     "docx": "8.5.0",
     "exceljs": "4.4.0",
     "html-to-image": "1.11.11",
+    "immer": "10.1.1",
     "path": "0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -35,6 +36,7 @@
     "tauri-plugin-sql-api": "github:tauri-apps/tauri-plugin-sql#v1",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1",
     "uuid": "10.0.0",
+    "victory": "37.1.1",
     "zod": "3.23.8",
     "zustand": "4.5.4"
   },
