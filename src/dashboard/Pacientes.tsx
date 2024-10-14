@@ -33,23 +33,6 @@ export default function Pacientes() {
             <div className="border px-[30px] py-[30px]">
                 <Outlet />
             </div>
-            {/** 
-            <div>
-                <ul>
-                    {
-                    pacientes.length > 0 ?
-
-                    pacientes.map((paciente) => (
-                        <li key={paciente.id}>
-                            {paciente.primerNombre}-{paciente.segundoNombre}-{paciente.apellidoPaterno}-{paciente.apellidoMaterno}
-                        </li>
-                    ))
-                    
-                    : <p>No existen</p>
-                
-                }
-                </ul>
-            </div>*/}
         </main>
     )
 }

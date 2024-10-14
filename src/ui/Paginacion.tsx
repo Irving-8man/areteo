@@ -8,16 +8,17 @@ import { paginasPacientes } from '@/services/PacienteController';
 export default function Paginacion() {
     const [searchParams] = useSearchParams();
     const [totalPages, setNumPages] = useState<number>(0);
+    //Paginacion y query
     const currentPage = Number(searchParams.get('page')) || 1;
     const query = searchParams.get('query') || '';
-
-    const location = useLocation(); // Utiliza useLocation para obtener la ubicación actual
+    const location = useLocation();
     const pathname = location.pathname; // Extrae el pathname de la ubicación actual
+
 
     // Cada vez que cambian los searchParams, se ejecuta la búsqueda
     useEffect(() => {
         const fetchData = async () => {
-            const pages = await paginasPacientes(query);
+            const pages = await paginasPacientes(query);//Pide a la db
             setNumPages(pages);
         };
         fetchData();
@@ -32,7 +33,7 @@ export default function Paginacion() {
     const allPages = generarPaginacion(currentPage, totalPages);
 
     return (
-        <>
+        <div className='flex justify-center'>
             <div className="inline-flex">
                 <PaginationArrow
                     direction="left"
@@ -40,7 +41,7 @@ export default function Paginacion() {
                     isDisabled={currentPage <= 1}
                 />
 
-                <div className="flex -space-x-px">
+                <div className="flex -space-x-px ">
                     {allPages.map((page, index) => {
                         let position: 'first' | 'last' | 'single' | 'middle' | undefined;
 
@@ -63,11 +64,12 @@ export default function Paginacion() {
 
                 <PaginationArrow
                     direction="right"
+            
                     href={createPageURL(currentPage + 1)}
                     isDisabled={currentPage >= totalPages}
                 />
             </div>
-        </>
+        </div>
     );
 }
 
@@ -87,7 +89,7 @@ function PaginationNumber({
         {
             'rounded-l-md': position === 'first' || position === 'single',
             'rounded-r-md': position === 'last' || position === 'single',
-            'z-10 bg-blue-600 border-blue-600 text-white': isActive,
+            'z-10  bg-blue-300 text-black border-black ': isActive,
             'hover:bg-gray-100': !isActive && position !== 'middle',
             'text-gray-300': position === 'middle',
         },

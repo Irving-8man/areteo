@@ -1,7 +1,6 @@
 import { Avatar } from "@fluentui/react-components";
 
-function obtenerColorEdad(fechaNacimiento: string) {
-    const edad = new Date().getFullYear() - new Date(fechaNacimiento).getFullYear();
+function obtenerColorEdad(edad:number) {
 
     if (edad <= 12) return 'light-teal'; // Infancia
     if (edad <= 18) return 'cornflower'; // Adolescencia
@@ -13,11 +12,11 @@ function obtenerColorEdad(fechaNacimiento: string) {
 interface propsI {
     label: string;
     name: string;
-    fechaNacimiento: string;
+    edad: number;
 }
 
 export function AvatarPaciente(props: propsI) {
-    const backgroundColor = obtenerColorEdad(props.fechaNacimiento);
+    const backgroundColor = obtenerColorEdad(props.edad);
 
     return (
         <Avatar

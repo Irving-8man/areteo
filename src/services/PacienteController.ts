@@ -4,7 +4,7 @@ import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-const PACIENTES_POR_PAGINA = 3
+const PACIENTES_POR_PAGINA = 5
 
 //Recuperar administrador
 export async function getAllPacientesRegistrados() {
@@ -83,7 +83,7 @@ export async function getPacientesFiltradoPaginado(query: string, currentPage: n
                 LOWER(segundoNombre) LIKE "%${normalizedQuery}%" OR
                 LOWER(apellidoPaterno) LIKE "%${normalizedQuery}%" OR
                 LOWER(apellidoMaterno) LIKE "%${normalizedQuery}%"
-            ORDER BY fechaRegistro DESC
+            ORDER BY fechaRegistro ASC
             LIMIT $1 OFFSET $2
         `;
 
@@ -121,3 +121,24 @@ export async function paginasPacientes(query: string) {
         throw new Error('Failed to fetch total number of pacientes.');
     }
 }
+
+
+export async function eliminarPaciente(id: string) {
+
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+        DELETE FROM Paciente
+        WHERE id = $1
+      `;
+        const resultado = await db.select(sqlQuery,[id]);
+        return resultado
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch total number of pacientes.');
+    }
+}
+
+
+
+
