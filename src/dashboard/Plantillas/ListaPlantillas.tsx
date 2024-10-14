@@ -1,9 +1,7 @@
 export default function ListaPlantillas() {
-    return(
+    return (
         <div>
-             <h1>Lista Plantillas</h1>
+            <h1>Lista Plantillas</h1>
         </div>
-       
-    
     )
 }

@@ -11,17 +11,17 @@ import {
 
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "Enero", desktop: 186 },
+  { month: "Febrero", desktop: 305 },
+  { month: "Marzo", desktop: 237 },
+  { month: "Abril", desktop: 73 },
+  { month: "Mayo", desktop: 209 },
+  { month: "Junio", desktop: 214 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Pacientes",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig
@@ -71,10 +71,10 @@ export function ThreChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month 
+              Pacientes
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
+              Enero - Junio 2024
             </div>
           </div>
         </div>

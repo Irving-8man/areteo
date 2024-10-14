@@ -93,7 +93,7 @@ export function SecondChart() {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Pacientes
                         </tspan>
                       </text>
                     )
@@ -106,10 +106,10 @@ export function SecondChart() {
       </div>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month
+          Pacientes
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+        Mostrar total de pacientes  en 6 meses
         </div>
       </CardFooter>
     </Card>

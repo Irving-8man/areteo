@@ -1,8 +1,11 @@
 import { Button } from "@fluentui/react-components";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
+import { useSesion } from "@/hooks/useSesion";
 
 export default function SideNav() {
+    const {logout}= useSesion();
+
     return (
         <aside className="flex h-full flex-col border-e border-e-gray-200">
             {/**Cabecera */}
@@ -28,7 +31,7 @@ export default function SideNav() {
                             <p>Mi Perfil</p>
                         </Link>
                     </Button>
-                    <Button appearance='transparent' style={{ width: "100%", margin: "0", padding: "0", border: "0", borderRadius: "0" }}>
+                    <Button onClick={logout} appearance='transparent' style={{ width: "100%", margin: "0", padding: "0", border: "0", borderRadius: "0" }}>
                         <Link
                             to="/dashboard/perfil"
                             className="flex w-full h-[48px] items-center justify-start gap-2 text-sm font-medium p-4"
