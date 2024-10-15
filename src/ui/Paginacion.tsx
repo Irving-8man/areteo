@@ -1,34 +1,57 @@
 import clsx from 'clsx';
-import { Link, useSearchParams,useLocation } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import { generarPaginacion } from '@/utils/GenerarPaginacion';
 import { ArrowCircleLeft20Regular, ArrowCircleRight20Regular } from "@fluentui/react-icons";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { paginasPacientes } from '@/services/PacienteController';
+import { usePacienteStore } from '@/store/storePacientes';
+import { useNavigate } from 'react-router-dom';
 
 export default function Paginacion() {
     const [searchParams] = useSearchParams();
     const [totalPages, setNumPages] = useState<number>(0);
-    //Paginacion y query
+    const pacientes = usePacienteStore((state) => state.pacientes); //Bandera general de los pacientes
+    const paginasMomento = useRef<number>(1);
+
+    // Paginación y query
     const currentPage = Number(searchParams.get('page')) || 1;
     const query = searchParams.get('query') || '';
     const location = useLocation();
-    const pathname = location.pathname; // Extrae el pathname de la ubicación actual
+    const pathname = location.pathname;
+    const navigate = useNavigate(); // Para redirigir
 
+    // Memorizar la función createPageURL para evitar problemas con dependencias
+    const createPageURL = useCallback(
+        (pageNumber: number | string) => {
+            const params = new URLSearchParams(searchParams);
+            params.set('page', pageNumber.toString());
+            return `${pathname}?${params.toString()}`;
+        },
+        [searchParams, pathname]
+    );
 
-    // Cada vez que cambian los searchParams, se ejecuta la búsqueda
+    // Cada vez que cambian los searchParams o pacientes, se ejecuta la búsqueda
     useEffect(() => {
         const fetchData = async () => {
-            const pages = await paginasPacientes(query);//Pide a la db
+            const pages = await paginasPacientes(query); // Pide a la base de datos
             setNumPages(pages);
         };
         fetchData();
-    }, [query, currentPage]);
+    }, [query, currentPage, pacientes]);
 
-    const createPageURL = (pageNumber: number | string) => {
-        const params = new URLSearchParams(searchParams);
-        params.set('page', pageNumber.toString());
-        return `${pathname}?${params.toString()}`;
-    };
+    
+    // Mantener una referencia de las páginas actuales
+    useEffect(() => {
+        paginasMomento.current = totalPages;
+    }, [totalPages]);
+
+
+    // Si la página actual es mayor que el total de páginas y ajustar si es necesario
+    useEffect(() => {
+        if (currentPage > totalPages && totalPages > 0) {
+            navigate(createPageURL(totalPages));
+        }
+    }, [currentPage, totalPages, navigate, createPageURL]);
 
     const allPages = generarPaginacion(currentPage, totalPages);
 
@@ -64,7 +87,7 @@ export default function Paginacion() {
 
                 <PaginationArrow
                     direction="right"
-            
+
                     href={createPageURL(currentPage + 1)}
                     isDisabled={currentPage >= totalPages}
                 />

@@ -6,6 +6,7 @@ import { formSchemaAdminLogin } from "@/schemas/formSchemaAdmin";
 import { useSesion } from "@/hooks/useSesion";
 import { Admin } from "@/models/types";
 import useRedirecSesion from "@/hooks/useRedirecSesion";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 
 
@@ -13,6 +14,7 @@ export default function Login() {
     //hooks
     const {login} = useSesion();
     useRedirecSesion();
+    const [parent] = useAutoAnimate()
 
     // useForm con validacion de zod para formulario
     const Schema = formSchemaAdminLogin
@@ -45,7 +47,7 @@ export default function Login() {
                 <div>
                     <p className="text-center font-bold text-[20px] pb-[30px]">Iniciar sesión</p>
                 </div>
-                <div className="flex flex-col items-center gap-[25px]">
+                <div className="flex flex-col items-center gap-[25px]" ref={parent}>
 
                     <div className="flex-col">
                         <InfoLabel className="block">Usuario</InfoLabel>

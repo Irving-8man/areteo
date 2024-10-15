@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom';
 import ItemPacienteList from '@/componets/ItemPacienteList';
 import { usePacienteStore } from '@/store/storePacientes';
 
-
 export default function PacientesTabla() {
     const [pacientesCarga, setPacientesCarga] = useState<PacienteRegistrado[]>([]);
     const pacientes = usePacienteStore((state) => state.pacientes);

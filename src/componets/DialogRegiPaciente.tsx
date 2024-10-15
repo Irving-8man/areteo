@@ -27,6 +27,7 @@ import { formSchemaPacienteRegistro } from "@/schemas/formSchemaPacientes";
 import { Paciente } from "@/models/types";
 import { usePacienteStore } from "@/store/storePacientes";
 import { useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 
 
@@ -35,11 +36,13 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         rowGap: "10px",
+        overflowY:"hidden"
     },
 });
 
 export default function DialogRegiPaciente() {
     //hooks
+    const [parent] = useAutoAnimate()
     const styles = useStyles();
     const Schema = formSchemaPacienteRegistro
     const registrarPaciente = usePacienteStore((state) => state.registrarPaciente);
@@ -111,7 +114,7 @@ export default function DialogRegiPaciente() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogBody>
                         <DialogTitle>Registrar Paciente</DialogTitle>
-                        <DialogContent className={styles.content}>
+                        <DialogContent className={styles.content} ref={parent} >
                             <Label required htmlFor="primerNombre">
                                 Primer Nombre
                             </Label>

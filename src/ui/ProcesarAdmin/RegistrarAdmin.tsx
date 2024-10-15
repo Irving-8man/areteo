@@ -9,6 +9,7 @@ import { registrarAdmin } from "@/services/AdminController";
 import { Admin } from "@/models/types";
 import { useNavigate } from "react-router-dom";
 import useRedirecSesion from "@/hooks/useRedirecSesion";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const useStyles = makeStyles({
     card: {
@@ -23,7 +24,7 @@ export default function RegistrarAdmin() {
     const Schema = formSchemaAdminRegistro
     const { dataPrueba } = useSesion()
     useRedirecSesion();
-
+    const [parent] = useAutoAnimate()
 
     // useForm con validacion de zod
     const { register, handleSubmit, formState: { errors }, } = useForm<z.infer<typeof Schema>>({
@@ -61,7 +62,7 @@ export default function RegistrarAdmin() {
                 <header>
                     <p className="text-center font-bold text-xl pb-[30px]">Registro de Administrador</p>
                 </header>
-                <div className="flex flex-col items-center gap-[25px]">
+                <div className="flex flex-col items-center gap-[25px]" ref={parent}>
 
                     <div>
                         <p className="font-semibold">Ingrese los siguientes datos: {dataPrueba} </p>
