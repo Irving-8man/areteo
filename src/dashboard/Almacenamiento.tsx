@@ -1,5 +1,11 @@
+import { Docx } from "@/Docx/Docx";
+
 export default function Almacenamiento() {
-    return(
-        <h1>Almacenamiento</h1>
+    return (
+        <div>
+            <h1>Pruebas Docx</h1>
+            <p>ddad</p>
+            <Docx></Docx>
+        </div>
     )
 }
