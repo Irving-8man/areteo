@@ -1,4 +1,3 @@
-import DialogRegiPaciente from "@/componets/DialogRegiPaciente"
 import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 
@@ -25,9 +24,6 @@ export default function Pacientes() {
                             </li>
                         </ul>
                     </div>
-                    <li>
-                        <DialogRegiPaciente />
-                    </li>
                 </ul>
             </header>
             <div className="border px-[30px] py-[30px]">

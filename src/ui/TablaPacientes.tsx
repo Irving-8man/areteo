@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import ItemPacienteList from '@/componets/ItemPacienteList';
 import { usePacienteStore } from '@/store/storePacientes';
 
-export default function PacientesTabla() {
+export default function TablaPacientes() {
     const [pacientesCarga, setPacientesCarga] = useState<PacienteRegistrado[]>([]);
     const pacientes = usePacienteStore((state) => state.pacientes);
     const [searchParams] = useSearchParams();
@@ -15,7 +15,7 @@ export default function PacientesTabla() {
     // Cada vez que cambian los searchParams, se ejecuta la búsqueda
     useEffect(() => {
         const fetchData = async () => {
-            const pacientes = await getPacientesFiltradoPaginado(query, currentPage) 
+            const pacientes = await getPacientesFiltradoPaginado(query, currentPage)
             setPacientesCarga(pacientes);
         };
         fetchData();
@@ -50,10 +50,17 @@ export default function PacientesTabla() {
                             </tr>
                         </thead>
                         <tbody className="bg-white">
-                            {pacientesCarga?.map((paciente) => (
-                                <ItemPacienteList key={paciente.id} paciente={paciente}></ItemPacienteList>
-                            ))}
-
+                            {pacientesCarga.length > 0 ? (
+                                pacientesCarga?.map((paciente) => (
+                                    <ItemPacienteList key={paciente.id} paciente={paciente}></ItemPacienteList>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={4} className="px-4 py-4 text-center text-gray-500">
+                                        No hay Pacientes disponibles.
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

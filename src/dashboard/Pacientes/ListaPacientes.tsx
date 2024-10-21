@@ -1,7 +1,8 @@
 import Search from "@/componets/Search"
 import Paginacion from "@/ui/Paginacion"
-import PacientesTabla from "@/ui/Table"
+import TablaPacientes from "@/ui/TablaPacientes"
 import { usePacienteStore } from '@/store/storePacientes';
+import DialogRegiPaciente from "@/ui/DialogRegiPaciente"
 import { useEffect } from "react";
 
 export default function ListaPacientes() {
@@ -12,12 +13,13 @@ export default function ListaPacientes() {
 
     return (
         <div>
-            <div>
+            <div className="flex gap-2">
                 <Search placeholder="Buscar Paciente..." />
+                <DialogRegiPaciente />
             </div>
 
             <div>
-                <PacientesTabla />
+                <TablaPacientes />
                 <div>
                 <Paginacion />
                 </div>

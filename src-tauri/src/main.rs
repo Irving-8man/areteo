@@ -13,7 +13,7 @@ fn main() {
     id TEXT PRIMARY KEY NOT NULL,
     nombre TEXT NOT NULL,
     contrasenia TEXT NOT NULL
-);
+    );
 CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
         kind: MigrationKind::Up,
     },
@@ -26,13 +26,70 @@ CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
             segundoNombre TEXT NULL,
             apellidoPaterno TEXT NOT NULL,
             apellidoMaterno TEXT NULL,
+            fechaRegistro TEXT NOT NULL,
             fechaNacimiento TEXT NOT NULL,
-            fechaRegistro TEXT NOT NULL
+            sexo TEXT NOT NULL
     
 );
-CREATE INDEX IF NOT EXISTS index_id ON Paciente (id);",
+CREATE INDEX IF NOT EXISTS index_id_pac ON Paciente (id);
+
+CREATE TABLE IF NOT EXISTS RegistroMedico (
+    id TEXT PRIMARY KEY NOT NULL,
+    paciente_id TEXT NOT NULL,
+    fechaDiagnostico TEXT NOT NULL,
+    sexo TEXT NOT NULL,
+    edad INTEGER NOT NULL,
+    peso REAL NOT NULL,
+    estatura REAL NOT NULL,
+    presionArterialPAS_0min REAL NOT NULL,
+    presionArterialPAD_0min REAL NOT NULL,
+    presionArterialPAS_5min REAL NOT NULL,
+    presionArterialPAD_5min REAL NOT NULL,
+    hba1c REAL NOT NULL,
+    anioDiagnostico TEXT NOT NULL,
+    antecedFamiInfa TEXT NOT NULL,
+    descripcionAntecedentes TEXT NULL,
+    hdl REAL NOT NULL,
+    tgc REAL NOT NULL,
+    educacion TEXT NOT NULL,
+    detalleEducacion TEXT NULL,
+    estadoCivil TEXT NOT NULL,
+    usaTratamientoInyectable BOOLEAN,
+    usaTratamientoOral BOOLEAN,
+
+    FOREIGN KEY (paciente_id) REFERENCES Paciente(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS index_id_Re ON RegistroMedico(id);
+
+
+CREATE TABLE IF NOT EXISTS TratamientoInyectable (
+    id TEXT PRIMARY KEY NOT NULL,
+    registro_id TEXT NOT NULL,
+    desdeCuandoIn TEXT NOT NULL,
+    dosisIn TEXT NOT NULL,
+    tipoNombreIn TEXT NOT NULL,
+    FOREIGN KEY (registro_id) REFERENCES RegistroMedico(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS index_id_TratIn ON TratamientoInyectable(id);
+
+
+CREATE TABLE IF NOT EXISTS TratamientoOral (
+    id TEXT PRIMARY KEY NOT NULL,
+    registro_id TEXT NOT NULL,
+    desdeCuandoOr TEXT NOT NULL,
+    dosisOr TEXT NOT NULL,
+    nombreMedicamentoOr TEXT NOT NULL,
+    FOREIGN KEY (registro_id) REFERENCES RegistroMedico(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS index_id_TratOra ON TratamientoOral(id);
+",
+
         kind: MigrationKind::Up,
     },
+
     ];
 
     tauri::Builder::default()

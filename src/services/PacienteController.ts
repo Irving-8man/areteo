@@ -6,7 +6,7 @@ import { generarID } from "@/utils/GenerarID";
 const getDb: any = getDbInstance()
 const PACIENTES_POR_PAGINA = 3
 
-//Recuperar administrador
+
 export async function getAllPacientesRegistrados() {
     try {
         const db = await getDb;
@@ -22,7 +22,23 @@ export async function getAllPacientesRegistrados() {
     }
 }
 
-// Registrar administrador
+
+export async function getPaciente(id:string){
+    try {
+        const db = await getDb;
+        const paciente = await db.select("SELECT * FROM Paciente WHERE id= $1",[id]);
+        if (paciente) {
+            return paciente;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error("Error al consultar la base de datos:", error);
+        return null;
+    }
+}
+
+
 export async function registrarPaciente(data: Paciente): Promise<PacienteRegistrado | null> {
     try {
         const db = await getDb;
@@ -38,12 +54,12 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
             id: nuevoID,
             ...otrosDatos, // Agregar todos los demás atributos de data
             fechaNacimiento: fechaNacimientoISO, // Agregar fecha de nacimiento tratada
-            fechaRegistro: horaRegistro.toISOString() // Guardar la fecha de registro en formato ISO
+            fechaRegistro: horaRegistro.toISOString(), // Guardar la fecha de registro en formato ISO
         };
 
 
         const registrado = await db.execute(
-            "INSERT INTO Paciente (id, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaRegistro) VALUES ($1, $2, $3,$4,$5,$6,$7)",
+            "INSERT INTO Paciente (id, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaRegistro, sexo) VALUES ($1, $2, $3,$4,$5,$6,$7,$8)",
             [
                 nuevoPaciente.id,
                 nuevoPaciente.primerNombre,
@@ -52,6 +68,7 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
                 nuevoPaciente.apellidoMaterno || null,
                 nuevoPaciente.fechaNacimiento,
                 nuevoPaciente.fechaRegistro,
+                nuevoPaciente.sexo
             ]
         );
 
@@ -92,7 +109,7 @@ export async function getPacientesFiltradoPaginado(query: string, currentPage: n
         return resultados;
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch pacientes.');
+        return [];
     }
 }
 
@@ -131,14 +148,13 @@ export async function eliminarPaciente(id: string) {
         DELETE FROM Paciente
         WHERE id = $1
       `;
-        const resultado = await db.select(sqlQuery,[id]);
+        const resultado = await db.select(sqlQuery, [id]);
         return resultado
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch total number of pacientes.');
     }
 }
-
 
 
 
