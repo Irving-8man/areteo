@@ -41,10 +41,26 @@ const useStyles = makeStyles({
         cursor: 'pointer',
         marginTop: '5px',
     },
+    scoreInput: {
+        padding: '8px',
+        width: '100%',
+        marginTop: '5px', 
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+    },
+    label: {
+        marginTop: '10px', 
+        fontWeight: 'bold',
+        display: 'block', 
+    },
+    scoreWrapper: {
+        marginTop: '20px', 
+    }
 });
 
 export default function CasillaV() {
     const [options, setOptions] = useState<string[]>(['', '']);
+    const [score, setScore] = useState<number | ''>(''); // Manejamos el puntaje como un número
     const styles = useStyles();
 
     const addOption = () => {
@@ -71,7 +87,6 @@ export default function CasillaV() {
                         <input
                             type="checkbox"
                             checked={true}
-                            
                         />
                     </div>
                     <input
@@ -97,6 +112,17 @@ export default function CasillaV() {
             >
                 Agregar opción
             </button>
+            <div className={styles.scoreWrapper}>
+                <label className={styles.label}>Puntaje:</label>
+                <input
+                    type="number"
+                    min={1} 
+                    value={score}
+                    onChange={(e) => setScore(Number(e.target.value))} 
+                    className={styles.scoreInput}
+                    placeholder="Asigna un puntaje"
+                />
+            </div>
         </div>
     );
 }

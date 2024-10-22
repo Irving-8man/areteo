@@ -47,18 +47,33 @@ const useStyles = makeStyles({
         cursor: 'pointer',
         marginTop: '5px',
     },
+    scoreInput: {
+        padding: '8px',
+        width: '100%',
+        marginTop: '5px',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+    },
+    label: {
+        marginTop: '10px',
+        fontWeight: 'bold',
+        display: 'block', 
+    },
+    scoreWrapper: {
+        marginTop: '20px', 
+    }
 });
 
 export default function OpcionM() {
     const styles = useStyles();
     const [options, setOptions] = useState<string[]>(['', '']);
+    const [score, setScore] = useState<number | ''>(''); 
 
     const addOption = () => {
         setOptions([...options, '']);
     };
 
     const removeOption = (index: number) => {
-        // Solo permitir eliminar opciones después de las dos primeras
         if (index >= 2) {
             setOptions(options.filter((_, i) => i !== index));
         }
@@ -78,7 +93,7 @@ export default function OpcionM() {
                         <div className={styles.radio}>
                             <input
                                 type="radio"
-                                name="radio-group" // Asegura que solo se pueda seleccionar una opción
+                                name="radio-group" 
                             />
                         </div>
                         <input
@@ -106,6 +121,17 @@ export default function OpcionM() {
             >
                 Agregar opción
             </button>
+            <div className={styles.scoreWrapper}>
+                <label className={styles.label}>Puntaje:</label>
+                <input
+                    type="number"
+                    min={1}  
+                    value={score}
+                    onChange={(e) => setScore(Number(e.target.value))}  
+                    className={styles.scoreInput}
+                    placeholder="Asigna un puntaje"
+                />
+            </div>
         </div>
     );
 }

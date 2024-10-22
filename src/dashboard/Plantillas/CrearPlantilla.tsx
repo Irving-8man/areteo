@@ -82,7 +82,7 @@ const useStyles = makeStyles({
         backgroundColor: 'red',
         color: 'white',
         border: 'none',
-        padding: '1vh 13.4vw',  
+        padding: '1vh 14.8vw',  
         borderRadius: '4px',
         cursor: 'pointer',
         transition: 'background-color 0.3s ease',

@@ -3,7 +3,7 @@ import { makeStyles } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
   container: {
-    marginBottom: '20px',
+    marginBottom: '5px',
   },
   gridInput: {
     width: '100%',
@@ -25,13 +25,28 @@ const useStyles = makeStyles({
     },
   },
   header: {
-    marginBottom: '10px',
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
   },
   section: {
-    marginBottom: '20px',
+    marginBottom: '5px',
+  },
+  scoreInput: {
+    padding: '8px',
+    width: '100%',
+    marginTop: '5px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    marginBottom: '15px',
+  },
+  label: {
+    marginTop: '10px',
+    fontWeight: 'bold',
+    display: 'block',
+  },
+  scoreWrapper: {
+    marginTop: '20px',
   },
 });
 
@@ -41,6 +56,7 @@ export default function MatrizOpciones() {
   const [columns, setColumns] = useState<number>(2);
   const [columnLabels, setColumnLabels] = useState<string[]>(Array(columns).fill(''));
   const [rowLabels, setRowLabels] = useState<string[]>(Array(rows).fill(''));
+  const [score, setScore] = useState<number | ''>(''); 
 
   const handleAddRow = () => {
     setRows(rows + 1);
@@ -115,6 +131,17 @@ export default function MatrizOpciones() {
             <button onClick={handleRemoveColumn} className={styles.button}>Eliminar Columna</button>
           </div>
         </div>
+      </div>
+      <div className={styles.scoreWrapper}>
+        <label className={styles.label}>Puntaje:</label>
+        <input
+          type="number"
+          min={1} 
+          value={score}
+          onChange={(e) => setScore(Number(e.target.value))} 
+          className={styles.scoreInput}
+          placeholder="Asigna un puntaje"
+        />
       </div>
     </div>
   );

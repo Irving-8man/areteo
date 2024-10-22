@@ -14,11 +14,22 @@ const useStyles = makeStyles({
     marginTop: '10px',
     fontSize: '16px',
   },
+  scoreInput: {
+    padding: '8px',
+    width: '100%',
+    marginTop: '5px',  
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  },
+  label: {
+    fontWeight: 'bold',
+  },
 });
 
 export default function Rango() {
   const styles = useStyles();
   const [value, setValue] = useState(5); // Valor inicial
+  const [score, setScore] = useState<number | ''>('');  // Manejamos el puntaje como un número
 
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(parseInt(event.target.value, 10));
@@ -35,6 +46,15 @@ export default function Rango() {
         className={styles.rangeInput}
       />
       <div className={styles.rangeValue}>Valor seleccionado: {value}</div>
+      <label className={styles.label}>Puntaje:</label>
+      <input
+        type="number"
+        min={1}  
+        value={score}
+        onChange={(e) => setScore(Number(e.target.value))}  
+        className={styles.scoreInput}
+        placeholder="Asigna un puntaje"
+      />
     </div>
   );
 }

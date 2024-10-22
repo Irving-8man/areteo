@@ -10,12 +10,14 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: '10px',
+    
   },
   labelContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     marginTop: '10px',
+    
   },
   input: {
     width: '50px',
@@ -24,6 +26,7 @@ const useStyles = makeStyles({
     border: '1px solid #ccc',
     borderRadius: '4px',
     padding: '5px',
+    
   },
   textInput: {
     width: '100px',
@@ -32,10 +35,22 @@ const useStyles = makeStyles({
     border: '1px solid #ccc',
     borderRadius: '4px',
     padding: '5px',
+    
   },
   rangeInput: {
     flexGrow: 1,
     margin: '0 10px',
+    
+  },
+  scoreInput: {
+    padding: '8px',
+    width: '100%',
+    marginTop: '5px', 
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  },
+  label: {
+    fontWeight: 'bold',
   },
 });
 
@@ -45,6 +60,7 @@ export default function Escala() {
   const [maxValue, setMaxValue] = useState(5); // Valor máximo inicial
   const [minLabel, setMinLabel] = useState(''); // Etiqueta para el mínimo
   const [maxLabel, setMaxLabel] = useState(''); // Etiqueta para el máximo
+  const [score, setScore] = useState<number | ''>(''); // Puntaje inicial
 
   const handleMinValueChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(event.target.value, 10);
@@ -66,6 +82,13 @@ export default function Escala() {
 
   const handleMaxLabelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMaxLabel(event.target.value);
+  };
+
+  const handleScoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
+    if (value >= 1) { // Asegurar que el puntaje sea al menos 1
+      setScore(value);
+    }
   };
 
   return (
@@ -116,10 +139,22 @@ export default function Escala() {
           </label>
         ))}
       </div>
+
       <div className={styles.labelContainer}>
         <span>{minLabel}</span>
         <span>{maxLabel}</span>
       </div>
+
+      <label className={styles.label}>Puntaje:</label>
+      <input
+        type="number"
+        min={1} 
+        value={score}
+        onChange={handleScoreChange}
+        className={styles.scoreInput}
+        placeholder="Asigna un puntaje"
+        
+      />
     </div>
   );
 }
