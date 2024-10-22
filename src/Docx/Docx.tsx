@@ -14,7 +14,7 @@ export function Docx() {
         
         Packer.toBlob(documentCreator).then((blob) => {
             console.log(blob);
-            saveAs(blob, "example.docx");
+            saveAs(blob, "Expediente.docx");
             console.log("Document created successfully");
         });
     };
@@ -22,7 +22,7 @@ export function Docx() {
     return (
         <div>
             <p>
-                <Button onClick={generate}>Generate CV with docx!</Button>
+                <Button onClick={generate}>Descargar Expediente!</Button>
             </p>
         </div>
     );
