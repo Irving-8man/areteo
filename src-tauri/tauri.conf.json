@@ -12,9 +12,38 @@
   },
   "tauri": {
     "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": "^((.*config.json)|(https?://\\w+))"
+      },
+      "window": {
+        "all": true
+      },
+      "path": {
+        "all": true
+      },
       "fs": {
+        "all": true,
         "writeFile": true,
-        "readFile": true
+        "readFile": true,
+        "scope": [
+          "$APPCACHE/**",
+          "$APPCONFIG/**",
+          "$RESOURCE/**"
+        ]
+      },
+      "os": {
+        "all": true
+      },
+      "globalShortcut": {
+        "all": true
+      },
+      "protocol": {
+        "asset": true,
+        "assetScope": [
+          "$APPCACHE/Downloads/**"
+        ]
       },
       "dialog": {
         "all": true
