@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS RegistroMedico (
     educacion TEXT NOT NULL,
     detalleEducacion TEXT NULL,
     estadoCivil TEXT NOT NULL,
-    usaTratamientoInyectable BOOLEAN,
-    usaTratamientoOral BOOLEAN,
+    usaTratamientoInyectable BOOLEAN NOT NULL,
+    usaTratamientoOral BOOLEAN NOT NULL,
 
     FOREIGN KEY (paciente_id) REFERENCES Paciente(id) ON DELETE CASCADE
 );
