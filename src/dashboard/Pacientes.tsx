@@ -18,10 +18,7 @@ export default function Pacientes() {
                                 <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
                                     }`}>Lista Pacientes</Link>
                             </li>
-                            <li>
-                                <Link to="/dashboard/pacientes/registrar-paciente" className={`${isRutaExacta(pathName, "/dashboard/pacientes/registrar-paciente") ? 'font-medium' : 'text-black'
-                                    }`}>Historial Medico</Link>
-                            </li>
+
                         </ul>
                     </div>
                 </ul>

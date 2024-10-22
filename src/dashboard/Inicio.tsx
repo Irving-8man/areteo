@@ -32,11 +32,11 @@ export default function Inicio() {
 
 
     return (
-        <main className="min-h-full border-orange-600 border px-[30px] py-[30px] relative">
-            <header className="sticky top-0 border-orange-600 border  bg-transparent py-4 z-[4]">
+        <main className="min-h-full  border px-[30px] py-[30px] relative">
+            <header className="sticky top-0 border bg-white py-4 z-[4]">
                 <h1>Inicio</h1>
             </header>
-            <section className="border-pink-500 border min-h-[100vh]">
+            <section className="min-h-[100vh]">
                 <div className="grid grid-cols-2 gap-[20px]">
                      {/* DOM nodes you want to convert to PNG */}
                     <div ref={ref} className="bg-white">

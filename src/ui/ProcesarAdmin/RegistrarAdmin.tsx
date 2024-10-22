@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { formSchemaAdminRegistro } from "@/schemas/formSchemaAdmin";
 import { PersonRegular, PasswordRegular } from "@fluentui/react-icons";
-import { useSesion } from "@/hooks/useSesion";
 import { registrarAdmin } from "@/services/AdminController";
 import { Admin } from "@/models/types";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +21,6 @@ export default function RegistrarAdmin() {
     const navigate = useNavigate();
     const styles = useStyles();
     const Schema = formSchemaAdminRegistro
-    const { dataPrueba } = useSesion()
     useRedirecSesion();
     const [parent] = useAutoAnimate()
 
@@ -65,7 +63,7 @@ export default function RegistrarAdmin() {
                 <div className="flex flex-col items-center gap-[25px]" ref={parent}>
 
                     <div>
-                        <p className="font-semibold">Ingrese los siguientes datos: {dataPrueba} </p>
+                        <p className="font-semibold">Ingrese los siguientes datos: </p>
                     </div>
 
                     <div className="flex-col">

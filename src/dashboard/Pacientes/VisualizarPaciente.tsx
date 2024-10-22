@@ -36,7 +36,7 @@ export default function VisualizarPaciente() {
                     <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
                 </Link>
             </section>
-            <section><p> {paciente?.primerNombre}</p></section>
+            <section><h1 className="text-3xl"> {paciente?.primerNombre} {paciente?.segundoNombre} {paciente?.apellidoPaterno} {paciente?.apellidoMaterno}</h1></section>
             <section>
                 <TablaRegistros id={id} />
             </section>
