@@ -28,8 +28,8 @@ export const formSchemaCrearRegistro = z.object({
     presionArterialPAD_5min: z.number({ invalid_type_error: "El campo de PAD no puede estar vacío" })
         .min(0, "La presión diastólica a 5 min debe ser un número positivo"),
     hba1c: z.number({ invalid_type_error: "El campo de HbA1c no puede estar vacío" }).min(0, "El valor de HbA1c debe ser un número positivo"),
-    anioDiagnostico: z.enum(['0', '1','2']),
-    antecedFamiInfa: z.enum(['0', '1','2']),
+    anioDiagnostico: z.string().min(1),
+    antecedFamiInfa: z.string().min(1),
     descripcionAntecedentes: z.string().nullable(),
     hdl: z.number({ invalid_type_error: "El campo de HDL no puede estar vacío" }).min(0, "El HDL debe ser un número positivo"),
     tgc: z.number({ invalid_type_error: "El campo de TGC no puede estar vacío" }).min(0, "El TGC debe ser un número positivo"),

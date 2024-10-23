@@ -16,53 +16,85 @@ import { useNavigate } from 'react-router-dom';
 
 const NIVEL_ESTUDIO = [
     {
-        value: '0',
+        value: 0,
         estudio: "Sin estudio"
     },
     {
-        value: '1',
+        value: 1,
         estudio: "Primaria"
     },
     {
-        value: '2',
+        value: 2,
         estudio: "Secundaria"
     },
     {
-        value: '3',
+        value: 3,
         estudio: "Preparatoria"
     },
     {
-        value: '4',
+        value: 4,
         estudio: "Licenciatura"
     },
     {
-        value: '5',
+        value: 5,
         estudio: "Otro"
     },
 ];
 
+const educacionMapping: { [key: string]: string } = {
+    0: "Sin estudio",
+    1: "Primaria",
+    2: "Secundaria",
+    3: "Preparatoria",
+    4: "Licenciatura",
+    5: "Otro"
+};
+
+
 const ESTADO_CIVIL = [
     {
-        value: '0',
+        value: 0,
         estado: "Soltero"
     },
     {
-        value: '1',
+        value: 1,
         estado: "Casado"
     },
     {
-        value: '2',
+        value: 2,
         estado: "Unión libre"
     },
     {
-        value: '3',
+        value: 3,
         estado: "Divorciado/ separado"
     },
     {
-        value: '4',
+        value: 4,
         estado: "Viudo"
     },
 ];
+
+
+const estadoCivilMapping: { [key: string]: string }  = {
+    0: "Soltero",
+    1: "Casado",
+    2: "Unión libre",
+    3: "Divorciado/ separado",
+    4: "Viudo"
+}
+
+const antecedentesMapping:{ [key: string]: string }  = {
+    0: "No",
+    1: "Sí",
+    2: "Desconozco"
+};
+
+const diagnosticoMapping:{ [key: string]: string }  = {
+    0: "0 a 5 años",
+    1: "6 a 10 años",
+    2: "Más de 10 años",
+};
+
 
 
 //Constantes
@@ -74,7 +106,7 @@ export default function CrearRegistro() {
     const [paciente, setPaciente] = useState<null | PacienteRegistrado>(null)
     const [edad, setEdad] = useState<number>(0)
     const [sexo, setSexo] = useState<string>("Masculino")
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     //Recuperar al paciente
     useEffect(() => {
@@ -128,9 +160,19 @@ export default function CrearRegistro() {
 
     // Procesar información
     const onSubmit = async (data: z.infer<typeof Schema>) => {
+        const textoDiagnostico = diagnosticoMapping[data.anioDiagnostico];
+        const textoAntecedentes = antecedentesMapping[data.antecedFamiInfa];
+        const textoEducacion = educacionMapping[data.educacion];
+        const textEstadoCivil = estadoCivilMapping[data.estadoCivil];
+
+
         //Ajustes
-        data.edad = edad
-        data.sexo = sexo
+        data.edad = edad;
+        data.sexo = sexo;
+        data.anioDiagnostico = textoDiagnostico;
+        data.antecedFamiInfa = textoAntecedentes;
+        data.educacion = textoEducacion;
+        data.estadoCivil = textEstadoCivil;
         console.log(data)
         try {
             const registrado = await crearRegistrosPaciente(data);

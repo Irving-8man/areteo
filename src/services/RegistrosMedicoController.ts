@@ -1,25 +1,24 @@
 import { getDbInstance } from "./DatabaseSingleton";
-import { RegistroMedicoDB } from '../models/types';
+import { RegistroMedicoList } from '../models/types';
 import { generarID } from "@/utils/GenerarID";
-//import { generarID } from "@/utils/GenerarID";
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
 
 
-export async function getRegistrosPaciente(id: string) {
+export async function getRegistrosPaciente(paciente_id: string) {
 
     try {
         const db = await getDb;
         const sqlQuery = `
-            SELECT * 
+            SELECT id,fechaDiagnostico,edad,peso,antecedFamiInfa 
             FROM RegistroMedico
             WHERE paciente_id = $1
             ORDER BY fechaDiagnostico ASC;
         `;
-
         // Ejecutar la consulta
-        const resultados: RegistroMedicoDB[] = await db.select(sqlQuery, [id]);
+        const resultados: RegistroMedicoList[] = await db.select(sqlQuery, [paciente_id]);
         return resultados;
     } catch (error) {
         console.error('Database Error:', error);
@@ -29,10 +28,15 @@ export async function getRegistrosPaciente(id: string) {
 
 
 
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function crearRegistrosPaciente(data: any) {
-    const idRegistro = generarID();
-    let resIn, resOr;
+    const registro_id = generarID();
+    const usaInye = data.usaTratamientoInyectable === 1;
+    const usaOral = data.usaTratamientoOral === 1;
+    data.antecedFamiInfa == "No" ? data.descripcionAntecedentes = null : data.descripcionAntecedentes;
+    data.educacion !== "Otro" ? data.detalleEducacion = null : data.detalleEducacion;
+
 
     try {
         const db = await getDb;
@@ -40,33 +44,36 @@ export async function crearRegistrosPaciente(data: any) {
             INSERT INTO RegistroMedico (
                 id, 
                 paciente_id, 
-                fechaDiagnostico, 
+                fechaDiagnostico,
+                sexo, 
                 edad, 
                 peso, 
                 estatura, 
                 presionArterialPAS_0min, 
                 presionArterialPAD_0min, 
                 presionArterialPAS_5min, 
-                presionArterialPAD_5min, 
-                hba1c, 
-                anioDiagnostico, 
-                antecedFamiInfa, 
-                descripcionAntecedentes, 
-                hdl, 
-                tgc, 
-                educacion, 
-                detalleEducacion, 
-                estadoCivil, 
-                usaTratamientoInyectable, 
+                presionArterialPAD_5min,
+
+                hba1c,
+                anioDiagnostico,
+                antecedFamiInfa,
+                descripcionAntecedentes,
+                hdl,
+                tgc,
+                educacion,
+                detalleEducacion,
+                estadoCivil,
+                usaTratamientoInyectable,
                 usaTratamientoOral
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20);
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,  $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);
         `;
 
         // Crear registro
-        const res = await db.execut(sqlQueryRegistro, [
-            idRegistro,
+        const res = await db.execute(sqlQueryRegistro, [
+            registro_id,
             data.paciente_id,
             data.fechaDiagnostico,
+            data.sexo,
             data.edad,
             data.peso,
             data.estatura,
@@ -74,71 +81,76 @@ export async function crearRegistrosPaciente(data: any) {
             data.presionArterialPAD_0min,
             data.presionArterialPAS_5min,
             data.presionArterialPAD_5min,
+
             data.hba1c,
             data.anioDiagnostico,
             data.antecedFamiInfa,
-            data.descripcionAntecedentes || null,  // Es opcional
+            data.descripcionAntecedentes || null,
             data.hdl,
             data.tgc,
             data.educacion,
-            data.detalleEducacion || null,  // Es opcional
+            data.detalleEducacion || null,
             data.estadoCivil,
-            data.usaTratamientoInyectable,
-            data.usaTratamientoOral]);
+            usaInye,
+            usaOral
+        ]);
 
-        //Validar resgistro medico agregado
-        if (res) {
+        if (!res) return false; //Si falla registrar
 
-            //verificar inyectable
-            if (data.usaTratamientoInyectable == 1) {
-                const sqlTratInyectable = `
-                    INSERT INTO TratamientoInyectable (
-                        id,
-                        registro_id,
-                        desdeCuando,
-                        dosis,
-                        tipoNombre
-                    ) VALUES ($1, $2, $3, $4, $5);
-                `;
+        // Si el paciente usa tratamiento inyectable
+        if (usaInye) {
+            const sqlQueryInyectable = `
+                INSERT INTO TratamientoInyectable (
+                    id,
+                    registro_id,
+                    desdeCuandoIn,
+                    dosisIn,
+                    tipoNombreIn
+                ) VALUES ($1, $2, $3, $4, $5);
+            `;
+            const resInyectable = await db.execute(sqlQueryInyectable, [
+                generarID(),
+                registro_id,
+                data.desdeCuandoIn,
+                data.dosisIn,
+                data.tipoNombreIn
+            ]);
 
-                // inyectable
-                resIn = await db.execut(sqlTratInyectable, [generarID(), idRegistro, data.desdeCuandoIn, data.dosisIn, data.tipoNombreIn]);
-            }
-
-            // Si hay oral
-            if (data.usaTratamientoOral) {
-                const sqlTratOral = `
-                    INSERT INTO TratamientoOral (
-                        id,
-                        registro_id,
-                        desdeCuando,
-                        dosis,
-                        nombreMedicamento
-                    ) VALUES ($1, $2, $3, $4, $5);
-                `;
-
-                await db.execut(sqlTratOral, [
-                    generarID(),   
-                    idRegistro,          
-                    data.desdeCuandoOr,
-                    data.dosisOr,
-                    data.nombreMedicamentoOr
-                ]);
-            }
-
-            if (resIn && resOr && res) {
-                return true
-            }else{
+            if (!resInyectable) {
+                await db.execute(`DELETE FROM RegistroMedico WHERE id = $1`, [registro_id]);
                 return false;
             }
-        } else {
-            return false;
         }
 
+        // Si el paciente usa tratamiento oral
+        if (usaOral) {
+            const sqlQueryOral = `
+                INSERT INTO TratamientoOral (
+                    id,
+                    registro_id,
+                    desdeCuandoOr,
+                    dosisOr,
+                    nombreMedicamentoOr
+                ) VALUES ($1, $2, $3, $4, $5);
+            `;
 
+            const resOral = await db.execute(sqlQueryOral, [
+                generarID(),
+                registro_id,
+                data.desdeCuandoOr,
+                data.dosisOr,
+                data.nombreMedicamentoOr
+            ]);
+
+            if (!resOral) {
+                await db.execute(`DELETE FROM RegistroMedico WHERE id = $1`, [registro_id]);
+                return false;
+            }
+        }
+        return true;
     } catch (error) {
         console.error('Database Error:', error);
-        return false;
+        throw new Error('Fallo al guardar registro.');
     }
 }
 

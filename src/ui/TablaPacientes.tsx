@@ -31,7 +31,7 @@ export default function TablaPacientes() {
                     <table className="hidden min-w-full text-gray-900 md:table">
                         <thead className="rounded-lg text-left text-sm font-normal">
                             <tr>
-                                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                                <th scope="col" className="px-4 py-5 font-medium">
                                     Nombre Completo
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
@@ -44,8 +44,8 @@ export default function TablaPacientes() {
                                 <th scope="col" className="px-3 py-5 font-medium">
                                     Ultima Consulta
                                 </th>
-                                <th scope="col" className="relative py-3 pl-6 pr-3">
-                                    <span className="sr-only">Edit</span>
+                                <th scope="col" className="px-3 py-5 font-medium">
+                                    Consultar
                                 </th>
                             </tr>
                         </thead>

@@ -20,7 +20,7 @@ import {
     Select,
 } from "@fluentui/react-components";
 
-import { Add20Filled, Checkmark20Filled, Dismiss20Filled, SpinnerIos20Filled } from "@fluentui/react-icons";
+import { Add20Filled, Checkmark20Filled, Dismiss20Filled, Dismiss24Regular, SpinnerIos20Filled } from "@fluentui/react-icons";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -38,7 +38,8 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         rowGap: "10px",
-        overflowY: "hidden"
+        overflowY: "scroll",
+        scrollbarWidth:"thin"
     },
 });
 
@@ -102,6 +103,7 @@ export default function DialogRegiPaciente() {
                 notify("Error durante el registro del paciente", "error");
             }
             reset();
+            alert("Creado")
         } catch (error) {
             // Notificar error
             setLoading(false);
@@ -115,13 +117,25 @@ export default function DialogRegiPaciente() {
     return (
         <>
             <Dialog open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
-                <DialogTrigger disableButtonEnhancement>
+                <DialogTrigger disableButtonEnhancement >
                     <Button appearance="primary" icon={<Add20Filled />}>Nuevo Paciente</Button>
                 </DialogTrigger>
                 <DialogSurface aria-describedby={undefined}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <DialogBody>
-                            <DialogTitle>Registrar Paciente</DialogTitle>
+                            <DialogTitle
+                                action={
+                                    <DialogTrigger action="close">
+                                        <Button
+                                            appearance="subtle"
+                                            aria-label="close"
+                                            icon={<Dismiss24Regular />}
+                                        />
+                                    </DialogTrigger>
+                                }
+                            >
+                                Registrar Paciente
+                            </DialogTitle>
                             <DialogContent className={styles.content} ref={parent} >
                                 <Label required htmlFor="primerNombre">
                                     Primer Nombre
@@ -184,7 +198,7 @@ export default function DialogRegiPaciente() {
                                     type="date"
                                     {...register("fechaNacimiento")}
                                     disabled={loading}
-                                    max={format(new Date(),"YYYY-MM-DD")}
+                                    max={format(new Date(), "YYYY-MM-DD")}
                                 />
                                 {errors.fechaNacimiento && (
                                     <p className="text-red-600 text-sm">{errors.fechaNacimiento.message}</p>

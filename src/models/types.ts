@@ -54,6 +54,18 @@ export interface RegistroMedicoDB extends RegistroMedico {
     id: string;
 }
 
+
+//Para mostrar en el listado por pacientes
+export interface RegistroMedicoList{
+    id: string;
+    fechaDiagnostico: string;
+    edad:string;
+    peso: number;
+    antecedFamiInfa: string;
+}
+
+
+
 export interface TratamientoInyectable{
     desdeCuandoIn: string;
     dosisIn: string;
