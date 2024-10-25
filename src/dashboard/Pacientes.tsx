@@ -1,5 +1,6 @@
 import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
+import ButtoCsv from "@/ui/ProcesarPacientes/ButtonCsv";
 
 
 export default function Pacientes() {
@@ -17,6 +18,9 @@ export default function Pacientes() {
                             <li>
                                 <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
                                     }`}>Lista Pacientes</Link>
+                            </li>
+                            <li>
+                                <ButtoCsv />
                             </li>
 
                         </ul>
