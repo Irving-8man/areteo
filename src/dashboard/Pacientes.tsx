@@ -1,3 +1,4 @@
+import ButtonCrearPlantilla from "@/ui/ProcesarPlantillas/ButtonCrearPlantillas";
 import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 
@@ -17,6 +18,10 @@ export default function Pacientes() {
                             <li>
                                 <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
                                     }`}>Lista Pacientes</Link>
+                            </li>
+
+                            <li>
+                                <ButtonCrearPlantilla />
                             </li>
 
                         </ul>
