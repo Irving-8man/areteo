@@ -30,6 +30,7 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "14.2.3",
     "react-hook-form": "7.52.1",
+    "react-papaparse": "^4.4.0",
     "react-router-dom": "6.25.1",
     "react-window": "1.8.10",
     "recharts": "2.12.7",
@@ -40,6 +41,7 @@
     "use-debounce": "10.0.3",
     "uuid": "10.0.0",
     "victory": "37.1.1",
+    "write-excel-file": "^2.0.10",
     "zod": "3.23.8",
     "zustand": "4.5.4"
   },
