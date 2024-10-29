@@ -1,101 +1,159 @@
+import {
+    Input,
+    Label,
+    useId,
+    useToastController,
+    Toast,
+    ToastTitle,
+    ToastTrigger,
+    Link,
+    Textarea,
+} from "@fluentui/react-components";
 
-import { writeTextFile, BaseDirectory } from '@tauri-apps/api/fs';
-import { dialog } from '@tauri-apps/api';
+
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Plantilla } from "@/models/types";
+import { useState } from "react";
+import { formSchemaPlantilla } from "@/schemas/formSchemaPlantilla";
+import { crearPlantilla } from "@/services/PlantillasController";
+
+
+
 
 export default function CrearPlantilla() {
-    return (
-        <div>
-            <h1>Crear plantilla</h1>
-            <GenerateAndSaveTPLDesktop />
-            <GenerateAndDownloadTPLBrowser />
-        </div>
+    //hooks
+    const Schema = formSchemaPlantilla
+    const [loading, setLoading] = useState<boolean>(false);
 
-    )
-}
+    //Tostada
+    const toasterId = useId("toaster");
+    const { dispatchToast } = useToastController(toasterId);
+    const notify = (message: string, type: "success" | "error") => {
+        dispatchToast(
+            <Toast>
+                <ToastTitle
+                    action={
+                        <ToastTrigger>
+                            <Link>Cerrar</Link>
+                        </ToastTrigger>
+                    }
+                >
+                    {message}
+                </ToastTitle>
+            </Toast>,
+            { intent: type } // success o error
+        );
+    };
 
 
-function GenerateAndSaveTPLDesktop() {
-    const generateFile = async () => {
-        const data = {
-            // Aquí coloca la estructura JSON que deseas guardar
-            nombre: "Instrumento 1",
-            descripcion: "Descripción del instrumento",
-            preguntas: [
-                { pregunta: "¿Pregunta 1?", respuesta: "Sí" },
-                { pregunta: "¿Pregunta 2?", respuesta: "No" },
-            ]
-        };
+    // useForm con validacion de zod
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof Schema>>({
+        resolver: zodResolver(Schema), defaultValues: {
+        },
+    });
 
-        // Convertir el JSON a un string
-        const jsonString = JSON.stringify(data, null, 2);
 
+
+    // Procesar información
+    const onSubmit = async (data: z.infer<typeof Schema>) => {
+        const dataPlantilla: Plantilla = data;
         try {
-            // Abre un diálogo para que el usuario elija dónde guardar el archivo
-            const selectedPath = await dialog.save({
-                defaultPath: `${BaseDirectory.Desktop}/instrumento.tpl`, // Directorio de Descargas
-                filters: [{
-                    name: 'TPL Files',
-                    extensions: ['tpl'] // Asegura que la extensión sea .tpl
-                }]
-            });
-
-            if (selectedPath) {
-                // Asegura que la ruta tenga la extensión .tpl
-                const finalPath = selectedPath.endsWith('.tpl') ? selectedPath : `${selectedPath}.tpl`;
-
-                // Guardar el archivo en la ruta seleccionada con la extensión .tpl
-                await writeTextFile(finalPath, jsonString);
-                alert('Archivo guardado con éxito en: ' + finalPath);
+            setLoading(true);
+            const registrado = await crearPlantilla(dataPlantilla);
+            if (registrado) {
+                setLoading(false);
+                notify(`Plantilla ${data.nombre} creada con éxito`, "success");
+            } else {
+                notify("Error durante la creación de plantilla", "error");
             }
-        } catch (err) {
-            console.error('Error al guardar el archivo:', err);
+            reset();
+            alert("Creado")
+        } catch (error) {
+            // Notificar error
+            setLoading(false);
+            notify("Error durante creación de plantilla", "error");
+            console.log("Error durante el registro:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
-    return (
-        <button onClick={generateFile}>
-            Generar y guardar archivo .tpl desktop
-        </button>
-    );
-}
-
-
-
-
-function GenerateAndDownloadTPLBrowser() {
-    const generateFile = () => {
-        const data = {
-            // Aquí coloca la estructura JSON que deseas guardar
-            nombre: "Instrumento 1",
-            descripcion: "Descripción del instrumento",
-            preguntas: [
-                { pregunta: "¿Pregunta 1?", respuesta: "Sí" },
-                { pregunta: "¿Pregunta 2?", respuesta: "No" },
-            ]
-        };
-
-        // Convertir el JSON a un string
-        const jsonString = JSON.stringify(data, null, 2);
-
-        // Crear un blob con el contenido del archivo
-        const blob = new Blob([jsonString], { type: 'application/json' });
-
-        // Crear un enlace temporal para descargar el archivo
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'instrumento2.tpl';
-        document.body.appendChild(link);
-        link.click();
-
-        // Limpiar el enlace temporal
-        document.body.removeChild(link);
-    };
 
     return (
-        <button onClick={generateFile}>
-            Generar y descargar archivo .tpl browser
-        </button>
-    );
+        <>
+            <h1>Crear plantilla</h1>
+
+            <section>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="flex flex-col gap-15">
+                        <Label required htmlFor="nombre">
+                            Nombre
+                        </Label>
+                        <Input
+                            appearance="underline"
+                            placeholder="Ej. Muestra de..."
+                            {...register("nombre")}
+                            disabled={loading}
+                            required
+                        />
+                        {errors.nombre && (
+                            <p className="text-sm text-red-600">{errors.nombre.message}</p>
+                        )}
+
+                        <Label required htmlFor="descripcion">
+                            Descripción
+                        </Label>
+
+                        <Textarea
+                            placeholder="Ej. Este intrumento tiene como proposito..."
+                            {...register("descripcion")}
+                            style={{ height: "100px" }}
+                            disabled={loading}
+                            required
+                        ></Textarea>
+                        {errors.descripcion && (
+                            <p className="text-sm text-red-600">{errors.descripcion.message}</p>
+                        )}
+
+                        <div className="border">
+                            <div className="flex flex-col w-1/2">
+                                <Label required htmlFor="nombre">
+                                    Autor
+                                </Label>
+                                <Input
+                                    appearance="underline"
+                                    placeholder="Ej. Pedro Francisco"
+                                    {...register("autor")}
+                                    disabled={loading}
+                                    required
+                                />
+                                {errors.autor && (
+                                    <p className="text-sm text-red-600">{errors.autor.message}</p>
+                                )}
+                            </div>
+
+                            <div className="flex flex-col w-1/2">
+                                <Label required htmlFor="nombre">
+                                    Adaptación por ...
+                                </Label>
+                                <Input
+                                    appearance="underline"
+                                    placeholder="Ej. Antonia Sofia"
+                                    {...register("adaptacionPor")}
+                                    disabled={loading}
+                                    required
+                                />
+                                {errors.adaptacionPor && (
+                                    <p className="text-sm text-red-600">{errors.adaptacionPor.message}</p>
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </section>
+        </>
+    )
 }
-
-

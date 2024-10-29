@@ -9,9 +9,6 @@ export default function Plantillas() {
                         <Link to="/dashboard/plantillas">Lista de Plantillas</Link>
                     </li>
                     <li> 
-                        <Link to="/dashboard/plantillas/crear-plantilla">Crear Plantilla</Link>
-                    </li>
-                    <li> 
                         <Link to="/dashboard/plantillas/cargar-plantilla">Cargar Plantilla</Link>
                     </li>
                 </ul>
