@@ -1,12 +1,13 @@
 import SearchPlantilla from "@/componets/SearchPlantilla";
 import DialogRegiPlantilla from "@/ui/DialogRegiPlantilla";
 import TablaPlantillas from "@/ui/TablaPlantillas";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { crearPlantilla, eliminarPlantilla, getPlantillasFiltPag, paginasPlantilla } from "@/services/PlantillasController";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { crearPlantilla, paginasPlantilla } from "@/services/PlantillasController";
 import { Plantilla } from "@/models/types";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import PaginacionPlantillas from "../../ui/PaginacionPlantillas";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePlantillas } from "@/hooks/usePlantillas";
 
 export default function ListaPlantillas() {
     const queryClient = useQueryClient();
@@ -17,14 +18,8 @@ export default function ListaPlantillas() {
     const location = useLocation();
     const [totalPages, setTotalPages] = useState<number>(0);
     const paginasMomento = useRef<number>(1);
+    const {plantillas} = usePlantillas(query,currentPage);
 
-
-    const { data: plantillas = [], isLoading, error } = useQuery(
-        {
-            queryKey: ['plantillas', query, currentPage],
-            queryFn: () => getPlantillasFiltPag(query, currentPage),
-        }
-    )
 
     // Mutación para registrar una plantilla
     const mutation = useMutation({
@@ -53,21 +48,6 @@ export default function ListaPlantillas() {
         }
     };
 
-
-    // Mutación para eliminar una plantilla
-    const eliminarMutacion = useMutation({
-        mutationFn: (id: string) => eliminarPlantilla(id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["plantillas"] });
-        },
-        onError: (error) => {
-            console.error("Error al eliminar la plantilla:", error);
-        },
-    });
-
-    const handleDeletePlant = async (id: string) => {
-        await eliminarMutacion.mutateAsync(id);
-    };
 
 
     useEffect(() => {
@@ -103,9 +83,7 @@ export default function ListaPlantillas() {
                 <DialogRegiPlantilla onSubmits={handleCreatePlant} />
             </div>
             <div>
-                {isLoading && <p>Cargando plantillas...</p>}
-                {error && <p>Error al cargar las plantillas: {error.message}</p>}
-                <TablaPlantillas plantillasCarga={plantillas} onDelete={handleDeletePlant} />
+                <TablaPlantillas plantillasCarga={plantillas} />
                 <div>
                     <PaginacionPlantillas totalPages={totalPages}
                         currentPage={currentPage}

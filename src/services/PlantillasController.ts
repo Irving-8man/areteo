@@ -5,7 +5,7 @@ import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-const INSTRU_POR_PAGINA = 5
+const INSTRU_POR_PAGINA = 3
 
 export async function getAllPlantillas() {
     try {

@@ -3,10 +3,9 @@ import { PlantillaListDB } from '@/models/types';
 
 interface TablaPlantillas {
     plantillasCarga: PlantillaListDB[];
-    onDelete: (id:string) => void
 }
 
-export default function TablaPlantillas({plantillasCarga,onDelete}:TablaPlantillas) {
+export default function TablaPlantillas({plantillasCarga}:TablaPlantillas) {
     
     return (
         <div className="mt-6 flow-root min-h-[50vh]">
@@ -36,7 +35,7 @@ export default function TablaPlantillas({plantillasCarga,onDelete}:TablaPlantill
                         <tbody className="bg-white">
                             {plantillasCarga.length > 0 ? (
                                 plantillasCarga?.map((plantilla) => (
-                                    <ItemPlantilla key={plantilla.id} plantilla={plantilla} delete={onDelete} />
+                                    <ItemPlantilla key={plantilla.id} plantilla={plantilla} />
                                 ))
                             ) : (
                                 <tr>

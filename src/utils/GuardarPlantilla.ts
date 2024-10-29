@@ -1,13 +1,21 @@
-import { exists, writeTextFile } from "@tauri-apps/api/fs"
-import { join,appDataDir } from "@tauri-apps/api/path"
+import { exists, writeTextFile, createDir } from "@tauri-apps/api/fs";
+import { join, appDataDir } from "@tauri-apps/api/path";
 
-export async function guardarPantilla() {
-    const file = await join(await appDataDir(), 'plantilla.json')
+export async function guardarPantilla(nombre:string) {
+    const dir = await join(await appDataDir(), 'plantillas');
+    const file = await join(dir, `${nombre}.json`);
+
+    if (!(await exists(dir))) {
+        await createDir(dir);
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let data: any
+    let data: any;
+
     if (!(await exists(file))) {
-        data = {}
+        data = {};
+    } else {
+        data = {};
     }
 
     data = {
@@ -23,7 +31,9 @@ export async function guardarPantilla() {
                 "respuesta": "No"
             }
         ]
-    }
+    };
 
-    await writeTextFile(file, JSON.stringify(data))
+    // Escribe el archivo JSON en la carpeta especificada
+    await writeTextFile(file, JSON.stringify(data));
+    alert("guardado")
 }

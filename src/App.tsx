@@ -25,6 +25,7 @@ import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
 import { SesionProvider } from './context/SesionContext';
 import CrearRegistro from './dashboard/Pacientes/CrearRegistro';
+import VisualizarPlantilla from './dashboard/Plantillas/VisualizarPlantilla';
 
 
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
               <Route index element={<ListaPlantillas />} />
               <Route path='crear-plantilla' element={<CrearPlantilla />} />
               <Route path='cargar-plantilla' element={<CargarPlantilla />} />
+              <Route path=':id' element={<VisualizarPlantilla />} />
             </Route>
             <Route path='analiticas' element={<Analiticas />} />
             <Route path='almacenamiento' element={<Almacenamiento />} />

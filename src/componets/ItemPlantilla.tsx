@@ -9,7 +9,6 @@ import { ArrowRight20Filled } from "@fluentui/react-icons";
 
 interface propsI {
     plantilla: PlantillaListDB;
-    delete: (id: string) => void;
 }
 
 export default function ItemPlantilla(props: propsI) {
@@ -43,7 +42,6 @@ export default function ItemPlantilla(props: propsI) {
             <td className="whitespace-nowrap py-3 pl-6 pr-3">
                 <div className="flex justify-end gap-3">
                     <Link to={`/dashboard/plantillas/${props.plantilla.id}`} ><Button icon={<ArrowRight20Filled />}></Button></Link>
-                    <Button onClick={() => props.delete(props.plantilla.id)}>borrar</Button>
                 </div>
             </td>
         </tr>

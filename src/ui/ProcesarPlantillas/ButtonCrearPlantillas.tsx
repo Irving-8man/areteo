@@ -1,9 +1,9 @@
 import { guardarPantilla } from "@/utils/GuardarPlantilla";
 import { Button } from "@fluentui/react-components";
 
-export default function ButtonCrearPlantilla() {
+export default function ButtonCrearPlantilla({nombre = "default"}:{nombre:string | undefined}) {
     const handle = () =>{
-        guardarPantilla()
+        guardarPantilla(nombre)
         console.log("logrado")
     }
     return(
