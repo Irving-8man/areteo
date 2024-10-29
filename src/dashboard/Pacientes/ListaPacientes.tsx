@@ -21,7 +21,7 @@ export default function ListaPacientes() {
             <div>
                 <TablaPacientes />
                 <div>
-                <Paginacion />
+                    <Paginacion />
                 </div>
             </div>
         </div>

@@ -79,7 +79,7 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
             return null;
         }
     } catch (error) {
-        console.error("Error en registrarAdmin:", error);
+        console.error("Error en registrar paciente:", error);
         return null;
     }
 }

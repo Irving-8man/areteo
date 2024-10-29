@@ -17,20 +17,17 @@ import {
     ToastTrigger,
     Link,
     Toaster,
-    Select,
+    Textarea,
 } from "@fluentui/react-components";
 
 import { Add20Filled, Checkmark20Filled, Dismiss20Filled, Dismiss24Regular, SpinnerIos20Filled } from "@fluentui/react-icons";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { formSchemaPacienteRegistro } from "@/schemas/formSchemaPacientes";
-import { Paciente } from "@/models/types";
-import { usePacienteStore } from "@/store/storePacientes";
+import { Plantilla } from "@/models/types";
 import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { format } from "@formkit/tempo"
-
+import { formSchemaPlantilla } from "@/schemas/formSchemaPlantilla";
 
 
 const useStyles = makeStyles({
@@ -39,20 +36,22 @@ const useStyles = makeStyles({
         flexDirection: "column",
         rowGap: "10px",
         overflowY: "scroll",
-        scrollbarWidth:"thin"
+        scrollbarWidth: "thin"
     },
 });
 
-export default function DialogRegiPaciente() {
+interface DialogRegiPlantillaProps {
+    onSubmits: (data: Plantilla) => Promise<boolean>;
+}
+
+
+export default function DialogRegiPlantilla({ onSubmits }: DialogRegiPlantillaProps) {
     //hooks
     const [parent] = useAutoAnimate()
     const styles = useStyles();
-    const Schema = formSchemaPacienteRegistro
-    const registrarPaciente = usePacienteStore((state) => state.registrarPaciente);
+    const Schema = formSchemaPlantilla
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
-
-
 
     //Tostada
     const toasterId = useId("toaster");
@@ -78,12 +77,6 @@ export default function DialogRegiPaciente() {
     // useForm con validacion de zod
     const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof Schema>>({
         resolver: zodResolver(Schema), defaultValues: {
-            primerNombre: "",
-            segundoNombre: "",
-            apellidoPaterno: "",
-            apellidoMaterno: "",
-            fechaNacimiento: "",
-            sexo: "Masculino"
         },
     });
 
@@ -91,23 +84,23 @@ export default function DialogRegiPaciente() {
 
     // Procesar información
     const onSubmit = async (data: z.infer<typeof Schema>) => {
-        const dataPaciente: Paciente = data;
+        const dataPlantilla: Plantilla = data;
         try {
             setLoading(true);
-            const registrado: boolean = await registrarPaciente(dataPaciente);
+            const registrado = await onSubmits(dataPlantilla);
             if (registrado) {
                 setLoading(false);
                 setOpen(false)
-                notify(`Paciente ${data.primerNombre} registrado con éxito`, "success");
+                notify(`Plantilla ${data.nombre} creada con éxito`, "success");
             } else {
-                notify("Error durante el registro del paciente", "error");
+                notify("Error durante la creación de plantilla", "error");
             }
             reset();
             alert("Creado")
         } catch (error) {
             // Notificar error
             setLoading(false);
-            notify("Error durante el registro del paciente", "error");
+            notify("Error durante creación de plantilla", "error");
             console.log("Error durante el registro:", error);
         } finally {
             setLoading(false);
@@ -118,7 +111,7 @@ export default function DialogRegiPaciente() {
         <>
             <Dialog open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
                 <DialogTrigger disableButtonEnhancement >
-                    <Button appearance="primary" icon={<Add20Filled />}>Nuevo Paciente</Button>
+                    <Button appearance="primary" icon={<Add20Filled />}>Nueva Plantilla</Button>
                 </DialogTrigger>
                 <DialogSurface aria-describedby={undefined}>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -134,84 +127,67 @@ export default function DialogRegiPaciente() {
                                     </DialogTrigger>
                                 }
                             >
-                                Registrar Paciente
+                                Nueva Plantilla
                             </DialogTitle>
                             <DialogContent className={styles.content} ref={parent} >
-                                <Label required htmlFor="primerNombre">
-                                    Primer Nombre
+                                <Label required htmlFor="nombre">
+                                    Nombre
                                 </Label>
                                 <Input
                                     appearance="underline"
-                                    placeholder="Ej. Fabian"
-                                    {...register("primerNombre")}
+                                    placeholder="Ej. Muestra de..."
+                                    {...register("nombre")}
                                     disabled={loading}
                                     required
                                 />
-                                {errors.primerNombre && (
-                                    <p className="text-sm text-red-600">{errors.primerNombre.message}</p>
+                                {errors.nombre && (
+                                    <p className="text-sm text-red-600">{errors.nombre.message}</p>
                                 )}
 
-
-                                <Label htmlFor="segundoNombre">
-                                    Segundo Nombre (opcional)
+                                <Label required htmlFor="descripcion">
+                                    Descripción
                                 </Label>
-                                <Input
-                                    appearance="underline"
-                                    placeholder="Ej. Andrés"
-                                    {...register("segundoNombre")}
+
+                                <Textarea
+                                    placeholder="Ej. Este intrumento tiene como proposito..."
+                                    {...register("descripcion")}
+                                    style={{ height: "130px" }}
                                     disabled={loading}
-                                />
-                                {errors.segundoNombre && (
-                                    <p className="text-sm text-red-600">{errors.segundoNombre.message}</p>
+                                    required
+                                ></Textarea>
+                                {errors.descripcion && (
+                                    <p className="text-sm text-red-600">{errors.descripcion.message}</p>
                                 )}
 
-                                <Label required htmlFor="apellidoPaterno">
-                                    Apellido Paterno
+                                <Label required htmlFor="nombre">
+                                    Autor
                                 </Label>
                                 <Input
                                     appearance="underline"
-                                    placeholder="Ej. Pérez"
-                                    {...register("apellidoPaterno")}
+                                    placeholder="Ej. Pedro Francisco"
+                                    {...register("autor")}
                                     disabled={loading}
                                     required
                                 />
-                                {errors.apellidoPaterno && (
-                                    <p className="text-red-600 text-sm">{errors.apellidoPaterno.message}</p>
+                                {errors.autor && (
+                                    <p className="text-sm text-red-600">{errors.autor.message}</p>
                                 )}
 
-                                <Label htmlFor="apellidoMaterno">
-                                    Apellido Materno (opcional)
+                                <Label required htmlFor="nombre">
+                                    Adaptación por ...
                                 </Label>
                                 <Input
                                     appearance="underline"
-                                    placeholder="Ej. Gómez"
-                                    {...register("apellidoMaterno")}
+                                    placeholder="Ej. Antonia Sofia"
+                                    {...register("adaptacionPor")}
                                     disabled={loading}
-                                />
-                                {errors.apellidoMaterno && (
-                                    <p className="text-red-600 text-sm">{errors.apellidoMaterno.message}</p>
-                                )}
-
-                                <Label required htmlFor="fechaNacimiento">
-                                    Fecha de Nacimiento
-                                </Label>
-                                <Input
-                                    appearance="underline"
-                                    type="date"
-                                    {...register("fechaNacimiento")}
-                                    disabled={loading}
-                                    max={format(new Date(), "YYYY-MM-DD")}
                                     required
                                 />
-                                {errors.fechaNacimiento && (
-                                    <p className="text-red-600 text-sm">{errors.fechaNacimiento.message}</p>
+                                {errors.adaptacionPor && (
+                                    <p className="text-sm text-red-600">{errors.adaptacionPor.message}</p>
                                 )}
 
-                                <Label htmlFor="sexo" required>Sexo</Label>
-                                <Select id="sexo" {...register("sexo")}>
-                                    <option>Masculino</option>
-                                    <option>Femenino</option>
-                                </Select>
+
                             </DialogContent>
                             <DialogActions>
                                 <DialogTrigger disableButtonEnhancement>

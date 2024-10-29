@@ -85,9 +85,27 @@ CREATE TABLE IF NOT EXISTS TratamientoOral (
 
 CREATE INDEX IF NOT EXISTS index_id_TratOra ON TratamientoOral(id);
 ",
-
         kind: MigrationKind::Up,
     },
+    Migration {
+        version: 3,
+        description: "Crear tabla Plantillas",
+        sql:"CREATE TABLE IF NOT EXISTS Plantilla(
+    id TEXT PRIMARY KEY NOT NULL,
+    nombre TEXT NOT NULL,
+    descripcion TEXT,
+    autor TEXT NOT NULL,
+    adaptacionPor TEXT NOT NULL,
+    fechaCreacion TEXT NOT NULL,
+    fechaModific TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS index_id_Instru ON Plantilla(id);
+"
+,
+        kind: MigrationKind::Up,
+    },
+
 
     ];
 

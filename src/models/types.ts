@@ -93,3 +93,19 @@ export interface TratamientoOralDB extends TratamientoOral{
 export interface FormRegistro extends RegistroMedico,TratamientoInyectable,TratamientoOral{
 
 }
+
+
+
+//Plantillas
+export interface Plantilla {
+    nombre:string;
+    descripcion:string;
+    autor:string;
+    adaptacionPor:string;
+}
+
+export interface PlantillaListDB extends Plantilla{
+    id:string;
+    fechaCreacion:string;
+    fechaModific:string;
+}
