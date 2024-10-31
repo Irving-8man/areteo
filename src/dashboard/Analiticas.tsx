@@ -1,5 +1,5 @@
 import { Docx } from "@/Docx/Docx";
-
+import { Registro } from "@/Docx/Registro";
 
 export default function Analiticas() {
     return (

@@ -1,20 +1,20 @@
 import { saveAs } from "file-saver";
 import { Button } from "@fluentui/react-components";
 import { Packer } from "docx";
-import { NuevoDocucmento } from "./generador";
+import { DocucmentoNuevo } from "./Datos";
 
 
 
 
 
-export function Docx() {
+export function Registro() {
 
     const generate = () => {
-        const documentCreator = NuevoDocucmento
+        const documentCreator = DocucmentoNuevo
         
         Packer.toBlob(documentCreator).then((blob) => {
             console.log(blob);
-            saveAs(blob, "Expediente.docx");
+            saveAs(blob, "Registro.docx");
             console.log("Document created successfully");
         });
     };
@@ -22,7 +22,7 @@ export function Docx() {
     return (
         <div>
             <p>
-                <Button onClick={generate}>Descargar Expediente!</Button>
+                <Button onClick={generate}>Descargar Registro!</Button>
             </p>
         </div>
     );
