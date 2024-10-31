@@ -2,14 +2,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { AccessTimeRegular, Home24Regular, PeopleCommunity24Regular,TextBulletListSquareEdit24Regular } from "@fluentui/react-icons";
 import { Button } from '@fluentui/react-components';
 import { isRutaActiva } from '@/utils/IdentificarRutas';
-
+/**
+ *  { name: 'Analiticas', href: `/dashboard/analiticas`, icon: AccessTimeRegular },
+    { name: 'Almacenamiento', href: `/dashboard/almacenamiento`, icon: AccessTimeRegular },
+ */
 const links = [
     { name: 'Inicio', href: `/dashboard`, icon: Home24Regular },
     { name: 'Pacientes', href: `/dashboard/pacientes`, icon: PeopleCommunity24Regular },
     { name: 'Instrumentos', href: `/dashboard/instrumentos`, icon: AccessTimeRegular },
-    { name: 'Plantillas', href: `/dashboard/plantillas`, icon: TextBulletListSquareEdit24Regular },
-    { name: 'Analiticas', href: `/dashboard/analiticas`, icon: AccessTimeRegular },
-    { name: 'Almacenamiento', href: `/dashboard/almacenamiento`, icon: AccessTimeRegular },
+    { name: 'Plantillas', href: `/dashboard/plantillas`, icon: TextBulletListSquareEdit24Regular }
 ];
 
 

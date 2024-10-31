@@ -3,7 +3,7 @@ import { Avatar } from "@fluentui/react-components";
 function obtenerColorEdad(edad:number) {
 
     if (edad <= 12) return 'light-teal'; // Infancia
-    if (edad <= 18) return 'cornflower'; // Adolescencia
+    if (edad <= 18) return 'red'; // Adolescencia
     if (edad <= 35) return 'dark-green'; // Adultez temprana
     if (edad <= 60) return 'navy'; // Adultez media
     return 'platinum';                 // Vejez

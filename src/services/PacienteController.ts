@@ -4,7 +4,7 @@ import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-const PACIENTES_POR_PAGINA = 3
+const PACIENTES_POR_PAGINA = 6
 
 
 export async function getAllPacientesRegistrados() {

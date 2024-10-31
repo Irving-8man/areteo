@@ -16,7 +16,7 @@ export const SesionContext = createContext<Sesion | undefined>(undefined);
 
 // Proveer el contexto, lo que ofrece la lógica
 export function SesionProvider({ children }: { children: ReactNode }) {
-    const [isAutenticado, setIsAutenticado] = useState<boolean>(true); //Cambiar a true para acceder sin loguear
+    const [isAutenticado, setIsAutenticado] = useState<boolean>(false); //Cambiar a true para acceder sin loguear
     const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null); 
     const navigate = useNavigate();
     const dataPrueba = 100;
