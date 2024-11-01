@@ -1,34 +1,8 @@
+import ChartExporter from "@/componets/CharterExport";
 import { FirstChart } from "../componets/FirstChart";
-import{ useCallback, useRef } from 'react';
-import { toJpeg} from 'html-to-image';
-import { Button } from "@fluentui/react-components";
 
-
-/*
-
-import { SecondChart } from "../componets/SecondChar";
-import { ThreChart } from "../componets/ThreChart";
-import { FourChart } from "../componets/FourChart";*/
 
 export default function Inicio() {
-    const ref = useRef<HTMLDivElement>(null)
-
-    const onButtonClick = useCallback(() => {
-        if (ref.current === null) {
-            return
-        }
-
-        toJpeg(ref.current, { cacheBust: true, })
-            .then((dataUrl) => {
-                const link = document.createElement('a')
-                link.download = 'my-image-name.jpg'
-                link.href = dataUrl
-                link.click()
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [ref])
 
 
     return (
@@ -37,14 +11,11 @@ export default function Inicio() {
                 <h1>Inicio</h1>
             </header>
             <section className="min-h-[100vh]">
-                <div className="grid grid-cols-2 gap-[20px]">
-                     {/* DOM nodes you want to convert to PNG */}
-                    <div ref={ref} className="bg-white">
+                <div className="grid grid-cols-2 gap-[20px] relative">
+                    <ChartExporter title="Primer Gráfico">
                         <FirstChart />
-                    </div>
+                    </ChartExporter>
                 </div>
-
-                <Button onClick={onButtonClick} appearance="primary">Guardar como jpg</Button>
             </section>
         </main>
     )

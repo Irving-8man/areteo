@@ -4,7 +4,7 @@ import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-const PACIENTES_POR_PAGINA = 6
+const PACIENTES_POR_PAGINA = 10
 
 
 export async function getAllPacientesRegistrados() {
@@ -23,10 +23,29 @@ export async function getAllPacientesRegistrados() {
 }
 
 
-export async function getPaciente(id:string){
+export async function numeroPacientes() {
+
     try {
         const db = await getDb;
-        const paciente = await db.select("SELECT * FROM Paciente WHERE id= $1",[id]);
+        const sqlQuery = `
+        SELECT COUNT(*)
+        FROM Paciente
+      `;
+
+        // Ejecutar la consulta
+        const count = await db.select(sqlQuery);
+        return Number(count[0]['COUNT(*)']) | 0
+    } catch (error) {
+        console.error('Database Error:', error);
+        return 0;
+    }
+}
+
+
+export async function getPaciente(id: string) {
+    try {
+        const db = await getDb;
+        const paciente = await db.select("SELECT * FROM Paciente WHERE id= $1", [id]);
         if (paciente) {
             return paciente;
         } else {

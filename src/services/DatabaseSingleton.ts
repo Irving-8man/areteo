@@ -3,7 +3,7 @@ import { join, appDataDir } from "@tauri-apps/api/path";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let db: any = null;
-const dbPath = await join(await appDataDir(), "db.sqlite");
+export const dbPath = await join(await appDataDir(), "db.sqlite");
 
 export async function getDbInstance() {
     if (!db) {
@@ -11,3 +11,5 @@ export async function getDbInstance() {
     }
     return db;
 }
+
+

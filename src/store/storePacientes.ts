@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { PacienteRegistrado, Paciente } from "@/models/types";
-import { eliminarPaciente, getAllPacientesRegistrados, registrarPaciente } from "@/services/PacienteController";
+import { eliminarPaciente, getAllPacientesRegistrados,  registrarPaciente } from "@/services/PacienteController";
 import { mockpacientesRegis } from "@/mocks/listPacientesRe";
 
 interface PacienteState {
     pacientes: PacienteRegistrado[];
-    cargarTodosPacientes:() => Promise<void>;
+    cargarTodosPacientes: () => Promise<void>;
     registrarPaciente: (nuevoPaciente: Paciente) => Promise<boolean>;
     eliminarPaciente: (id: string) => Promise<void>;
 }
@@ -15,15 +15,15 @@ export const usePacienteStore = create<PacienteState>((set) => ({
     cargarTodosPacientes: async () => {
         try {
             const pacientes: PacienteRegistrado[] = await getAllPacientesRegistrados();
-            if (pacientes.length<0) {
-                set({ pacientes:mockpacientesRegis });
+            if (pacientes.length < 0) {
+                set({ pacientes: mockpacientesRegis });
             }
             set({ pacientes });
         } catch (error) {
             console.error("Error al cargar pacientes:", error);
         }
     },
-    
+
     // Registrar un nuevo paciente
     registrarPaciente: async (nuevoPaciente: Paciente) => {
         try {
@@ -56,4 +56,6 @@ export const usePacienteStore = create<PacienteState>((set) => ({
             console.error("Error al eliminar paciente:", error);
         }
     },
+
+   
 }));
