@@ -19,7 +19,6 @@ export default function ListaPacientes() {
         <section>
             <div>
                 <LeyenPacientes pacientes={todosPacientes.length} />
-                
                 <div className="mt-10">
                     <Card style={{ padding: "25px" }}>
                         <div className="flex justify-between">

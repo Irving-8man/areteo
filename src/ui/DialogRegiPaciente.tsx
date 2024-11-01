@@ -103,7 +103,6 @@ export default function DialogRegiPaciente() {
                 notify("Error durante el registro del paciente", "error");
             }
             reset();
-            alert("Creado")
         } catch (error) {
             // Notificar error
             setLoading(false);
@@ -213,7 +212,8 @@ export default function DialogRegiPaciente() {
                                     <option>Femenino</option>
                                 </Select>
                             </DialogContent>
-                            <DialogActions>
+
+                            <DialogActions className="mt-4">
                                 <DialogTrigger disableButtonEnhancement>
                                     <Button appearance="secondary" disabled={loading} icon={<Dismiss20Filled />}>Cerrar</Button>
                                 </DialogTrigger>

@@ -45,7 +45,7 @@ export default function LeyenPacientes({ pacientes }: { pacientes: number }) {
 
             <Card style={{ padding: "25px" }}>
                 <div className="flex justify-between">
-                    <h1 className="font-medium text-2xl mb-2">Información</h1>    <p className="font-normal text-base mb-6">Total de paciente registrados: <span className="text-red-600 font-medium">{pacientes}</span></p>
+                    <h1 className="font-medium text-2xl mb-2">Información</h1><p className="font-semibold text-base mb-6">Total de pacientes registrados: <span className="text-red-600 font-medium">{pacientes}</span></p>
                 </div>
 
                 <div className="flex justify-between">

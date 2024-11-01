@@ -116,7 +116,7 @@ export default function CrearRegistro() {
                 const res = await getPaciente(String(id))
                 if (res) {
                     setPaciente(res[unico])
-                    setEdad(calcularEdad(res[unico].fechaNacimiento));
+                    setEdad(calcularEdad(res[unico].fechaNacimiento).valor);
                     setSexo(res[unico].sexo)
                 }
             } catch (error) {
@@ -227,7 +227,7 @@ export default function CrearRegistro() {
                                     </InfoLabel>
                                 }>
 
-                                    <Input min={0} max={200} step={0.01} type="number" id="peso"  {...register("peso", { valueAsNumber: true })} />
+                                    <Input required min={0} max={200} step={0.01} type="number" id="peso"  {...register("peso", { valueAsNumber: true })} />
                                 </Field>
                                 {errors.peso && (
                                     <p className="text-sm text-red-600">{errors.peso.message}</p>
@@ -243,7 +243,7 @@ export default function CrearRegistro() {
                                     </InfoLabel>
                                 }>
 
-                                    <Input min={0} max={300} type="number" id="estatura" {...register("estatura", { valueAsNumber: true })} />
+                                    <Input required min={0} max={300} type="number" id="estatura" {...register("estatura", { valueAsNumber: true })} />
                                 </Field>
                                 {errors.estatura && (
                                     <p className="text-sm text-red-600">{errors.estatura.message}</p>
@@ -263,7 +263,7 @@ export default function CrearRegistro() {
                                 }>
                                     <div className="flex flex-row gap-[100px]" >
                                         <div className="flex flex-col gap-2 items-center" ref={parent}>
-                                            <Input min={0} max={999} step={0.001} type="number" id="presion" {...register("presionArterialPAS_0min", { valueAsNumber: true })} />
+                                            <Input required min={0} max={999} step={0.001} type="number" id="presion" {...register("presionArterialPAS_0min", { valueAsNumber: true })} />
                                             <span>PAS</span>
                                             {errors.presionArterialPAS_0min && (
                                                 <p className="text-sm text-red-600 max-w-[15ch]">{errors.presionArterialPAS_0min.message}</p>
@@ -271,7 +271,7 @@ export default function CrearRegistro() {
                                         </div>
 
                                         <div className="flex flex-col gap-2 items-center" ref={parent}>
-                                            <Input min={0} max={999} step={0.001} type="number" id="presion" {...register("presionArterialPAD_0min", { valueAsNumber: true })} />
+                                            <Input required min={0} max={999} step={0.001} type="number" id="presion" {...register("presionArterialPAD_0min", { valueAsNumber: true })} />
                                             <span>PAD</span>
                                             {errors.presionArterialPAD_0min && (
                                                 <p className="text-sm text-red-600 max-w-[15ch]">{errors.presionArterialPAD_0min.message}</p>
@@ -290,7 +290,7 @@ export default function CrearRegistro() {
 
                                     <div className="flex flex-row gap-[100px]">
                                         <div className="flex flex-col gap-2 items-center" ref={parent}>
-                                            <Input min={0} max={999} step={0.001} type="number" id="presiona"  {...register("presionArterialPAS_5min", { valueAsNumber: true })} />
+                                            <Input required min={0} max={999} step={0.001} type="number" id="presiona"  {...register("presionArterialPAS_5min", { valueAsNumber: true })} />
                                             <span>PAS</span>
                                             {errors.presionArterialPAS_5min && (
                                                 <p className="text-sm text-red-600 max-w-[15ch]">{errors.presionArterialPAS_5min.message}</p>
@@ -298,7 +298,7 @@ export default function CrearRegistro() {
                                         </div>
 
                                         <div className="flex flex-col gap-2 items-center" ref={parent}>
-                                            <Input min={0} max={999} step={0.001} type="number" id="presiona" {...register("presionArterialPAD_5min", { valueAsNumber: true })} />
+                                            <Input required min={0} max={999} step={0.001} type="number" id="presiona" {...register("presionArterialPAD_5min", { valueAsNumber: true })} />
                                             <span>PAD</span>
                                             {errors.presionArterialPAD_5min && (
                                                 <p className="text-sm text-red-600 max-w-[15ch]">{errors.presionArterialPAD_5min.message}</p>
@@ -317,7 +317,7 @@ export default function CrearRegistro() {
                                     </InfoLabel>
                                 }>
 
-                                    <Input min={0} max={99} step={0.01} type="number" {...register("hba1c", { valueAsNumber: true })} />
+                                    <Input required min={0} max={99} step={0.01} type="number" {...register("hba1c", { valueAsNumber: true })} />
                                 </Field>
                                 {errors.hba1c && (
                                     <p className="text-sm text-red-600 ">{errors.hba1c.message}</p>
@@ -328,7 +328,7 @@ export default function CrearRegistro() {
                         <li>
                             <div className="flex flex-col max-w-[400px]">
                                 <Label className="font-bold" required>Año de diagnóstico</Label>
-                                <Select {...register("anioDiagnostico")}>
+                                <Select {...register("anioDiagnostico")} required>
                                     <option value="0">0 a 5 años</option>
                                     <option value="1">6 a 10 años</option>
                                     <option value="2"> &gt; 10 años</option>
@@ -364,7 +364,7 @@ export default function CrearRegistro() {
                                 <Field label={
                                     <Label className="font-bold" required>HDL, ultimos 6 meses</Label>
                                 }>
-                                    <Input min={0} max={99} step={0.01} type="number" {...register("hdl", { valueAsNumber: true })} />
+                                    <Input required min={0} max={99} step={0.01} type="number" {...register("hdl", { valueAsNumber: true })} />
                                 </Field>
                                 {errors.hdl && (
                                     <p className="text-sm text-red-600 ">{errors.hdl.message}</p>
@@ -377,7 +377,7 @@ export default function CrearRegistro() {
                                 <Field label={
                                     <Label className="font-bold" required>TGC, ultimos 6 meses</Label>
                                 }>
-                                    <Input min={0} max={999} step={0.01} type="number" {...register("tgc", { valueAsNumber: true })} />
+                                    <Input  required min={0} max={999} step={0.01} type="number" {...register("tgc", { valueAsNumber: true })} />
                                 </Field>
                                 {errors.tgc && (
                                     <p className="text-sm text-red-600 ">{errors.tgc.message}</p>
@@ -389,7 +389,7 @@ export default function CrearRegistro() {
                             <div className="flex flex-row min-w-[400px] max-w-[900px] gap-10" ref={parent}>
                                 <div className="flex flex-col min-w-[400px]">
                                     <Label className="font-semibold" required>Nivel de educación</Label>
-                                    <Select {...register("educacion")} >
+                                    <Select {...register("educacion")}  required>
                                         {
                                             NIVEL_ESTUDIO.map(({ value, estudio }) => (
                                                 <option key={value} value={value}>{estudio}</option>
@@ -413,7 +413,7 @@ export default function CrearRegistro() {
                         <li>
                             <div className="flex flex-col max-w-[400px]">
                                 <Label className="font-bold" required>Estado civil</Label>
-                                <Select {...register("estadoCivil")} >
+                                <Select {...register("estadoCivil")} required>
                                     {
                                         ESTADO_CIVIL.map(({ value, estado }) => (
                                             <option key={value} value={value}>{estado}</option>
@@ -427,7 +427,7 @@ export default function CrearRegistro() {
                             <div className="flex flex-col max-w-[400px]  gap-10" ref={parent}>
                                 <div className="flex flex-col min-w-[400px]">
                                     <Label className="font-bold" required>Utiliza tratamiento inyectable</Label>
-                                    <Select {...register("usaTratamientoInyectable", { valueAsNumber: true })} >
+                                    <Select {...register("usaTratamientoInyectable", { valueAsNumber: true })} required >
                                         <option value={0}>No</option>
                                         <option value={1}>Sí</option>
                                     </Select>
@@ -461,7 +461,7 @@ export default function CrearRegistro() {
                             <div className="flex flex-col max-w-[400px]  gap-10" ref={parent}>
                                 <div className="flex flex-col min-w-[400px]">
                                     <Label className="font-bold" required>Utiliza tratamiento oral</Label>
-                                    <Select {...register("usaTratamientoOral", { valueAsNumber: true })} >
+                                    <Select {...register("usaTratamientoOral", { valueAsNumber: true })} required >
                                         <option value={0}>No</option>
                                         <option value={1}>Sí</option>
                                     </Select>

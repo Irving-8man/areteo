@@ -33,6 +33,7 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "14.2.3",
     "react-hook-form": "7.52.1",
+    "react-papaparse": "4.4.0",
     "react-router-dom": "6.25.1",
     "react-window": "1.8.10",
     "recharts": "2.12.7",

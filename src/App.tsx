@@ -7,7 +7,6 @@ import Inicio from './dashboard/Inicio';
 //Pacientes
 import Pacientes from './dashboard/Pacientes';
 import ListaPacientes from './dashboard/Pacientes/ListaPacientes';
-import RegistrarPaciente from './dashboard/Pacientes/RegistrarPaciente';
 import VisualizarPaciente from './dashboard/Pacientes/VisualizarPaciente';
 //Instrumentos
 import Instrumentos from './dashboard/Instrumentos';
@@ -39,9 +38,9 @@ export default function App() {
 
             <Route path='pacientes' element={<Pacientes />} >
               <Route index element={<ListaPacientes />} />
-              <Route path='registrar-paciente' element={<RegistrarPaciente />} />
               <Route path=':id' element={<VisualizarPaciente/>} />
               <Route path=':id/crear-registro' element={<CrearRegistro />} />
+              
             </Route>
 
             <Route path='instrumentos' element={<Instrumentos />} />

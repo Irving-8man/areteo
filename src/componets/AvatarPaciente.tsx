@@ -11,8 +11,8 @@ function obtenerColorEdad(edad:number) {
 
 interface propsI {
     label: string;
-    name: string;
     edad: number;
+    tamanio: string;
 }
 
 export function AvatarPaciente(props: propsI) {
@@ -23,6 +23,7 @@ export function AvatarPaciente(props: propsI) {
             aria-label={props.label}
             name={props.label}
             color={backgroundColor}
+            style={{width:props.tamanio, height:props.tamanio}}
         />
     );
 }

@@ -24,9 +24,9 @@ export default function ItemPacienteList(props: propsI) {
         >
             <td className="whitespace-nowrap py-3 pl-6 pr-3 flex flex-row gap-[5px]">
                 <AvatarPaciente
-                    edad={calcularEdad(props.paciente.fechaNacimiento)}
+                    edad={calcularEdad(props.paciente.fechaNacimiento).valor}
                     label={`${props.paciente.primerNombre} ${props.paciente.apellidoPaterno}`}
-                    name={`${props.paciente.primerNombre} ${props.paciente.apellidoPaterno}`}
+                    tamanio="35px"
                 />
                 <div className="flex items-center gap-3">
                     <Link to={`/dashboard/pacientes/${props.paciente.id}`} className="hover:underline">
@@ -35,7 +35,7 @@ export default function ItemPacienteList(props: propsI) {
                 </div>
             </td>
             <td className="whitespace-nowrap px-3 py-3">
-                <p><span>{calcularEdad(props.paciente.fechaNacimiento)}</span> años</p>
+                <p><span>{calcularEdad(props.paciente.fechaNacimiento).texto}</span></p>
             </td>
             <td className="whitespace-nowrap px-3 py-3">
                 <p>{format(new Date(props.paciente.fechaNacimiento), "short")}</p>

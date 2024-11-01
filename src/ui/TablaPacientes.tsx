@@ -32,19 +32,19 @@ export default function TablaPacientes() {
                         <thead className="rounded-lg text-left text-sm font-normal">
                             <tr>
                                 <th scope="col" className="px-4 py-5 font-medium">
-                                    Nombre Completo
+                                    Nombre completo
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
                                     Edad
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
-                                    Fecha de Nacimiento
+                                    Fecha de nacimiento
                                 </th>
 
                                 <th scope="col" className="px-3 py-5 font-medium">
-                                    Ultima Consulta
+                                    Ultima consulta
                                 </th>
-                                <th scope="col" className="px-3 py-5 font-medium">
+                                <th scope="col" className="px-3 py-5 font-medium text-right">
                                     Consultar
                                 </th>
                             </tr>
