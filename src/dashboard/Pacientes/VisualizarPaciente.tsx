@@ -1,13 +1,13 @@
-import { actualizarPaciente, getPaciente } from "@/services/PacienteController";
-import { Button, Card } from "@fluentui/react-components";
-import { Link, useParams } from "react-router-dom"
+import { actualizarPaciente, eliminarPaciente, getPaciente } from "@/services/PacienteController";
+import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
+import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
 import TablaRegistros from "@/ui/TablaRegistros";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
 import { AvatarPaciente } from "@/componets/AvatarPaciente";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PacienteActualizar} from "@/models/types";
+import { PacienteActualizar } from "@/models/types";
 import DialogActualiPaciente from "@/ui/DialogActualiPaciente";
 
 
@@ -16,6 +16,7 @@ export default function VisualizarPaciente() {
     const { id } = useParams();
     const queryClient = useQueryClient();
     const unico = 0
+    const navigate = useNavigate();
 
     const { data: pacienteData, isError } = useQuery(
         {
@@ -65,7 +66,50 @@ export default function VisualizarPaciente() {
             return false;
         }
     };
+
+
+    //Borrar paciente
+    //Tostada
+    const toasterId = useId("toaster");
+    const { dispatchToast } = useToastController(toasterId);
+    const notify = (message: string, type: "success" | "error") => {
+        dispatchToast(
+            <Toast>
+                <ToastTitle
+                    action={
+                        <ToastTrigger>
+                            <Link>Cerrar</Link>
+                        </ToastTrigger>
+                    }
+                >
+                    {message}
+                </ToastTitle>
+            </Toast>,
+            { intent: type } // success o error
+        );
+    };
+
+
+    const handleDeletePaciente = async () => {
+        if (!pacienteData || !pacienteData.paciente || !pacienteData.paciente.id) {
+            console.error("Datos del paciente no están disponibles para eliminar.");
+            return;
+        }
     
+        try {
+            const res = await eliminarPaciente(pacienteData.paciente.id);
+            if (res) {
+                notify(`Paciente ${pacienteData.paciente.primerNombre} eliminado`, "success");
+                navigate(`/dashboard/pacientes/`);
+            }
+        } catch (error) {
+            console.error("Error al eliminar el paciente:", error);
+            notify("Error al eliminar el paciente", "error");
+        }
+    };
+    
+
+
     if (isError) {
         return <p>Error al cargar los datos del paciente.</p>;
     }
@@ -73,19 +117,17 @@ export default function VisualizarPaciente() {
     return (
         <>
             <section className="flex justify-between">
-                <Link to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Volver</Button></Link>
+                <LinkR to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Volver</Button></LinkR>
                 {pacienteData.existe && (
-                    <Link to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
+                    <LinkR to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
                         <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
-                    </Link>
+                    </LinkR>
                 )}
             </section>
 
             <section className="pt-10">
                 <article>
                     <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }}>
-
-
                         <ul className="text-base">
                             <li className="flex gap-4 items-center">
                                 <AvatarPaciente edad={calcularEdad(pacienteData.paciente.fechaNacimiento).valor}
@@ -109,8 +151,15 @@ export default function VisualizarPaciente() {
                             </li>
                         </ul>
 
-                        <ul>
-                            <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
+                        <ul className="flex flex-col gap-3 justify-center">
+                            <li>
+                                <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
+                            </li>
+
+                            <li>
+                                <Button onClick={handleDeletePaciente}>Borrar</Button>
+                            </li>
+
                         </ul>
                     </Card>
                 </article>

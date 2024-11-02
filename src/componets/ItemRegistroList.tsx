@@ -16,6 +16,7 @@ import {
     CopyFilled,
 } from "@fluentui/react-icons";
 import { RegistroMedicoList } from "@/models/types";
+import { format } from "@formkit/tempo";
 
 const PasteIcon = bundleIcon(ClipboardPasteFilled, ClipboardPasteRegular);
 const CopyIcon = bundleIcon(CopyFilled, CopyRegular);
@@ -29,7 +30,7 @@ export default function ItemRegistroList(props: RowProps) {
     const registro = props.registro;
     return (
         <tr className='w-full border-b text-sm hover:bg-gray-200'>
-            <td className="whitespace-nowrap py-3 pl-6">{registro.fechaDiagnostico}</td>
+            <td className="whitespace-nowrap py-3 pl-6">{format(registro.fechaDiagnostico,"short")}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.edad}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.peso}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.antecedFamiInfa}</td>

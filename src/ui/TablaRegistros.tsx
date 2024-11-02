@@ -72,7 +72,7 @@ const Header_TABLE = () => {
     return (
         <thead className='rounded-lg text-left text-sm font-normal'>
             <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Registro</th>
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
                 <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                 <th scope="col" className="px-3 py-5 font-medium">Peso</th>
                 <th scope="col" className="px-3 py-5 font-medium">Antecedentes Familiares</th>
@@ -126,7 +126,7 @@ export default function TablaRegistros(props: Props) {
                         <table className="hidden min-w-full text-gray-900 md:table">
                             <thead className='rounded-lg text-left text-sm font-normal'>
                                 <tr>
-                                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Registro</th>
+                                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Peso</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Antecedentes Familiares</th>
