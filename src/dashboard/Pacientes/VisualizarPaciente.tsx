@@ -1,7 +1,7 @@
 import { actualizarPaciente, eliminarPaciente, getPaciente } from "@/services/PacienteController";
 import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
 import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
-import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
+import { Add20Filled, ArrowDownload20Regular, ArrowLeft20Filled, Delete20Regular } from "@fluentui/react-icons";
 import TablaRegistros from "@/ui/TablaRegistros";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
@@ -141,7 +141,7 @@ export default function VisualizarPaciente() {
                                 <h2 className="font-semibold">Fecha de registro: <span className="font-normal">{format(pacienteData.paciente.fechaRegistro, "long")}</span> </h2>
                             </li>
 
-                            <li className="grid grid-cols-2 gap-10">
+                            <li className="grid grid-cols-2 gap-10 mt-4">
                                 <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal">{format(pacienteData.paciente.fechaNacimiento, "long")}</span></h2>
                                 <h2 className="font-semibold">Edad: <span className="font-normal">{calcularEdad(pacienteData.paciente.fechaNacimiento).texto}</span></h2>
                             </li>
@@ -155,11 +155,14 @@ export default function VisualizarPaciente() {
                             <li>
                                 <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
                             </li>
-
+                            
                             <li>
-                                <Button onClick={handleDeletePaciente}>Borrar</Button>
+                                <Button icon={<ArrowDownload20Regular />}>Datos personales</Button>
                             </li>
 
+                            <li>
+                                <Button icon={<Delete20Regular />} style={{"backgroundColor":"red", "color":"white"}} onClick={handleDeletePaciente}>Eliminar paciente</Button>
+                            </li>
                         </ul>
                     </Card>
                 </article>

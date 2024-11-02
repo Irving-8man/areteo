@@ -6,7 +6,7 @@ import { mockpacientesRegis } from "@/mocks/listPacientesRe";
 interface PacienteState {
     pacientes: PacienteRegistrado[];
     cargarTodosPacientes: () => Promise<void>;
-    registrarPaciente: (nuevoPaciente: Paciente) => Promise<boolean>;
+    registrarPaciente: (nuevoPaciente: Paciente) => Promise<PacienteRegistrado | null>;
     eliminarPaciente: (id: string) => Promise<void>;
 }
 
@@ -32,14 +32,14 @@ export const usePacienteStore = create<PacienteState>((set) => ({
                 set((state) => ({
                     pacientes: [...state.pacientes, pacienteRegistrado],
                 }));
-                return true;
+                return pacienteRegistrado;
             } else {
                 console.error("Error al registrar paciente:");
-                return false;
+                return null;
             }
         } catch (error) {
             console.error("Error al registrar paciente:", error);
-            return false;
+            return null;
         }
     },
 

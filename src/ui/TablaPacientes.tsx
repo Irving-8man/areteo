@@ -42,7 +42,7 @@ export default function TablaPacientes() {
                                 </th>
 
                                 <th scope="col" className="px-3 py-5 font-medium">
-                                    Ultima consulta
+                                    Fecha de registro
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium text-right">
                                     Consultar
@@ -51,8 +51,8 @@ export default function TablaPacientes() {
                         </thead>
                         <tbody className="bg-white">
                             {pacientesCarga.length > 0 ? (
-                                pacientesCarga?.map((paciente) => (
-                                    <ItemPacienteList key={paciente.id} paciente={paciente}></ItemPacienteList>
+                                pacientesCarga?.map((paciente,idx) => (
+                                    <ItemPacienteList key={paciente.id} paciente={paciente} num={idx}></ItemPacienteList>
                                 ))
                             ) : (
                                 <tr>

@@ -30,6 +30,7 @@ import { usePacienteStore } from "@/store/storePacientes";
 import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { format } from "@formkit/tempo"
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -52,6 +53,7 @@ export default function DialogRegiPaciente() {
     const registrarPaciente = usePacienteStore((state) => state.registrarPaciente);
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
 
 
@@ -95,12 +97,13 @@ export default function DialogRegiPaciente() {
         const dataPaciente: Paciente = data;
         try {
             setLoading(true);
-            const registrado: boolean = await registrarPaciente(dataPaciente);
+            const registrado = await registrarPaciente(dataPaciente);
             if (registrado) {
                 setLoading(false);
                 setOpen(false)
-                notify(`Paciente ${data.primerNombre} registrado con éxito`, "success");
-            } else {
+                alert(`Paciente ${data.primerNombre} Registrado`);
+                navigate(`/dashboard/pacientes/${registrado?.id}`);
+            }else{
                 notify("Error durante el registro del paciente", "error");
             }
             reset();

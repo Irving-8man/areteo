@@ -149,7 +149,7 @@ export async function getPacientesFiltradoPaginado(query: string, currentPage: n
                 LOWER(segundoNombre) LIKE "%${normalizedQuery}%" OR
                 LOWER(apellidoPaterno) LIKE "%${normalizedQuery}%" OR
                 LOWER(apellidoMaterno) LIKE "%${normalizedQuery}%"
-            ORDER BY fechaRegistro ASC
+            ORDER BY fechaRegistro DESC
             LIMIT $1 OFFSET $2
         `;
 

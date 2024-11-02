@@ -247,7 +247,7 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
                                     <li className="flex flex-col gap-2">
                                         <div className="flex justify-between">
                                             <Label htmlFor="sexo" required className="font-semibold">Sexo</Label>
-                                            <p className="font-normal ml-2">Sexo dado: <span className="text-red-600">{paciente.sexo}</span></p>
+                                            
                                         </div>
 
                                         <Select id="sexo" {...register("sexo")}>
