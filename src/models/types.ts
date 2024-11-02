@@ -24,6 +24,10 @@ export interface PacienteRegistrado extends Paciente {
     fechaRegistro: string;
 }
 
+export interface PacienteActualizar extends Paciente{
+    id: string;
+}
+
 
 //Registro medico
 export interface RegistroMedico {

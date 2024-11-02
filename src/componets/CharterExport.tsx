@@ -1,6 +1,8 @@
 import React, { useCallback, useRef } from 'react';
-import { toJpeg } from 'html-to-image';
+import { toBlob } from 'html-to-image';
 import { Button } from "@fluentui/react-components";
+import { dialog } from '@tauri-apps/api';
+import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 
 interface ChartExporterProps {
     title: string;
@@ -10,27 +12,38 @@ interface ChartExporterProps {
 const ChartExporter: React.FC<ChartExporterProps> = ({ title, children }) => {
     const ref = useRef<HTMLDivElement>(null);
 
-    const onButtonClick = useCallback(() => {
+    const onButtonClick = useCallback(async () => {
         if (ref.current === null) {
             return;
         }
 
-        toJpeg(ref.current, { cacheBust: true })
-            .then((dataUrl) => {
-                const link = document.createElement('a');
-                link.download = `${title}.jpg`; // Usa el título como nombre de archivo
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        try {
+            const blob = await toBlob(ref.current);
+            if (blob) {
+                const arrayBuffer = await blob.arrayBuffer();
+                const selectedPath = await dialog.save({
+                    defaultPath: `${BaseDirectory.Desktop}/${title}.jpg`,
+                    filters: [{
+                        name: 'JPG Files',
+                        extensions: ['jpg']
+                    }]
+                });
+
+                if (selectedPath) {
+                    // Guarda la imagen en el directorio seleccionado
+                    await writeBinaryFile(selectedPath, new Uint8Array(arrayBuffer));
+                    alert('Imagen guardada con éxito en: ' + selectedPath);
+                }
+            }
+        } catch (err) {
+            console.error('Error al exportar la imagen:', err);
+        }
     }, [ref, title]);
 
     return (
         <div>
-            <div ref={ref} className="bg-white">
-                {children} {/* Renderiza los gráficos que se pasen como children */}
+            <div ref={ref} className="bg-white inline-flex">
+                {children} 
             </div>
             <Button onClick={onButtonClick} appearance="outline">Guardar como JPG</Button>
         </div>

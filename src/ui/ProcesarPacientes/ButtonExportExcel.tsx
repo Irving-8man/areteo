@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import writeXlsxFile, { Schema } from 'write-excel-file';
 import { usePacienteStore } from '@/store/storePacientes';
-import { PacienteRegistrado } from "@/models/types";
+import {  PacienteRegistrado } from "@/models/types";
 import { Button } from "@fluentui/react-components";
+import { format } from '@formkit/tempo';
 
-//Instalacion: npm install write-excel-file --save
-//Pagina: https://www.npmjs.com/package/write-excel-file?activeTab=readme
+import { calcularEdad } from '@/utils/CalcularEdad';
 
-//Asignacion de valores
 const schema: Schema<PacienteRegistrado> = [
+    {
+        column: 'Fecha de Registro',
+        type: String,
+        value: paciente => format(new Date(paciente.fechaRegistro), "DD-MM-YYYY")
+    },
     {
         column: 'Primer Nombre',
         type: String,
@@ -31,9 +35,18 @@ const schema: Schema<PacienteRegistrado> = [
     },
     {
         column: 'Fecha de Nacimiento',
-        type: Date,
-        format: 'yyyy-mm-dd',
-        value: paciente => paciente.fechaNacimiento ? new Date(paciente.fechaNacimiento) : null
+        type:String,
+        value: paciente => format(new Date(paciente.fechaNacimiento), "DD-MM-YYYY")
+    },
+    {
+        column: 'Edad',
+        type: Number,
+        value: paciente => calcularEdad(paciente.fechaNacimiento).valor
+    },
+    {
+        column: 'Edad Descrita',
+        type: String,
+        value: paciente => calcularEdad(paciente.fechaNacimiento).texto
     },
     {
         column: 'Sexo',
@@ -42,9 +55,10 @@ const schema: Schema<PacienteRegistrado> = [
     }
 ];
 
-export default function ButtonExcel() {
+export default function ButtonExportExcel() {
     const cargarTodosPacientes = usePacienteStore((state) => state.cargarTodosPacientes);
     const pacientes = usePacienteStore((state) => state.pacientes);
+    const fecha = format(new Date(),"DD-MM-YYYY")
 
     useEffect(() => {
         cargarTodosPacientes();
@@ -54,7 +68,7 @@ export default function ButtonExcel() {
         try {
             await writeXlsxFile(pacientes, {
                 schema,
-                fileName: 'Lista de Pacientes.xlsx'
+                fileName: `Excel_Lista_de_Pacientes_${fecha}.xlsx`
             });
         } catch (error) {
             console.error("Error al generar el archivo Excel:", error);

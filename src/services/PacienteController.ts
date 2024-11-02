@@ -1,5 +1,5 @@
 import { getDbInstance } from "./DatabaseSingleton";
-import { Paciente, PacienteRegistrado } from '../models/types';
+import { Paciente, PacienteActualizar, PacienteRegistrado } from '../models/types';
 import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -102,6 +102,36 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
         return null;
     }
 }
+
+
+export async function actualizarPaciente(data:PacienteActualizar): Promise<boolean> {
+    try {
+        const db = await getDb;
+
+        // Convertir la fecha de nacimiento a formato ISO, en caso de que haya sido modificada
+        const fechaNacimientoISO = new Date(data.fechaNacimiento).toISOString();
+
+        const actualizado = await db.execute(
+            "UPDATE Paciente SET primerNombre = $1, segundoNombre = $2, apellidoPaterno = $3, apellidoMaterno = $4, fechaNacimiento = $5, sexo = $6 WHERE id = $7",
+            [
+                data.primerNombre,
+                data.segundoNombre || null,
+                data.apellidoPaterno,
+                data.apellidoMaterno || null,
+                fechaNacimientoISO,
+                data.sexo,
+                data.id
+            ]
+        );
+
+        return actualizado;
+    } catch (error) {
+        console.error("Error al actualizar paciente:", error);
+        return false;
+    }
+}
+
+
 
 export async function getPacientesFiltradoPaginado(query: string, currentPage: number) {
     const offset = (currentPage - 1) * PACIENTES_POR_PAGINA; // Define el offset

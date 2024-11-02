@@ -1,49 +1,74 @@
-import { getPaciente } from "@/services/PacienteController";
+import { actualizarPaciente, getPaciente } from "@/services/PacienteController";
 import { Button, Card } from "@fluentui/react-components";
-import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
 import TablaRegistros from "@/ui/TablaRegistros";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
 import { AvatarPaciente } from "@/componets/AvatarPaciente";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { PacienteActualizar} from "@/models/types";
+import DialogActualiPaciente from "@/ui/DialogActualiPaciente";
 
 
 
 export default function VisualizarPaciente() {
     const { id } = useParams();
-    const [pacienteData, setPacienteData] = useState({
-        paciente: {
-            id: "N/A",
-            primerNombre: "N/A",
-            segundoNombre: "N/A",
-            apellidoPaterno: "N/A",
-            apellidoMaterno: "N/A",
-            fechaRegistro: new Date().toISOString(),
-            fechaNacimiento: new Date().toISOString(),
-            sexo: "N/A",
-        },
-        existe: false
-    });
-    const unico = 0;
+    const queryClient = useQueryClient();
+    const unico = 0
 
-    const edad =  useRef<{ valor: number; texto: string; }>()
-
-    // Recuperar al paciente
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await getPaciente(String(id));
-                if (res) {
-                    setPacienteData({ paciente: res[unico], existe: true });
-                    edad.current = calcularEdad(res[unico].fechaNacimiento)
+    const { data: pacienteData, isError } = useQuery(
+        {
+            queryKey: ['paciente', id],
+            queryFn: async () => {
+                const result = await getPaciente(String(id));
+                if (result) {
+                    return { paciente: { ...result[unico] }, existe: true };
+                } else {
+                    return { paciente: null, existe: false };
                 }
-            } catch (error) {
-                console.error("Error al consultar la base de datos:", error);
+            },
+            initialData: {
+                paciente: {
+                    id: "N/A",
+                    primerNombre: "N/A",
+                    segundoNombre: "N/A",
+                    apellidoPaterno: "N/A",
+                    apellidoMaterno: "N/A",
+                    fechaRegistro: new Date().toISOString(),
+                    fechaNacimiento: new Date().toISOString(),
+                    sexo: "N/A",
+                },
+                existe: false,
             }
-        };
-        fetchData();
-    }, [id]);
+        }
+    )
+
+
+    // Mutación para actualizar paciente
+    const mutation = useMutation({
+        mutationFn: (nuevoPaciente: PacienteActualizar) => actualizarPaciente(nuevoPaciente),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["paciente", id] });
+        },
+        onError: (error) => {
+            console.error("Error al actualizar el paciente:", error);
+        },
+    });
+
+    const handleActualizarPaciente = async (data: PacienteActualizar): Promise<boolean> => {
+        try {
+            await mutation.mutateAsync(data);
+            return true;
+        } catch (error) {
+            console.error("Error durante la actualización:", error);
+            return false;
+        }
+    };
+    
+    if (isError) {
+        return <p>Error al cargar los datos del paciente.</p>;
+    }
 
     return (
         <>
@@ -59,6 +84,8 @@ export default function VisualizarPaciente() {
             <section className="pt-10">
                 <article>
                     <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }}>
+
+
                         <ul className="text-base">
                             <li className="flex gap-4 items-center">
                                 <AvatarPaciente edad={calcularEdad(pacienteData.paciente.fechaNacimiento).valor}
@@ -74,17 +101,16 @@ export default function VisualizarPaciente() {
 
                             <li className="grid grid-cols-2 gap-10">
                                 <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal">{format(pacienteData.paciente.fechaNacimiento, "long")}</span></h2>
-                                <h2 className="font-semibold">Edad: <span className="font-normal">{edad.current?.texto}</span></h2>
+                                <h2 className="font-semibold">Edad: <span className="font-normal">{calcularEdad(pacienteData.paciente.fechaNacimiento).texto}</span></h2>
                             </li>
 
                             <li>
                                 <h2 className="font-semibold">Sexo: <span className="font-normal">{pacienteData.paciente.sexo}</span></h2>
                             </li>
-
                         </ul>
 
                         <ul>
-
+                            <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
                         </ul>
                     </Card>
                 </article>

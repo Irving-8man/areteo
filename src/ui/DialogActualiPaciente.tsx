@@ -20,16 +20,16 @@ import {
     Select,
 } from "@fluentui/react-components";
 
-import { Add20Filled, Checkmark20Filled, Dismiss20Filled, Dismiss24Regular, SpinnerIos20Filled } from "@fluentui/react-icons";
+import { Pen20Regular, Checkmark20Filled, Dismiss20Filled, Dismiss24Regular, SpinnerIos20Filled } from "@fluentui/react-icons";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { formSchemaPacienteRegistro } from "@/schemas/formSchemaPacientes";
-import { Paciente } from "@/models/types";
-import { usePacienteStore } from "@/store/storePacientes";
-import { useState } from "react";
+import { formSchemaPacienteActua } from "@/schemas/formSchemaPacientes";
+import { PacienteActualizar, PacienteRegistrado } from "@/models/types";
+import { useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { format } from "@formkit/tempo"
+
 
 
 
@@ -39,21 +39,17 @@ const useStyles = makeStyles({
         flexDirection: "column",
         rowGap: "10px",
         overflowY: "scroll",
-        scrollbarWidth: "thin",
-        marginTop:"15px"
+        scrollbarWidth: "thin"
     },
 });
 
-export default function DialogRegiPaciente() {
+export default function DialogActualiPaciente({ paciente, actualizar }: { paciente: PacienteRegistrado, actualizar: (data: PacienteActualizar) => Promise<boolean>; }) {
     //hooks
     const [parent] = useAutoAnimate()
     const styles = useStyles();
-    const Schema = formSchemaPacienteRegistro
-    const registrarPaciente = usePacienteStore((state) => state.registrarPaciente);
+    const Schema = formSchemaPacienteActua
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
-
-
 
     //Tostada
     const toasterId = useId("toaster");
@@ -78,47 +74,67 @@ export default function DialogRegiPaciente() {
 
     // useForm con validacion de zod
     const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof Schema>>({
-        resolver: zodResolver(Schema), defaultValues: {
-            primerNombre: "",
-            segundoNombre: "",
-            apellidoPaterno: "",
-            apellidoMaterno: "",
-            fechaNacimiento: "",
-            sexo: "Masculino"
+        resolver: zodResolver(Schema),
+        defaultValues: {
+            id: paciente.id,
+            primerNombre: paciente?.primerNombre || "",
+            segundoNombre: paciente?.segundoNombre || "",
+            apellidoPaterno: paciente?.apellidoPaterno || "",
+            apellidoMaterno: paciente?.apellidoMaterno || "",
+            sexo: paciente?.sexo || "Masculino",
         },
     });
+
+
+    // Actualizar los valores cuando `paciente` cambie
+    useEffect(() => {
+        if (paciente) {
+            reset({
+                id: paciente.id,
+                primerNombre: paciente.primerNombre,
+                segundoNombre: paciente.segundoNombre,
+                apellidoPaterno: paciente.apellidoPaterno,
+                apellidoMaterno: paciente.apellidoMaterno,
+                sexo: paciente.sexo, // Establecer sexo al valor actual
+            });
+        }
+    }, [paciente, reset]);
 
 
 
     // Procesar información
     const onSubmit = async (data: z.infer<typeof Schema>) => {
-        const dataPaciente: Paciente = data;
+        data.fechaNacimiento = new Date(data.fechaNacimiento).toISOString();
+        const dataPaciente: PacienteActualizar = data;
         try {
             setLoading(true);
-            const registrado: boolean = await registrarPaciente(dataPaciente);
-            if (registrado) {
+            const success = await actualizar(dataPaciente);
+            if (success) {
                 setLoading(false);
                 setOpen(false)
-                notify(`Paciente ${data.primerNombre} registrado con éxito`, "success");
+                alert("Paciente actulizado")
+                notify(`Paciente ${data.primerNombre} actualizado`, "success");
             } else {
-                notify("Error durante el registro del paciente", "error");
+                notify("Error durante la actualizacion de paciente, reintentar", "error");
             }
             reset();
         } catch (error) {
             // Notificar error
             setLoading(false);
-            notify("Error durante el registro del paciente", "error");
-            console.log("Error durante el registro:", error);
+            notify("Error durante la actualizacion de paciente, reintentar", "error");
+            console.log("Error durante la actualizacion:", error);
         } finally {
             setLoading(false);
         }
     };
 
+
+
     return (
         <>
             <Dialog open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
                 <DialogTrigger disableButtonEnhancement >
-                    <Button appearance="primary" icon={<Add20Filled />}>Nuevo Paciente</Button>
+                    <Button appearance="secondary" icon={<Pen20Regular />}>Actualizar datos</Button>
                 </DialogTrigger>
                 <DialogSurface aria-describedby={undefined}>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -135,11 +151,12 @@ export default function DialogRegiPaciente() {
                                 }
                             >
                                 <span className="text-zinc-600">
-                                    Registrar Paciente
+                                    Actualizar Datos de Paciente
                                 </span>
                             </DialogTitle>
                             <DialogContent className={styles.content} ref={parent} >
                                 <ul className="flex flex-col gap-6">
+
                                     <li className="flex flex-col gap-2">
                                         <Label required htmlFor="primerNombre" className="font-semibold">
                                             Primer Nombre
@@ -150,6 +167,7 @@ export default function DialogRegiPaciente() {
                                             {...register("primerNombre")}
                                             disabled={loading}
                                             required
+                                            defaultValue={paciente.primerNombre}
                                         />
                                         {errors.primerNombre && (
                                             <p className="text-sm text-red-600">{errors.primerNombre.message}</p>
@@ -165,6 +183,7 @@ export default function DialogRegiPaciente() {
                                             placeholder="Ej. Andrés"
                                             {...register("segundoNombre")}
                                             disabled={loading}
+                                            defaultValue={paciente.segundoNombre}
                                         />
                                         {errors.segundoNombre && (
                                             <p className="text-sm text-red-600">{errors.segundoNombre.message}</p>
@@ -181,6 +200,7 @@ export default function DialogRegiPaciente() {
                                             {...register("apellidoPaterno")}
                                             disabled={loading}
                                             required
+                                            defaultValue={paciente.apellidoPaterno}
                                         />
                                         {errors.apellidoPaterno && (
                                             <p className="text-red-600 text-sm">{errors.apellidoPaterno.message}</p>
@@ -196,6 +216,7 @@ export default function DialogRegiPaciente() {
                                             placeholder="Ej. Gómez"
                                             {...register("apellidoMaterno")}
                                             disabled={loading}
+                                            defaultValue={paciente.apellidoMaterno}
                                         />
                                         {errors.apellidoMaterno && (
                                             <p className="text-red-600 text-sm">{errors.apellidoMaterno.message}</p>
@@ -203,9 +224,13 @@ export default function DialogRegiPaciente() {
                                     </li>
 
                                     <li className="flex flex-col gap-2">
-                                        <Label required htmlFor="fechaNacimiento" className="font-semibold">
-                                            Fecha de Nacimiento
-                                        </Label>
+                                        <div className="flex justify-between">
+                                            <Label required htmlFor="fechaNacimiento" className="font-semibold">
+                                                Fecha de Nacimiento
+                                            </Label>
+                                            <p className="font-normal ml-2">Fecha de nacimiento dada: <span className="text-red-600">{format(paciente.fechaNacimiento, "DD/MM/YYYY")}</span></p>
+                                        </div>
+
                                         <Input
                                             appearance="underline"
                                             type="date"
@@ -220,10 +245,14 @@ export default function DialogRegiPaciente() {
                                     </li>
 
                                     <li className="flex flex-col gap-2">
-                                        <Label htmlFor="sexo" required className="font-semibold">Sexo</Label>
+                                        <div className="flex justify-between">
+                                            <Label htmlFor="sexo" required className="font-semibold">Sexo</Label>
+                                            <p className="font-normal ml-2">Sexo dado: <span className="text-red-600">{paciente.sexo}</span></p>
+                                        </div>
+
                                         <Select id="sexo" {...register("sexo")}>
-                                            <option>Masculino</option>
-                                            <option>Femenino</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
                                         </Select>
                                     </li>
                                 </ul>
@@ -237,7 +266,7 @@ export default function DialogRegiPaciente() {
                                 <Button type="submit" appearance="primary" disabled={loading}
                                     icon={loading ? <SpinnerIos20Filled className="w-3 animate-spin" /> : <Checkmark20Filled />}
                                 >
-                                    Crear
+                                    Actualizar
                                 </Button>
                             </DialogActions>
                         </DialogBody>

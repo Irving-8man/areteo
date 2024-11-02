@@ -1,4 +1,4 @@
-import { isRutaActiva } from "@/utils/IdentificarRutas";
+import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 
 
@@ -15,8 +15,13 @@ export default function Pacientes() {
                     <div>
                         <ul className="flex flex-row gap-12 items-center justify-center">
                             <li>
-                                <Link to="/dashboard/pacientes" className={`${isRutaActiva(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
+                                <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
                                     }`}>Lista Pacientes</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/dashboard/pacientes/datos-pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes/datos-pacientes") ? 'font-medium' : 'text-black'
+                                    }`}>Datos de pacientes</Link>
                             </li>
                         </ul>
                     </div>

@@ -25,6 +25,7 @@ import RutaProtegida from './ui/RutaProtegida';
 import { SesionProvider } from './context/SesionContext';
 import CrearRegistro from './dashboard/Pacientes/CrearRegistro';
 import VisualizarPlantilla from './dashboard/Plantillas/VisualizarPlantilla';
+import DatosPacientes from './dashboard/Pacientes/DatosPacientes';
 
 
 export default function App() {
@@ -40,7 +41,7 @@ export default function App() {
               <Route index element={<ListaPacientes />} />
               <Route path=':id' element={<VisualizarPaciente/>} />
               <Route path=':id/crear-registro' element={<CrearRegistro />} />
-              
+              <Route path='datos-pacientes' element={<DatosPacientes />} />
             </Route>
 
             <Route path='instrumentos' element={<Instrumentos />} />
