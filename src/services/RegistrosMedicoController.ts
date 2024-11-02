@@ -3,6 +3,7 @@ import { RegistroMedicoList } from '../models/types';
 import { generarID } from "@/utils/GenerarID";
 
 
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
 
@@ -12,7 +13,7 @@ export async function getRegistrosPaciente(paciente_id: string) {
     try {
         const db = await getDb;
         const sqlQuery = `
-            SELECT id,fechaDiagnostico,edad,peso,antecedFamiInfa 
+            SELECT id,fechaDiagnostico,edadDicha,peso,antecedFamiInfa 
             FROM RegistroMedico
             WHERE paciente_id = $1
             ORDER BY fechaDiagnostico ASC;
@@ -37,7 +38,6 @@ export async function crearRegistrosPaciente(data: any) {
     data.antecedFamiInfa == "No" ? data.descripcionAntecedentes = null : data.descripcionAntecedentes;
     data.educacion !== "Otro" ? data.detalleEducacion = null : data.detalleEducacion;
 
-
     try {
         const db = await getDb;
         const sqlQueryRegistro = `
@@ -46,7 +46,8 @@ export async function crearRegistrosPaciente(data: any) {
                 paciente_id, 
                 fechaDiagnostico,
                 sexo, 
-                edad, 
+                edad,
+                edadDicha, 
                 peso, 
                 estatura, 
                 presionArterialPAS_0min, 
@@ -65,7 +66,7 @@ export async function crearRegistrosPaciente(data: any) {
                 estadoCivil,
                 usaTratamientoInyectable,
                 usaTratamientoOral
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,  $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,  $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23);
         `;
 
         // Crear registro
@@ -75,6 +76,7 @@ export async function crearRegistrosPaciente(data: any) {
             data.fechaDiagnostico,
             data.sexo,
             data.edad,
+            data.edadDicha,
             data.peso,
             data.estatura,
             data.presionArterialPAS_0min,

@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS RegistroMedico (
     fechaDiagnostico TEXT NOT NULL,
     sexo TEXT NOT NULL,
     edad INTEGER NOT NULL,
+    edadDicha TEXT NOT NULL,
     peso REAL NOT NULL,
     estatura REAL NOT NULL,
     presionArterialPAS_0min REAL NOT NULL,

@@ -63,7 +63,7 @@ export interface RegistroMedicoDB extends RegistroMedico {
 export interface RegistroMedicoList{
     id: string;
     fechaDiagnostico: string;
-    edad:string;
+    edadDicha:string;
     peso: number;
     antecedFamiInfa: string;
 }

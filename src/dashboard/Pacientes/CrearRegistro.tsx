@@ -106,6 +106,7 @@ export default function CrearRegistro() {
     const [paciente, setPaciente] = useState<null | PacienteRegistrado>(null)
     const [edad, setEdad] = useState<number>(0)
     const [sexo, setSexo] = useState<string>("Masculino")
+    const [edadDi, setEdadDi] = useState<string>("Sin edad");
     const navigate = useNavigate();
 
     //Recuperar al paciente
@@ -116,7 +117,9 @@ export default function CrearRegistro() {
                 const res = await getPaciente(String(id))
                 if (res) {
                     setPaciente(res[unico])
-                    setEdad(calcularEdad(res[unico].fechaNacimiento).valor);
+                    const data = calcularEdad(res[unico].fechaNacimiento);
+                    setEdad(data.valor);
+                    setEdadDi(data.texto);
                     setSexo(res[unico].sexo)
                 }
             } catch (error) {
@@ -169,6 +172,7 @@ export default function CrearRegistro() {
         //Ajustes
         data.edad = edad;
         data.sexo = sexo;
+        data.edadDicha = edadDi;
         data.anioDiagnostico = textoDiagnostico;
         data.antecedFamiInfa = textoAntecedentes;
         data.educacion = textoEducacion;
@@ -217,6 +221,7 @@ export default function CrearRegistro() {
                         <div>
                             <input type="hidden" defaultValue={FECHA_HOY}   {...register("fechaDiagnostico")} />
                             <input type="hidden" defaultValue={edad} {...register("edad")} />
+                            <input type="hidden" defaultValue="" {...register("edadDicha")} />
                         </div>
                         {/**Peso */}
                         <li>

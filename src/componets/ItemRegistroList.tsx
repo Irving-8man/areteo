@@ -31,7 +31,7 @@ export default function ItemRegistroList(props: RowProps) {
     return (
         <tr className='w-full border-b text-sm hover:bg-gray-200'>
             <td className="whitespace-nowrap py-3 pl-6">{format(registro.fechaDiagnostico,"short")}</td>
-            <td className="whitespace-nowrap px-3 py-3">{registro.edad}</td>
+            <td className="whitespace-nowrap px-3 py-3">{registro.edadDicha}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.peso}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.antecedFamiInfa}</td>
             <td className="whitespace-nowrap px-3 py-3">

@@ -14,6 +14,7 @@ export const formSchemaCrearRegistro = z.object({
     }),
     sexo: z.string(),
     edad: z.number().min(0, "La edad debe ser un número positivo").max(200),
+    edadDicha: z.string(),
     //Aqui comienza
     peso: z.number({ invalid_type_error: "El campo de Peso no puede estar vacío" })
         .min(0, "El peso debe ser un número positivo"),
