@@ -2,6 +2,7 @@ import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 import ButtonCsv from "@/ui/ProcesarPacientes/ButtonCsv";
 import ButtonExcel from "@/ui/ProcesarPacientes/ButtonExcel";
+import ButtonWord from "@/ui/ProcesarPacientes/ButtonWord";
 
 
 export default function Pacientes() {
@@ -23,6 +24,7 @@ export default function Pacientes() {
                             <li>
                                 <ButtonCsv />
                                 <ButtonExcel />
+                                <ButtonWord />
                             </li>
 
                         </ul>

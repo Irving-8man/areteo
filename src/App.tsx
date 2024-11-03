@@ -11,7 +11,14 @@ import RegistrarPaciente from './dashboard/Pacientes/RegistrarPaciente';
 import VisualizarPaciente from './dashboard/Pacientes/VisualizarPaciente';
 //Instrumentos
 import Instrumentos from './dashboard/Instrumentos';
-//Plantillas
+import AreaUno from './dashboard/Instrumentos/AreaUno';
+import AreaDos from './dashboard/Instrumentos/AreaDos';
+import AreaTres from './dashboard/Instrumentos/AreaTres';
+import AreaCuatro from './dashboard/Instrumentos/AreaCuatro';
+import AreaCinco from './dashboard/Instrumentos/AreaCinco';
+import AreaSeis from './dashboard/Instrumentos/AreaSeis';
+
+//Plantillassi
 import Plantillas from './dashboard/Plantillas';
 import ListaPlantillas from './dashboard/Plantillas/ListaPlantillas';
 import CargarPlantilla from './dashboard/Plantillas/CargarPlantilla';
@@ -43,7 +50,14 @@ export default function App() {
               <Route path=':id/crear-registro' element={<CrearRegistro />} />
             </Route>
 
-            <Route path='instrumentos' element={<Instrumentos />} />
+            <Route path='instrumentos' element={<Instrumentos />} >
+              <Route index element={<AreaUno />} />
+              <Route path='area-dos' element={<AreaDos />} />
+              <Route path='area-tres' element={<AreaTres />} />
+              <Route path='area-cuatro' element={<AreaCuatro />} />
+              <Route path='area-cinco' element={<AreaCinco />} />
+              <Route path='area-seis' element={<AreaSeis />} />
+            </Route>
             <Route path='plantillas' element={<Plantillas />} >
               <Route index element={<ListaPlantillas />} />
               <Route path='crear-plantilla' element={<CrearPlantilla />} />
