@@ -4,6 +4,7 @@ import { usePacienteStore } from '@/store/storePacientes';
 import {  PacienteRegistrado } from "@/models/types";
 import { Button } from "@fluentui/react-components";
 import { format } from '@formkit/tempo';
+import { ArrowDownload20Regular } from "@fluentui/react-icons";
 
 import { calcularEdad } from '@/utils/CalcularEdad';
 
@@ -76,8 +77,8 @@ export default function ButtonExportExcel() {
     };
 
     return (
-        <Button onClick={crearExcel}>
-            Guardar Excel
+        <Button onClick={crearExcel} icon={< ArrowDownload20Regular />}>
+            Descargar Excel
         </Button>
     );
 }

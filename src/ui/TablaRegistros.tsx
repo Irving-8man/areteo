@@ -100,8 +100,6 @@ export default function TablaRegistros(props: Props) {
     }, [props.id]);
 
 
-
-
     // Componente Row que renderiza cada fila de la tabla
     function Row({ index ,paciente_id }: { index: number; paciente_id:string}) {
         const registro = registrosCarga[index];

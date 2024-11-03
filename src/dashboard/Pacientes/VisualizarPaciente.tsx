@@ -43,8 +43,7 @@ export default function VisualizarPaciente() {
                     sexo: "N/A",
                 },
                 existe: false,
-            },
-            refetchOnWindowFocus:false
+            }
         }
     )
 

@@ -7,6 +7,7 @@ import { calcularEdad } from '@/utils/CalcularEdad';
 import { format } from '@formkit/tempo';
 import { writeTextFile, BaseDirectory } from '@tauri-apps/api/fs';
 import { dialog } from '@tauri-apps/api';
+import { ArrowDownload20Regular } from "@fluentui/react-icons";
 
 type CSVData = {
     FechaRegistro: string,
@@ -70,8 +71,8 @@ export default function ButtonExportCSVDialog() {
     };
 
     return (
-        <Button onClick={saveCSVFile}>
-            Guardar CSV diglaog
+        <Button onClick={saveCSVFile} icon={<ArrowDownload20Regular />}>
+            Descargar CSV
         </Button>
     );
 }
