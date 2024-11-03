@@ -7,8 +7,6 @@ import { generarID } from "@/utils/GenerarID";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
 
-
-
 export async function getRegistrosPaciente(paciente_id: string) {
 
     try {
@@ -65,6 +63,25 @@ export async function getRegistroMedico(registro_id:string) {
         return [];
     }
 }
+
+
+export async function borrarRegistroMedico(registro_id:string) {
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+                DELETE FROM RegistroMedico 
+                WHERE id = $1
+            ;
+        `;
+        // Ejecutar la consulta
+        const resultados = await db.execute(sqlQuery, [registro_id]);
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Fallo en borrar registro medico.');
+    }
+}
+
 
 
 

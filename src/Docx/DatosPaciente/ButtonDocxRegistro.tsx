@@ -17,6 +17,7 @@ interface DocxButtonProps {
 
 const ButtonDocxRegistro: React.FC<DocxButtonProps> = ({ paciente_id, registro_id }) => {
     const unico = 0;
+    
     const generarDocumento = async () => {
         const registro = await getRegistroMedico(registro_id);
         const pacienteDB = await getPaciente(paciente_id);
@@ -65,7 +66,7 @@ const ButtonDocxRegistro: React.FC<DocxButtonProps> = ({ paciente_id, registro_i
         }
     };
 
-    return <Button onClick={generarDocumento} icon={<ArrowDownload20Regular />}>Registro Médico</Button>;
+    return <Button onClick={generarDocumento} icon={<ArrowDownload20Regular />}>Descargar Registro</Button>;
 };
 
 export default ButtonDocxRegistro;

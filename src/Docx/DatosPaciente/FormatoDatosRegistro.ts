@@ -32,7 +32,7 @@ export function generarDocumentoRegistroMedico(
             children: [
                 new TextRun("Fecha de Creación: "),
                 new TextRun({
-                    text: new Date().toLocaleDateString(),
+                    text: format(new Date(),"full"),
                     bold: true,
                 }),
             ],
@@ -64,7 +64,7 @@ export function generarDocumentoRegistroMedico(
         new Paragraph({
             children: [
                 new TextRun({
-                    text: "Registro Médico",
+                    text: "Datos del Registro Médico",
                     bold: true,
                     size: 32,
                 }),

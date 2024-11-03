@@ -26,6 +26,7 @@ import { SesionProvider } from './context/SesionContext';
 import CrearRegistro from './dashboard/Pacientes/CrearRegistro';
 import VisualizarPlantilla from './dashboard/Plantillas/VisualizarPlantilla';
 import DatosPacientes from './dashboard/Pacientes/DatosPacientes';
+import VerResulRegistro from './dashboard/Pacientes/VerResulRegistro';
 
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
               <Route path=':id' element={<VisualizarPaciente/>} />
               <Route path=':id/crear-registro' element={<CrearRegistro />} />
               <Route path='datos-pacientes' element={<DatosPacientes />} />
+              <Route path=':id/result-registro/:idRegis' element={<VerResulRegistro/>} />
             </Route>
 
             <Route path='instrumentos' element={<Instrumentos />} />

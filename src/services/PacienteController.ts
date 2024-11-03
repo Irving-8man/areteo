@@ -197,11 +197,11 @@ export async function eliminarPaciente(id: string) {
         DELETE FROM Paciente
         WHERE id = $1
       `;
-        const resultado = await db.select(sqlQuery, [id]);
+        const resultado = await db.execute(sqlQuery, [id]);
         return resultado
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch total number of pacientes.');
+        throw new Error('Fallo en borrar paciente.');
     }
 }
 

@@ -64,7 +64,7 @@ const Inner = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
 );
 
 interface Props {
-    id: string | "";
+    id: string ;
 }
 
 
@@ -99,8 +99,11 @@ export default function TablaRegistros(props: Props) {
         fetchData();
     }, [props.id]);
 
+
+
+
     // Componente Row que renderiza cada fila de la tabla
-    function Row({ index ,paciente_id}: { index: number; paciente_id:string}) {
+    function Row({ index ,paciente_id }: { index: number; paciente_id:string}) {
         const registro = registrosCarga[index];
         return (
             <ItemRegistroList registro={registro} key={index} paciente_id={paciente_id} />

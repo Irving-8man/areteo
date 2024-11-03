@@ -6,24 +6,25 @@ import {
     MenuItem,
     MenuPopover,
 } from "@fluentui/react-components";
+
 import {
     bundleIcon,
-    CutRegular,
-    CutFilled,
-    CopyRegular,
-    CopyFilled,
+    EyeFilled,
+    EyeRegular,
+    MoreVerticalFilled
 } from "@fluentui/react-icons";
 import { RegistroMedicoList } from "@/models/types";
 import { format } from "@formkit/tempo";
 import ButtonDocxRegistro from "@/Docx/DatosPaciente/ButtonDocxRegistro";
+import { Link } from "react-router-dom";
 
 
-const CopyIcon = bundleIcon(CopyFilled, CopyRegular);
-const CutIcon = bundleIcon(CutFilled, CutRegular);
+const CopyEye = bundleIcon(EyeFilled, EyeRegular);
+
 
 interface RowProps {
     registro: RegistroMedicoList;
-    paciente_id: string;
+    paciente_id: string ;
 }
 
 const CHECKS = {
@@ -60,28 +61,16 @@ export default function ItemRegistroList(props: RowProps) {
             <td className="whitespace-nowrap px-3 py-3">
                 <Menu>
                     <MenuTrigger disableButtonEnhancement>
-                        <Button>Edit</Button>
+                        <Button icon={<MoreVerticalFilled/>}></Button>
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
-                            <MenuItem
-                                icon={<CutIcon />}
-                                onClick={() => alert("Cut to clipboard")}
-                            >
-                                Cut
+                            <MenuItem>
+                                <Link to={`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`}><Button icon={<CopyEye />}>Ver Registro</Button></Link>
                             </MenuItem>
-                            <MenuItem
-                                icon={<CopyIcon />}
-                                onClick={() => alert("Copied to clipboard")}
-                            >
-                                Copy
-                            </MenuItem>
-                            <MenuItem
-
-                            >
+                            <MenuItem>
                                 <ButtonDocxRegistro paciente_id={props.paciente_id} registro_id={props.registro.id} />
                             </MenuItem>
-
                         </MenuList>
                     </MenuPopover>
                 </Menu>

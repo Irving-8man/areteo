@@ -1,7 +1,7 @@
 import { actualizarPaciente, eliminarPaciente, getPaciente } from "@/services/PacienteController";
 import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
 import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
-import { Add20Filled, ArrowLeft20Filled, Delete20Regular } from "@fluentui/react-icons";
+import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
 import TablaRegistros from "@/ui/TablaRegistros";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
@@ -10,11 +10,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PacienteActualizar } from "@/models/types";
 import DialogActualiPaciente from "@/ui/DialogActualiPaciente";
 import ButtonDocxPaciente from "@/Docx/DatosPaciente/ButtonDocxPaciente";
-
+import DialogDeletePaciente from "@/ui/DialogDeletePaciente";
 
 
 export default function VisualizarPaciente() {
     const { id } = useParams();
+    const safeId = id!;
     const queryClient = useQueryClient();
     const unico = 0
     const navigate = useNavigate();
@@ -42,7 +43,8 @@ export default function VisualizarPaciente() {
                     sexo: "N/A",
                 },
                 existe: false,
-            }
+            },
+            refetchOnWindowFocus:false
         }
     )
 
@@ -96,12 +98,12 @@ export default function VisualizarPaciente() {
             console.error("Datos del paciente no están disponibles para eliminar.");
             return;
         }
-
         try {
             const res = await eliminarPaciente(pacienteData.paciente.id);
             if (res) {
                 notify(`Paciente ${pacienteData.paciente.primerNombre} eliminado`, "success");
                 navigate(`/dashboard/pacientes/`);
+                alert("Paciente eliminado")
             }
         } catch (error) {
             console.error("Error al eliminar el paciente:", error);
@@ -160,16 +162,15 @@ export default function VisualizarPaciente() {
                             <li>
                                 <ButtonDocxPaciente paciente={pacienteData.paciente} />
                             </li>
-
                             <li>
-                                <Button icon={<Delete20Regular />} style={{ "backgroundColor": "red", "color": "white" }} onClick={handleDeletePaciente}>Eliminar paciente</Button>
+                                <DialogDeletePaciente eliminar={handleDeletePaciente}/>
                             </li>
                         </ul>
                     </Card>
                 </article>
             </section>
             <section>
-                <TablaRegistros id={id} />
+                <TablaRegistros id={safeId} />
             </section>
         </>
     );

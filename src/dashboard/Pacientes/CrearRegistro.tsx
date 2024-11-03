@@ -1,4 +1,4 @@
-import { Button, Field, Label, Select, Textarea, Input, InfoLabel } from "@fluentui/react-components"
+import { Button, Field, Label, Select, Textarea, Input, InfoLabel, Card } from "@fluentui/react-components"
 import { Link, useParams } from "react-router-dom"
 import { ArrowLeft20Filled } from "@fluentui/react-icons";
 import { z } from "zod"
@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { PacienteRegistrado } from "@/models/types";
 import { getPaciente } from "@/services/PacienteController";
 import { calcularEdad } from "@/utils/CalcularEdad";
-import { format } from "@formkit/tempo";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { crearRegistrosPaciente } from "@/services/RegistrosMedicoController";
 import { useNavigate } from 'react-router-dom';
@@ -203,14 +202,16 @@ export default function CrearRegistro() {
 
 
     return (
-        <div>
+        <div className="relative">
             <section className="flex justify-between">
                 <Link to={`/dashboard/pacientes/${String(id)}`}><Button icon={<ArrowLeft20Filled />}>Volver</Button></Link>
             </section>
 
-            <section className="w-full pl-10 flex flex-row justify-between items-center mt-10">
-                <p className="text-left text-xl">{paciente?.primerNombre}</p>
-                <p className="text-right text-xl">{format(new Date(), "full")}</p>
+            <section className="flex justify-end sticky top-11 text-lg">
+                <Card>
+                    <p className="text-left"><span className="font-bold">Registro para:</span> {paciente?.primerNombre} {paciente?.segundoNombre || ''} {paciente?.apellidoPaterno} {paciente?.apellidoMaterno || ''}</p>
+                    <p><span className="font-bold">Edad:</span> {edadDi}</p>
+                </Card>
             </section>
 
             <section className="ml-10">
