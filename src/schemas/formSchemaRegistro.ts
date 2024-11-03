@@ -4,14 +4,7 @@ export const formSchemaCrearRegistro = z.object({
     paciente_id: z.string().min(1,{
         message: "La fecha de nacimiento no puede estar vacía.",
     }),
-    fechaDiagnostico: z.string().min(1, {
-        message: "La fecha de nacimiento no puede estar vacía.",
-    }).refine((fecha) => {
-        const fechaISORegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
-        return fechaISORegex.test(fecha);
-    }, {
-        message: "Necesario formato ISO (YYYY-MM-DD).",
-    }),
+    fechaDiagnostico: z.string(),
     sexo: z.string(),
     edad: z.number().min(0, "La edad debe ser un número positivo").max(200),
     edadDicha: z.string(),

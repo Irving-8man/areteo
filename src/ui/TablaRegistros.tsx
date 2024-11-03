@@ -64,7 +64,7 @@ const Inner = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
 );
 
 interface Props {
-    id: string | undefined;
+    id: string | "";
 }
 
 
@@ -75,7 +75,8 @@ const Header_TABLE = () => {
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
                 <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                 <th scope="col" className="px-3 py-5 font-medium">Peso</th>
-                <th scope="col" className="px-3 py-5 font-medium">Antecedentes Familiares</th>
+                <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
+                <th scope="col" className="px-1 py-5 font-medium"><p><span className='mr-1'>Inyectable</span>|<span className='ml-1'>Oral</span></p></th>
                 <th scope="col" className="px-3 py-5 font-medium">
                     <span>Acciones</span>
                 </th>
@@ -99,10 +100,10 @@ export default function TablaRegistros(props: Props) {
     }, [props.id]);
 
     // Componente Row que renderiza cada fila de la tabla
-    function Row({ index }: { index: number; }) {
+    function Row({ index ,paciente_id}: { index: number; paciente_id:string}) {
         const registro = registrosCarga[index];
         return (
-            <ItemRegistroList registro={registro} key={index} />
+            <ItemRegistroList registro={registro} key={index} paciente_id={paciente_id} />
         );
     }
 
@@ -120,7 +121,7 @@ export default function TablaRegistros(props: Props) {
                             itemCount={registrosCarga.length}
                             itemSize={35}
                             header={<Header_TABLE />}
-                            row={({ index }) => <Row index={index} />}
+                            row={({ index }) => <Row index={index} paciente_id={props.id} />}
                         />
                     ) : (
                         <table className="hidden min-w-full text-gray-900 md:table">
@@ -129,7 +130,8 @@ export default function TablaRegistros(props: Props) {
                                     <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Peso</th>
-                                    <th scope="col" className="px-3 py-5 font-medium">Antecedentes Familiares</th>
+                                    <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
+                                    <th scope="col" className="px-1 py-5 font-medium"><p><span className='mr-1'>Inyectable</span>|<span className='ml-1'>Oral</span></p></th>
                                     <th scope="col" className="px-3 py-5 font-medium">
                                         <span></span>
                                     </th>
@@ -143,7 +145,6 @@ export default function TablaRegistros(props: Props) {
                                 </tr>
                             </tbody>
                         </table>
-
                     )}
                 </div>
             </div>

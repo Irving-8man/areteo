@@ -1,7 +1,7 @@
 import { actualizarPaciente, eliminarPaciente, getPaciente } from "@/services/PacienteController";
 import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
 import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
-import { Add20Filled, ArrowDownload20Regular, ArrowLeft20Filled, Delete20Regular } from "@fluentui/react-icons";
+import { Add20Filled, ArrowLeft20Filled, Delete20Regular } from "@fluentui/react-icons";
 import TablaRegistros from "@/ui/TablaRegistros";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
@@ -9,6 +9,7 @@ import { AvatarPaciente } from "@/componets/AvatarPaciente";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PacienteActualizar } from "@/models/types";
 import DialogActualiPaciente from "@/ui/DialogActualiPaciente";
+import ButtonDocxPaciente from "@/Docx/DatosPaciente/ButtonDocxPaciente";
 
 
 
@@ -95,7 +96,7 @@ export default function VisualizarPaciente() {
             console.error("Datos del paciente no están disponibles para eliminar.");
             return;
         }
-    
+
         try {
             const res = await eliminarPaciente(pacienteData.paciente.id);
             if (res) {
@@ -107,7 +108,7 @@ export default function VisualizarPaciente() {
             notify("Error al eliminar el paciente", "error");
         }
     };
-    
+
 
 
     if (isError) {
@@ -155,13 +156,13 @@ export default function VisualizarPaciente() {
                             <li>
                                 <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
                             </li>
-                            
+
                             <li>
-                                <Button icon={<ArrowDownload20Regular />}>Datos personales</Button>
+                                <ButtonDocxPaciente paciente={pacienteData.paciente} />
                             </li>
 
                             <li>
-                                <Button icon={<Delete20Regular />} style={{"backgroundColor":"red", "color":"white"}} onClick={handleDeletePaciente}>Eliminar paciente</Button>
+                                <Button icon={<Delete20Regular />} style={{ "backgroundColor": "red", "color": "white" }} onClick={handleDeletePaciente}>Eliminar paciente</Button>
                             </li>
                         </ul>
                     </Card>

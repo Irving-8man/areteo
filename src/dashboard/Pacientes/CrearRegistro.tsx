@@ -98,7 +98,7 @@ const diagnosticoMapping:{ [key: string]: string }  = {
 
 
 //Constantes
-const FECHA_HOY = format(new Date(), "YYYY-MM-DD")
+const FECHA_HOY = new Date().toISOString();
 
 export default function CrearRegistro() {
     const { id } = useParams()
@@ -177,20 +177,19 @@ export default function CrearRegistro() {
         data.antecedFamiInfa = textoAntecedentes;
         data.educacion = textoEducacion;
         data.estadoCivil = textEstadoCivil;
-        console.log(data)
         try {
             const registrado = await crearRegistrosPaciente(data);
             if (registrado) {
-                console.log("conseguido")
+                alert("Registro medico agregado")
             } else {
-                console.log("no conseguido")
+                alert("Ha fallado el registro")
             }
             reset();
             navigate(`/dashboard/pacientes/${id}`);
         } catch (error) {
-            console.log("Error durante el registro:", error);
+            alert(`Error durante el registro:${error}`);
         } finally {
-            console.log("finalizado")
+            console.log("Registro Finalizado")
         }
     };
 

@@ -50,12 +50,13 @@ export interface RegistroMedico {
     educacion: string;
     detalleEducacion?: string | null;  // Puede ser null
     estadoCivil: string;
-    usaTratamientoInyectable: boolean;
-    usaTratamientoOral: boolean;
+    usaTratamientoInyectable: string;
+    usaTratamientoOral: string;
 }
 
 export interface RegistroMedicoDB extends RegistroMedico {
     id: string;
+    edadDicha:string;
 }
 
 
@@ -66,6 +67,8 @@ export interface RegistroMedicoList{
     edadDicha:string;
     peso: number;
     antecedFamiInfa: string;
+    usaTratamientoInyectable: string;
+    usaTratamientoOral: string;
 }
 
 
@@ -92,6 +95,11 @@ export interface TratamientoOralDB extends TratamientoOral{
     id: string;
     registro_id: string;
 }
+
+
+//Registro medico completo
+
+
 
 
 export interface FormRegistro extends RegistroMedico,TratamientoInyectable,TratamientoOral{

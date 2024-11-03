@@ -8,12 +8,13 @@ import { generarID } from "@/utils/GenerarID";
 const getDb: any = getDbInstance()
 
 
+
 export async function getRegistrosPaciente(paciente_id: string) {
 
     try {
         const db = await getDb;
         const sqlQuery = `
-            SELECT id,fechaDiagnostico,edadDicha,peso,antecedFamiInfa 
+            SELECT id,fechaDiagnostico,edadDicha,peso,antecedFamiInfa,usaTratamientoInyectable,usaTratamientoOral
             FROM RegistroMedico
             WHERE paciente_id = $1
             ORDER BY fechaDiagnostico ASC;
@@ -26,6 +27,84 @@ export async function getRegistrosPaciente(paciente_id: string) {
         return [];
     }
 }
+
+export async function getRegistroMedicRecie(paciente_id:string) {
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+                SELECT * 
+                FROM RegistroMedico 
+                WHERE paciente_id = $1 
+                ORDER BY fechaDiagnostico ASC 
+                LIMIT 1;
+        `;
+        // Ejecutar la consulta
+        const resultados = await db.select(sqlQuery, [paciente_id]);
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return [];
+    }
+}
+
+
+export async function getRegistroMedico(registro_id:string) {
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+                SELECT * 
+                FROM RegistroMedico 
+                WHERE id = $1 
+            ;
+        `;
+        // Ejecutar la consulta
+        const resultados = await db.select(sqlQuery, [registro_id]);
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return [];
+    }
+}
+
+
+
+export async function getTratamientoOral(registro_id:string) {
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+                SELECT * 
+                FROM TratamientoOral 
+                WHERE registro_id = $1 
+                LIMIT 1;
+        `;
+        // Ejecutar la consulta
+        const resultados = await db.select(sqlQuery, [registro_id]);
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return [];
+    }
+}
+
+export async function getTratamientoInyectable(registro_id:string) {
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+                SELECT * 
+                FROM TratamientoInyectable
+                WHERE registro_id = $1 
+                LIMIT 1;
+        `;
+        // Ejecutar la consulta
+        const resultados = await db.select(sqlQuery, [registro_id]);
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return [];
+    }
+}
+
+
 
 
 
