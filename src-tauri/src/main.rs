@@ -11,7 +11,8 @@ fn main() {
         description: "Crear tabla Administrador",
         sql:"CREATE TABLE IF NOT EXISTS Administrador (
     id TEXT PRIMARY KEY NOT NULL,
-    nombre TEXT NOT NULL,
+    nombreComple TEXT NOT NULL,
+    nombreUsuario TEXT NOT NULL,
     contrasenia TEXT NOT NULL
     );
 CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
