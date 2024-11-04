@@ -27,6 +27,7 @@ export const Q3Area2: QUnidaArea[] = [
 
 //estas son las ques area
 export const QuestArea2:QuestArea = {
+    desc:"Cooperación entre el sistema de salud y organismos comunitarios (o prestadores de servicios) y recursos comunitarios que desempeñan un papel importante en el manejo de la diabetes.",
     num: 3,
     quests: [
         {
@@ -42,5 +43,6 @@ export const QuestArea2:QuestArea = {
             componente:"Planes Regionales y/o Locales de Salud",
             quetUni: Q3Area2
         }
-    ]
+    ],
+    msgResult:["Puntuación total de la cooperación comunitaria"," Puntuación Promedio (puntuación de la cooperación comunitaria /"]
 }

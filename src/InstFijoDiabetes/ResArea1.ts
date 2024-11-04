@@ -51,6 +51,7 @@ export const Q6Area1: QUnidaArea[]  = [
 
 //estas son las ques area
 export const QuestArea1:QuestArea = {
+    desc:"El manejo de la diabetes puede ser más efectivo si el sistema de salud está organizado para controlar mejor las enfermedades crónicas y sus complicaciones.",
     num: 6,
     quests: [
         {
@@ -78,5 +79,6 @@ export const QuestArea1:QuestArea = {
             componente: "Beneficios relacionados con la educación del paciente para el auto cuido de la diabetes",
             quetUni: Q6Area1
         }
-    ]
+    ],
+    msgResult:["Puntuación Total de la organización del sistema de salud", "Puntuación promedio (puntuación de la organización del sistema de salud /"]
 }

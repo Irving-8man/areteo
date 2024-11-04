@@ -51,6 +51,7 @@ export const Q6Area5: QUnidaArea[]  = [
 
 //estas son las ques area
 export const QuestArea5:QuestArea = {
+    desc:"La evidencia sugiere que un manejo efectivo de la atención de diabetes incluye algo más que simplemente agregar otras intervenciones al sistema actual, que es basado en la atención de enfermedades de carácter agudo o intensivo. Podría requerir cambios en la organización de la práctica que repercutan en la prestación de la atención.",
     num: 6,
     quests: [
         {
@@ -78,5 +79,6 @@ export const QuestArea5:QuestArea = {
             componente: "Continuidad en el cuidado de la diabetes",
             quetUni: Q6Area5
         }
-    ]
+    ],
+    msgResult:["Puntuación total del apoyo técnico asistencial", "Puntuación promedio (puntuación del apoyo técnico asistencial /"]
 }

@@ -124,7 +124,7 @@ CREATE INDEX IF NOT EXISTS index_id_RegEvalACIC ON RegistroEvalACIC(id);
 
 CREATE TABLE IF NOT EXISTS ResEvalACIC (
     id TEXT PRIMARY KEY NOT NULL,
-    registroEvalACIC_id INTEGER NOT NULL,
+    registroEvalACIC_id TEXT NOT NULL,
     orden REAL NOT NULL,
     puntuacion REAL NOT NULL,
     FOREIGN KEY (registroEvalACIC_id) REFERENCES RegistroEvalACIC(id) ON DELETE CASCADE

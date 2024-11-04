@@ -28,6 +28,8 @@ export interface QUniOrden{
 
 //Esta es la area con las quest con el numero de preguntas
 export interface QuestArea {
+    desc:string;
     num: number;
     quests: QUniOrden[];
+    msgResult:[string,string]
 }

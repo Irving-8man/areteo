@@ -34,6 +34,7 @@ export const Q4Area3: QUnidaArea[] = [
 
 //estas son las ques area
 export const QuestArea3:QuestArea = {
+    desc:"Varios componentes que se manifiestan al nivel de la práctica, de cada proveedor de salud, han demostrado que mejoran la atención a la diabetes.",
     num: 4,
     quests: [
         {
@@ -53,5 +54,6 @@ export const QuestArea3:QuestArea = {
             componente: "Cambios del comportamiento y apoyo de grupo",
             quetUni: Q4Area3
         },
-    ]
+    ],
+    msgResult:["Puntuación Total del apoyo para el auto-cuidado de la diabetes"," Puntuación Promedio: (puntuación del apoyo del auto-cuidado /"]
 }

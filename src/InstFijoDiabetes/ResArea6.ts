@@ -44,6 +44,7 @@ export const Q5Area6: QUnidaArea[] = [
 
 //estas son las ques area
 export const QuestArea6:QuestArea = {
+    desc:"Un aspecto muy importante para la atención y programas de la diabetes es tener la información oportuna y útil acerca de los pacientes y las poblaciones de pacientes con diabetes.",
     num: 5,
     quests: [
         {
@@ -67,5 +68,6 @@ export const QuestArea6:QuestArea = {
             componente: "Protocolos y planes de tratamientos",
             quetUni: Q5Area6
         }
-    ]
+    ],
+    msgResult:["Puntuación total de los sistemas de información", "Puntuación promedio (puntuación de los sistemas de información /"]
 }

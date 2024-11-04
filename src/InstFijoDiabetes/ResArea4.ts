@@ -33,6 +33,7 @@ export const Q4Area4: QUnidaArea[] = [
 
 //estas son las ques area
 export const QuestArea4:QuestArea = {
+    desc:"El manejo efectivo de la diabetes asegura que el equipo de salud tenga acceso a información médica basada en evidencias para la atención y soporte de personas con diabetes.  Esto incluye evidencias medicas y guías clínicas o protocolos, consultas con especialistas, educación para el equipo de salud que este disponible y facilitar información al equipo de salud acerca de tratamientos efectivos.",
     num: 4,
     quests: [
         {
@@ -52,5 +53,6 @@ export const QuestArea4:QuestArea = {
             componente: "Informar a las personas con diabetes acerca de guías/normas medicas",
             quetUni: Q4Area4
         },
-    ]
+    ],
+    msgResult:["Puntuación total del diseño del sistema de atención de diabetes","Puntuación promedio (puntuación del diseño del sistema /"]
 }
