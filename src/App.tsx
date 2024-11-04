@@ -62,8 +62,8 @@ export default function App() {
               <Route path='instrumentoFijo' element={<InstrumentoFijo />} >
                   <Route index element={<OpcionesInstrumento />} /> 
                   <Route path='area/:areaId' element={<AreaResultados />} />
-                  <Route path='area/:areadId/evaluar' element={<AreaEvaluacion />} />
-                  <Route path='resultados/:areadId/:respID' element={<AreaRespuesta />} />
+                  <Route path='area/:areaId/evaluar' element={<AreaEvaluacion />} />
+                  <Route path='resultados/:respID' element={<AreaRespuesta />} />
               </Route>
             </Route>
 

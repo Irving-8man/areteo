@@ -90,8 +90,8 @@ CREATE INDEX IF NOT EXISTS index_id_TratOra ON TratamientoOral(id);
     },
     Migration {
         version: 3,
-        description: "Crear tabla Plantillas",
-        sql:"CREATE TABLE IF NOT EXISTS Plantilla(
+        description: "Crear tabla Instrumento",
+        sql:"CREATE TABLE IF NOT EXISTS Instrumento(
     id TEXT PRIMARY KEY NOT NULL,
     nombre TEXT NOT NULL,
     descripcion TEXT,
@@ -100,8 +100,34 @@ CREATE INDEX IF NOT EXISTS index_id_TratOra ON TratamientoOral(id);
     fechaCreacion TEXT NOT NULL,
     fechaModific TEXT NOT NULL
 );
+CREATE INDEX IF NOT EXISTS index_id_Instru ON Instrumento(id);
+"
+,
+        kind: MigrationKind::Up,
+    },
+    Migration {
+        version: 4,
+        description: "Crear tabla Respuetas ACIC",
+        sql:"
+    CREATE TABLE IF NOT EXISTS RegistroEvalACIC (
+    id TEXT PRIMARY KEY NOT NULL,
+    area_id INTEGER NOT NULL,
+    fechaEvaluacion TEXT NOT NULL,
+    puntuacionTotal REAL NOT NULL,
+    aplicador TEXT NOT NULL,
+    respondiente TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS index_id_RegEvalACIC ON RegistroEvalACIC(id);
 
-CREATE INDEX IF NOT EXISTS index_id_Instru ON Plantilla(id);
+
+CREATE TABLE IF NOT EXISTS ResEvalACIC (
+    id TEXT PRIMARY KEY NOT NULL,
+    registroEvalACIC_id INTEGER NOT NULL,
+    orden REAL NOT NULL,
+    puntuacion REAL NOT NULL,
+    FOREIGN KEY (registroEvalACIC_id) REFERENCES RegistroEvalACIC(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS index_id_ResEvalACIC ON ResEvalACIC(id);
 "
 ,
         kind: MigrationKind::Up,
