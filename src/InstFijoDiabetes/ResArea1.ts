@@ -55,27 +55,27 @@ export const QuestArea1:QuestArea = {
     quests: [
         {
             orden: 1,
-            componente: "Disponibilidad de recursos comunitarios para las personas con diabetes",
+            componente: "Organización y liderazgo para la atención de la diabetes",
             quetUni: Q1Area1
         }, {
             orden: 2,
-            componente: "Disponibilidad de recursos comunitarios para las personas con diabetes",
+            componente: "Metas organizacionales para la atención de la diabetes",
             quetUni: Q2Area1
         }, {
             orden: 3,
-            componente: "Disponibilidad de recursos comunitarios para las personas con diabetes",
+            componente: "Estrategias de mejoramiento para la atención de la diabetes",
             quetUni: Q3Area1
         }, {
             orden: 4,
-            componente: "Disponibilidad de recursos comunitarios para las personas con diabetes",
+            componente: "Incentivos que incluye reconocimiento para el trabajador de la salud y regulaciones para la atención de la diabetes",
             quetUni: Q4Area1
         }, {
             orden: 5,
-            componente: "Disponibilidad de recursos comunitarios para las personas con diabetes",
+            componente: "Lideres influyentes dentro del sector salud como de otros ministerios con poder de decisión",
             quetUni: Q5Area1
         }, {
             orden: 6,
-            componente: "Disponibilidad de recursos comunitarios para las personas con diabetes",
+            componente: "Beneficios relacionados con la educación del paciente para el auto cuido de la diabetes",
             quetUni: Q6Area1
         }
     ]

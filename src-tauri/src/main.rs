@@ -114,6 +114,7 @@ CREATE INDEX IF NOT EXISTS index_id_Instru ON Instrumento(id);
     area_id INTEGER NOT NULL,
     fechaEvaluacion TEXT NOT NULL,
     puntuacionTotal REAL NOT NULL,
+    promedio REAL NOT NULL,
     aplicador TEXT NOT NULL,
     respondiente TEXT NOT NULL
 );

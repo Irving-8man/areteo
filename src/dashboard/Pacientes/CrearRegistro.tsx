@@ -496,11 +496,11 @@ export default function CrearRegistro() {
                             </div>
                         </li>
                     </ul>
-                    <div className="mt-20 flex gap-12 items-center">
-                        <Link to={`/dashboard/pacientes/${String(id)}`}><Button >Cancelar</Button></Link>
-                        <Button type="submit" appearance="primary">
+                    <div className="mt-20 flex gap-5 items-center justify-center">
+                        <Button type="submit" appearance="primary" style={{width:"500px"}}>
                             Crear Registro
                         </Button>
+                        <Link to={`/dashboard/pacientes/${String(id)}`}><Button style={{width:"500px"}} >Cancelar</Button></Link>
                     </div>
                 </form>
             </section>

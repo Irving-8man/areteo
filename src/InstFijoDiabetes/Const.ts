@@ -1,6 +1,10 @@
 import { AreaFija, InfoArea, QuestArea } from "@/models/typesFijo";
 import { QuestArea1 } from "./ResArea1";
 import { QuestArea2 } from "./ResArea2";
+import { QuestArea3 } from "./ResArea3";
+import { QuestArea4 } from "./ResArea4";
+import { QuestArea5 } from "./ResArea5";
+import { QuestArea6 } from "./ResArea6";
 
 export const AREASFIJAS: AreaFija[] = [
     { id: 1, nombre: "Organización del Sistema de Salud" },
@@ -24,7 +28,11 @@ export const INFORMACIONAREAS: InfoArea[] = [
 //Devolver segun rama madre
 export const FORMSAREA: { [key: number]: QuestArea } = {
     1: QuestArea1,
-    2: QuestArea2
+    2: QuestArea2,
+    3: QuestArea3,
+    4: QuestArea4,
+    5: QuestArea5,
+    6: QuestArea6
 }
 
 export function QuetSeleccion(id: number) {

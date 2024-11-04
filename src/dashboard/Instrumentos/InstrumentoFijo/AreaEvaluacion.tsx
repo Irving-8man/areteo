@@ -1,10 +1,10 @@
 import { QuetSeleccion } from "@/InstFijoDiabetes/Const";
 import { QuestArea } from "@/models/typesFijo";
-import { Select } from "@fluentui/react-components";
+import { Button, Select } from "@fluentui/react-components";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { z } from 'zod';
-
+import { ArrowLeft20Filled } from "@fluentui/react-icons";
 
 // Esquema de validación de Zod aceptando strings
 const respuestaSchema = z.object({
@@ -19,7 +19,7 @@ const respuestaSchema = z.object({
 export default function AreaEvaluacion() {
     const { areaId } = useParams();
     const id = parseInt(areaId!);
-
+    const [error, setError] = useState<string | null>(null);
     const AreaPreguntas: QuestArea = QuetSeleccion(id);
     const { quests } = AreaPreguntas;
 
@@ -30,7 +30,6 @@ export default function AreaEvaluacion() {
         }, {} as { [key: number]: string })
     );
 
-    const [error, setError] = useState<string | null>(null);
 
     if (!AreaPreguntas) {
         return <div>Área no encontrada</div>;
@@ -47,16 +46,13 @@ export default function AreaEvaluacion() {
         e.preventDefault();
         try {
             respuestaSchema.parse({ respuestas });
-
             // Convertir las respuestas a enteros antes de procesar
             const respuestasArray = Object.entries(respuestas).map(([orden, valor]) => ({
-                orden: parseInt(orden), // Convertir el orden a número
-                respuesta: parseInt(valor) // Convertir el valor a número
+                orden: parseInt(orden),
+                respuesta: parseInt(valor)
             }));
 
             console.log('Respuestas enviadas:', respuestasArray);
-
-            // Aquí puedes enviar las respuestas al servidor o manejarlas como necesites
 
             setError(null);
         } catch (e) {
@@ -69,6 +65,10 @@ export default function AreaEvaluacion() {
 
     return (
         <section>
+            <div className="mb-2">
+                <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}><Button icon={<ArrowLeft20Filled />}>Área {id}</Button></Link>
+            </div>
+
             <h2 className="font-bold text-2xl">Evaluación de Área {id}</h2>
             <form onSubmit={handleSubmit} className="min-h-[100vh] flex flex-col gap-28 mt-6">
                 {quests.map((pregunta) => (
@@ -96,10 +96,9 @@ export default function AreaEvaluacion() {
                                     </div>
                                 ))}
                             </div>
-
                             <div className="flex justify-center mt-6">
-                                <div className="w-[300px]">
-                                    <p>Puntuación para componente {pregunta.orden}</p>
+                                <div className="w-[200px]">
+                                    <p className="font-semibold text-center mb-1 text-green-700">Puntuación para componente {pregunta.orden}</p>
                                     <Select
                                         required
                                         onChange={(e) => handleChange(pregunta.orden, e.target.value)}
@@ -117,7 +116,7 @@ export default function AreaEvaluacion() {
                     </div>
                 ))}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" className="mt-4 p-2 bg-blue-500 text-white">Enviar Respuestas</button>
+                <Button type="submit" className="mt-4 p-2" appearance="primary">Enviar Respuestas</Button>
             </form>
         </section>
     );
