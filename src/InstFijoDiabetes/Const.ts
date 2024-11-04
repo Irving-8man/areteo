@@ -1,4 +1,6 @@
-import { AreaFija, InfoArea } from "@/models/typesFijo";
+import { AreaFija, InfoArea, QuestArea } from "@/models/typesFijo";
+import { QuestArea1 } from "./ResArea1";
+import { QuestArea2 } from "./ResArea2";
 
 export const AREASFIJAS: AreaFija[] = [
     { id: 1, nombre: "Organización del Sistema de Salud" },
@@ -17,3 +19,14 @@ export const INFORMACIONAREAS: InfoArea[] = [
     { id: 5, nombre: "Apoyo técnico", descripcion: "Un cuidado efectivo de atención a la diabetes requiere más que simplemente agregar intervenciones a un sistema existente centrado en cuidados médicos agudos. Más bien, requiere de cambios básicos en la infraestructura del sistema de salud. La atención eficaz de diabetes a veces requiere una delegación clara de las funciones y responsabilidades del médico a otros profesionales quienes son parte del equipo de cuidado a la salud (por ejemplo: enfermeras, educadores de salud, etc.) y quienes tienen el conocimiento y el tiempo para llevar a cabo una variedad de tareas necesarias para manejar las complicaciones de la diabetes. El cuidado efectivo de diabetes también implica el uso de las visitas planificadas, el cuidado continuo y el seguimiento regular." },
     { id: 6, nombre: "Sistema de información de la Diabetes Mellitus", descripcion: "Información a tiempo sobre los pacientes individuales y sobre la población de pacientes con diabetes es una característica crítica de los programas efectivos, especialmente aquellos que emplean enfoques basados en la población. El primer paso es establecer un registro de enfermedades para las prácticas individuales, que incluyan información de elementos de atención. Equipo de salud que tienen acceso a un registro, pueden localizar pacientes con necesidades específicas y entregarles una atención planificada, pueden recibir retroalimentación sobre su desempeño y pueden implementar sistemas de recordatorio." }
 ]
+
+
+//Devolver segun rama madre
+export const FORMSAREA: { [key: number]: QuestArea } = {
+    1: QuestArea1,
+    2: QuestArea2
+}
+
+export function QuetSeleccion(id: number) {
+    return FORMSAREA[id];
+}
