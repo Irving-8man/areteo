@@ -2,7 +2,7 @@ import { Button } from "@fluentui/react-components";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import { useSesion } from "@/hooks/useSesion";
-import { SpinnerIos20Filled} from "@fluentui/react-icons";
+import { ArrowCounterclockwise20Filled} from "@fluentui/react-icons";
 
 export default function SideNav() {
     const {logout}= useSesion();
@@ -35,7 +35,7 @@ export default function SideNav() {
                 </div>
 
                 <div>
-                    <Button appearance='transparent' style={{ width: "100%",justifyContent:"flex-start" }} onClick={handleReloadPage} icon={<SpinnerIos20Filled className="w-3" id="spin" />}>
+                    <Button appearance='transparent' style={{ width: "100%",justifyContent:"flex-start" }} onClick={handleReloadPage} icon={<ArrowCounterclockwise20Filled className="w-3" id="spin" />}>
                         Recargar aplicación
                     </Button>
                     <Button appearance='transparent' style={{ width: "100%", margin: "0", padding: "0", border: "0", borderRadius: "0" }}>

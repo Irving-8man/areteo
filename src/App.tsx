@@ -8,8 +8,18 @@ import Inicio from './dashboard/Inicio';
 import Pacientes from './dashboard/Pacientes';
 import ListaPacientes from './dashboard/Pacientes/ListaPacientes';
 import VisualizarPaciente from './dashboard/Pacientes/VisualizarPaciente';
+import DatosPacientes from './dashboard/Pacientes/DatosPacientes';
+import VerResulRegistro from './dashboard/Pacientes/VerResulRegistro';
+import CrearRegistro from './dashboard/Pacientes/CrearRegistro';
 //Instrumentos
 import Instrumentos from './dashboard/Instrumentos';
+import ListaInstrumentos from './dashboard/Instrumentos/ListaInstrumentos';
+//Instrumento fijo
+import InstrumentoFijo from './dashboard/Instrumentos/InstrumentoFijo/InstrumentoFijo';
+import AreaEvaluacion from './dashboard/Instrumentos/InstrumentoFijo/AreaEvaluacion';
+import AreaResultados from './dashboard/Instrumentos/InstrumentoFijo/AreaResultados';
+import AreaRespuesta from './dashboard/Instrumentos/InstrumentoFijo/AreaRespuesta';
+import OpcionesInstrumento from './dashboard/Instrumentos/InstrumentoFijo/OpcionesInstrumento';
 //Plantillas
 import Plantillas from './dashboard/Plantillas';
 import ListaPlantillas from './dashboard/Plantillas/ListaPlantillas';
@@ -23,10 +33,10 @@ import Almacenamiento from './dashboard/Almacenamiento';
 import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
 import { SesionProvider } from './context/SesionContext';
-import CrearRegistro from './dashboard/Pacientes/CrearRegistro';
 import VisualizarPlantilla from './dashboard/Plantillas/VisualizarPlantilla';
-import DatosPacientes from './dashboard/Pacientes/DatosPacientes';
-import VerResulRegistro from './dashboard/Pacientes/VerResulRegistro';
+
+
+
 
 
 export default function App() {
@@ -46,15 +56,28 @@ export default function App() {
               <Route path=':id/result-registro/:idRegis' element={<VerResulRegistro/>} />
             </Route>
 
-            <Route path='instrumentos' element={<Instrumentos />} />
+            <Route path='instrumentos' element={<Instrumentos />} >
+              <Route index element={<ListaInstrumentos />} /> 
+
+              <Route path='instrumentoFijo' element={<InstrumentoFijo />} >
+                  <Route index element={<OpcionesInstrumento />} /> 
+                  <Route path='area/:areaId' element={<AreaResultados />} />
+                  <Route path='area/:areadId/evaluar' element={<AreaEvaluacion />} />
+                  <Route path='resultados/:areadId/:respID' element={<AreaRespuesta />} />
+              </Route>
+            </Route>
+
+
+            <Route path='analiticas' element={<Analiticas />} />
+            <Route path='almacenamiento' element={<Almacenamiento />} />
+
+            {/**PAuta */}
             <Route path='plantillas' element={<Plantillas />} >
               <Route index element={<ListaPlantillas />} />
               <Route path='crear-plantilla' element={<CrearPlantilla />} />
               <Route path='cargar-plantilla' element={<CargarPlantilla />} />
               <Route path=':id' element={<VisualizarPlantilla />} />
             </Route>
-            <Route path='analiticas' element={<Analiticas />} />
-            <Route path='almacenamiento' element={<Almacenamiento />} />
           </Route>
         </Routes>
       </SesionProvider>

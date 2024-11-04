@@ -6,12 +6,12 @@ import {
     Button,
 } from "@fluentui/react-components";
 import { Link } from "react-router-dom";
-import {ArrowRight20Filled} from "@fluentui/react-icons";
+import { ArrowRight20Filled } from "@fluentui/react-icons";
 
 
 interface propsI {
     paciente: PacienteRegistrado;
-    num:number
+    num: number
 }
 
 export default function ItemPacienteList(props: propsI) {
@@ -19,12 +19,12 @@ export default function ItemPacienteList(props: propsI) {
     return (
         <tr
             key={props.paciente.id}
-            className="w-full border py-3 text-sm 
-                hover:bg-gray-200
-            "
+            className={`w-full border py-3 text-sm 
+                ${props.num % 2 === 0 ? "bg-gray-200" : ""}
+            `}
         >
             <td className="whitespace-nowrap py-3 pl-6 pr-3 flex flex-row items-center gap-[5px]">
-                <p className="font-bold mr-2">{props.num+1}.</p>
+                <p className="font-bold mr-2">{props.num + 1}.</p>
                 <AvatarPaciente
                     edad={calcularEdad(props.paciente.fechaNacimiento).valor}
                     label={`${props.paciente.primerNombre} ${props.paciente.apellidoPaterno}`}

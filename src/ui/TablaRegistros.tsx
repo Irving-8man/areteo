@@ -140,7 +140,7 @@ export default function TablaRegistros(props: Props) {
                             </thead>
                             <tbody >
                                 <tr>
-                                    <td colSpan={4} className="px-4 py-4 text-center text-gray-500">
+                                    <td colSpan={5} className="px-4 py-4 text-center text-gray-500">
                                         No hay Registros Medicos disponibles.
                                     </td>
                                 </tr>

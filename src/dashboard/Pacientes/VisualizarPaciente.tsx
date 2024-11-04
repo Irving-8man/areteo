@@ -119,7 +119,7 @@ export default function VisualizarPaciente() {
     return (
         <>
             <section className="flex justify-between">
-                <LinkR to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Volver</Button></LinkR>
+                <LinkR to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Pacientes</Button></LinkR>
                 {pacienteData.existe && (
                     <LinkR to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
                         <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
