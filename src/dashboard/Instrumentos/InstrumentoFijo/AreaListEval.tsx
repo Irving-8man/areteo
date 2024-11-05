@@ -1,9 +1,8 @@
 import { AREASFIJAS, INFORMACIONAREAS } from "@/InstFijoDiabetes/Const";
 import { Button, Card, Input } from "@fluentui/react-components";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Add20Filled, ArrowLeft20Filled, Search20Filled } from "@fluentui/react-icons";
-import { useQuery } from "@tanstack/react-query";
 import { getRegistrosACIC } from "@/services/InstACICController";
 import { ResEvalACICList } from "@/models/typesFijo";
 import TablaEvalACIC from "@/ui/TablaEvalACIC";
@@ -13,25 +12,26 @@ export default function AreaListEval() {
     const { areaId } = useParams();
     const areaIdSafe = parseInt(areaId!, 10);
     const [filterText, setFilterText] = useState<string>('');
+    const [registrosACIC, setRegistrosACIC] = useState<ResEvalACICList[]>([]);
 
-    const { data: RegistrosEval, isError, isLoading } = useQuery(
-        {
-            queryKey: ['Evaluaciones', areaIdSafe],
-            queryFn: async () => {
-                const result = await getRegistrosACIC(areaIdSafe);
-                return result || [];
-            },
-            refetchOnWindowFocus: false,
-            refetchOnMount: false,
-            staleTime: 1000 * 60 * 5, // 5 minutos de caché
-            refetchOnReconnect: false,
-        }
-    )
+
+    // Cada vez que cambian los searchParams, se ejecuta la búsqueda
+    useEffect(() => {
+        const fetchData = async () => {
+            const resRegiACIC = await getRegistrosACIC(areaIdSafe);
+            if (resRegiACIC) {
+                setRegistrosACIC(resRegiACIC);
+            } else {
+                setRegistrosACIC([]);
+            }
+        };
+        fetchData();
+    }, [areaIdSafe]);
 
     const evaluacionesFiltra = useMemo(() => {
-        if (!RegistrosEval) return [];
+        if (!registrosACIC) return [];
         return filterText.trim().length > 0
-            ? RegistrosEval.filter((evaluation: ResEvalACICList) => {
+            ? registrosACIC.filter((evaluation: ResEvalACICList) => {
                 return (
                     evaluation.fechaEvaluacion.toLowerCase().includes(filterText.toLowerCase()) ||
                     evaluation.promedio.toString().includes(filterText) ||
@@ -40,8 +40,8 @@ export default function AreaListEval() {
                     evaluation.evaluacionDicha.toLowerCase().includes(filterText.toLowerCase())
                 );
             })
-            : RegistrosEval;
-    }, [RegistrosEval, filterText]);
+            : registrosACIC;
+    }, [registrosACIC, filterText]);
 
     const handleDeleteResEval = (id: string) => {
         console.log('hola desde', id)
@@ -63,10 +63,6 @@ export default function AreaListEval() {
     if (!infoArea) {
         return <div>Información no encontrada</div>;
     }
-
-    if (isLoading) return <p>Cargando evaluaciones...</p>;
-    if (isError) return <p>Error al cargar las evaluaciones.</p>;
-
 
     return (
         <div>

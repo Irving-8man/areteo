@@ -2,9 +2,6 @@ import { ResEvalACICList } from '@/models/typesFijo';
 import ItemEvalACICList from '@/componets/ItemEvalACICList';
 
 
-
-
-
 interface Props {
     ResEvalsACIC: ResEvalACICList[];
     borrarResEval: (id: string) => void
@@ -13,8 +10,6 @@ interface Props {
 // Adaptación del componente principal
 export default function TablaEvalACIC(props: Props) {
     const { ResEvalsACIC, borrarResEval } = props;
-
-
     return (
         <div className="flow-root min-h-[50vh]">
             <div className="inline-block min-w-full align-middle">
@@ -26,6 +21,7 @@ export default function TablaEvalACIC(props: Props) {
                                 <tr>
                                     <th scope="col" className="px-4 py-5 font-medium">Fecha de Evaluación</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Promedio</th>
+                                    <th scope="col" className="px-4 py-5 font-medium">Resultado</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Aplicador</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Evaluado</th>
                                     <th scope="col" className="px-3 py-5 font-medium">
