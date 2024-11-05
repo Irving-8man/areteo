@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const formSchemaAdminRegistro = z.object({
-    nombre: z.string().min(3, {
+    nombreComple: z.string().min(3, {
+        message: "El Nombre debe tener mínimo 3 caracteres.",
+    }),
+    nombreUsuario: z.string().min(3, {
         message: "El Nombre debe tener mínimo 3 caracteres.",
     }),
     contrasenia: z.string().min(8, {
@@ -16,7 +19,10 @@ export const formSchemaAdminRegistro = z.object({
 
 
 export const formSchemaAdminLogin = z.object({
-    nombre: z.string().min(0, {
+    nombreComple: z.string().min(0, {
+        message:"Por favor, escriba el Nombre",
+    }),
+    nombreUsuario: z.string().min(0, {
         message:"Por favor, escriba el Nombre",
     }),
     contrasenia: z.string().min(0, {

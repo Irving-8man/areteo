@@ -27,7 +27,8 @@ export default function RegistrarAdmin() {
     // useForm con validacion de zod
     const { register, handleSubmit, formState: { errors }, } = useForm<z.infer<typeof Schema>>({
         resolver: zodResolver(Schema), defaultValues: {
-            nombre: "",
+            nombreComple: "",
+            nombreUsuario: "",
             contrasenia: "",
             confirmContrasenia: ""
         },
@@ -36,7 +37,7 @@ export default function RegistrarAdmin() {
 
     // Procesar información
     const onSubmit = async (data: z.infer<typeof Schema>) => {
-        const dataAdim: Admin = (({ nombre, contrasenia }) => ({ nombre, contrasenia }))(data);
+        const dataAdim: Admin = (({ nombreComple, nombreUsuario, contrasenia }) => ({ nombreComple, nombreUsuario, contrasenia }))(data);
         try {
             // Aquí llamas a registrarAdmin solo para hacer una verificación
             const isRegistrado = await registrarAdmin(dataAdim);
@@ -65,11 +66,15 @@ export default function RegistrarAdmin() {
                     <div>
                         <p className="font-semibold">Ingrese los siguientes datos: </p>
                     </div>
-
                     <div className="flex-col">
-                        <Label className="block">Nombre</Label>
-                        <Input appearance="underline" contentBefore={<PersonRegular />} placeholder="Fabian" {...register("nombre")} />
-                        {errors.nombre && <p className="max-w-[25ch] text-sm">{errors.nombre.message}</p>}
+                        <Label className="block">Nombre de Usuario</Label>
+                        <Input appearance="underline" contentBefore={<PersonRegular />} placeholder="Fabian Pérez" {...register("nombreUsuario")} />
+                        {errors.nombreUsuario && <p className="max-w-[25ch] text-sm">{errors.nombreUsuario.message}</p>}
+                    </div>
+                    <div className="flex-col">
+                        <Label className="block">Nombre Completo</Label>
+                        <Input appearance="underline" contentBefore={<PersonRegular />} placeholder="Fabian Alejandro Pérez Gómez" {...register("nombreComple")} />
+                        {errors.nombreComple && <p className="max-w-[25ch] text-sm">{errors.nombreComple.message}</p>}
                     </div>
                     <div>
                         <Label className="block">Contraseña</Label>

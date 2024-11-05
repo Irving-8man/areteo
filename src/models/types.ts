@@ -1,6 +1,7 @@
 //Administrador
 export interface Admin {
-    nombre: string;
+    nombreComple: string;
+    nombreUsuario: string;
     contrasenia: string;
 }
 

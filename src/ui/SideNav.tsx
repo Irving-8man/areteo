@@ -40,7 +40,7 @@ export default function SideNav() {
                     </Button>
                     <Button appearance='transparent' style={{ width: "100%", margin: "0", padding: "0", border: "0", borderRadius: "0" }}>
                         <Link
-                            to="/dashboard/perfil"
+                            to="/dashboard/actualizar"
                             className="flex w-full h-[48px] items-center justify-start gap-2 text-sm font-medium p-4"
                         >
                             <p>Mi Perfil</p>

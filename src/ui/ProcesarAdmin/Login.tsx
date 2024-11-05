@@ -20,7 +20,8 @@ export default function Login() {
     const Schema = formSchemaAdminLogin
     const { register, handleSubmit, formState: { errors }, } = useForm<z.infer<typeof Schema>>({
         resolver: zodResolver(Schema), defaultValues: {
-            nombre: "",
+            nombreUsuario: "",
+            nombreComple: "",
             contrasenia: "",
         },
     });
@@ -28,7 +29,7 @@ export default function Login() {
 
     //procesar informacion de formulario
     const onSubmit = async (data: z.infer<typeof Schema>) => {
-        const dataAdim: Admin = (({ nombre, contrasenia }) => ({ nombre, contrasenia }))(data);
+        const dataAdim: Admin = (({ nombreUsuario, nombreComple, contrasenia }) => ({ nombreUsuario, nombreComple, contrasenia }))(data);
         try {        
             const isLogin = await login(dataAdim);
             if (isLogin) {
@@ -51,8 +52,8 @@ export default function Login() {
 
                     <div className="flex-col">
                         <InfoLabel className="block">Usuario</InfoLabel>
-                        <Input appearance="underline" {...register("nombre")} />
-                        {errors.nombre && <p>{errors.nombre.message}</p>}
+                        <Input appearance="underline" {...register("nombreUsuario")} />
+                        {errors.nombreUsuario && <p>{errors.nombreUsuario.message}</p>}
                     </div>
                     <div>
                         <InfoLabel className="block">Contraseña</InfoLabel>

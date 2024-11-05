@@ -29,6 +29,8 @@ import CrearPlantilla from './dashboard/Plantillas/CrearPlantilla';
 import Analiticas from './dashboard/Analiticas';
 //Almacenamiento
 import Almacenamiento from './dashboard/Almacenamiento';
+//Actualiazar datos
+import Actualizar from './dashboard/Actualizar';
 //Proteccion de rutas
 import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
@@ -70,6 +72,7 @@ export default function App() {
 
             <Route path='analiticas' element={<Analiticas />} />
             <Route path='almacenamiento' element={<Almacenamiento />} />
+            <Route path='actualizar' element={<Actualizar />} />
 
             {/**PAuta */}
             <Route path='plantillas' element={<Plantillas />} >

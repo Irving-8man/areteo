@@ -30,12 +30,13 @@ export async function registrarAdmin(data: Admin): Promise<boolean> {
 
         const nuevoAdmin: AdminRegistrado = {
             id: nuevoID,
-            nombre: data.nombre,
+            nombreComple: data.nombreComple,
+            nombreUsuario: data.nombreUsuario,
             contrasenia: contraseniaHashed
         }
         const registrado = await db.execute(
-            "INSERT into Administrador (id, nombre, contrasenia) VALUES (?, ?, ?)",
-            [nuevoAdmin.id, nuevoAdmin.nombre, nuevoAdmin.contrasenia],
+            "INSERT into Administrador (id, nombreComple, nombreUsuario, contrasenia) VALUES (?, ?, ?, ?)",
+            [nuevoAdmin.id, nuevoAdmin.nombreComple, nuevoAdmin.nombreUsuario, nuevoAdmin.contrasenia],
         );
 
         if (registrado) {
@@ -61,7 +62,7 @@ export async function verificarAdmin(data: Admin): Promise<AdminRegistrado | nul
             const admin = adminArray[0];
             
             //Comprueba el nombre
-            if(admin.nombre === data.nombre){
+            if(admin.nombreUsuario === data.nombreUsuario){
                 //Valida la contraseña
                 const isContrasenia =  await verificarContrasenia(data.contrasenia,admin.contrasenia);
 
