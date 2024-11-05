@@ -17,8 +17,6 @@ import { ResEvalACICList } from "@/models/typesFijo";
 import { format } from "@formkit/tempo";
 import { Link } from "react-router-dom";
 
-
-
 const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 
 
@@ -29,7 +27,7 @@ interface RowProps {
 }
 
 
-export default function ItemEvalACICList(props: RowProps) {
+export function ItemEvalACICList(props: RowProps) {
     const { ResEvalACIC, borrarResEval, num } = props
     return (
         <tr className={`w-full border-b text-sm ${num % 2 === 0 ? "bg-gray-200" : ""}`}>

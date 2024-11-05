@@ -293,7 +293,7 @@ export default function AreaEvaluacion() {
                         <div className="flex justify-between mt-5">
                             <Link to={`/dashboard/instrumentos/instrumentoFijo/resultados/${String(id)}/${String(resultados.registroId)}`}>
                                 <Button appearance="secondary" className="p-6" style={{ padding: "5px", width: "150px" }}>
-                                    Ver Evaluación
+                                    Revisar evaluación
                                 </Button>
                             </Link>
 

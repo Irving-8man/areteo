@@ -1,52 +1,46 @@
 import { AREASFIJAS, INFORMACIONAREAS } from "@/InstFijoDiabetes/Const";
-import { Button, Card, Input } from "@fluentui/react-components";
+import { Button, Card } from "@fluentui/react-components";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Add20Filled, ArrowLeft20Filled, Search20Filled } from "@fluentui/react-icons";
+import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
+import { useQuery } from "@tanstack/react-query";
 import { getRegistrosACIC } from "@/services/InstACICController";
 import { ResEvalACICList } from "@/models/typesFijo";
-import TablaEvalACIC from "@/ui/TablaEvalACIC";
+import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
+import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
+
+
 
 
 export default function AreaListEval() {
     const { areaId } = useParams();
     const areaIdSafe = parseInt(areaId!, 10);
-    const [filterText, setFilterText] = useState<string>('');
-    const [registrosACIC, setRegistrosACIC] = useState<ResEvalACICList[]>([]);
+    const [evaluacionesFiltradas, setEvaluacionesFiltradas] = useState<ResEvalACICList[]>([]);
+
+    const { data: RegistrosEval, isError, isLoading } = useQuery(
+        {
+            queryKey: ['Evaluaciones', areaIdSafe],
+            queryFn: async () => {
+                const result = await getRegistrosACIC(areaIdSafe);
+                return result || [];
+            },
+            refetchOnWindowFocus: false,
+        }
+    )
 
 
-    // Cada vez que cambian los searchParams, se ejecuta la búsqueda
     useEffect(() => {
-        const fetchData = async () => {
-            const resRegiACIC = await getRegistrosACIC(areaIdSafe);
-            if (resRegiACIC) {
-                setRegistrosACIC(resRegiACIC);
-            } else {
-                setRegistrosACIC([]);
-            }
-        };
-        fetchData();
-    }, [areaIdSafe]);
+        if (RegistrosEval && evaluacionesFiltradas.length === 0) {
+            setEvaluacionesFiltradas([]);
+        }
+    }, [RegistrosEval, evaluacionesFiltradas.length]);
 
-    const evaluacionesFiltra = useMemo(() => {
-        if (!registrosACIC) return [];
-        return filterText.trim().length > 0
-            ? registrosACIC.filter((evaluation: ResEvalACICList) => {
-                return (
-                    evaluation.fechaEvaluacion.toLowerCase().includes(filterText.toLowerCase()) ||
-                    evaluation.promedio.toString().includes(filterText) ||
-                    evaluation.aplicador.toLowerCase().includes(filterText.toLowerCase()) ||
-                    evaluation.respondiente.toLowerCase().includes(filterText.toLowerCase()) ||
-                    evaluation.evaluacionDicha.toLowerCase().includes(filterText.toLowerCase())
-                );
-            })
-            : registrosACIC;
-    }, [registrosACIC, filterText]);
 
+    /*
     const handleDeleteResEval = (id: string) => {
         console.log('hola desde', id)
     };
-
+*/
     //Fucniones de busqueda por defecto
     const area = useMemo(() => {
         return AREASFIJAS.find(a => a.id === areaIdSafe);
@@ -56,6 +50,9 @@ export default function AreaListEval() {
         return INFORMACIONAREAS.find(a => a.id === areaIdSafe);
     }, [areaIdSafe])
 
+
+
+
     if (!area) {
         return <div>Área no encontrada</div>;
     }
@@ -63,6 +60,10 @@ export default function AreaListEval() {
     if (!infoArea) {
         return <div>Información no encontrada</div>;
     }
+
+    if (isLoading) return <p>Cargando evaluaciones...</p>;
+    if (isError) return <p>Error al cargar las evaluaciones.</p>;
+
 
     return (
         <div>
@@ -78,28 +79,31 @@ export default function AreaListEval() {
 
                     <ul className="flex flex-col gap-3 justify-center">
                         <li>
-                            <Button appearance="outline">Hola</Button>
+                            {area && (
+                                <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}/evaluar`}>
+                                    <Button appearance="primary" icon={<Add20Filled />}>Evaluar Ahora</Button>
+                                </Link>
+                            )}
+                        </li>
+                        <li>
+                            <Button appearance="outline">en contruccion</Button>
                         </li>
                     </ul>
                 </Card>
             </section>
 
-
-            <section className="mt-10">
-                <div className="flex justify-end gap-2">
-                    <Input type="text"
-                        placeholder="Filtrar las evaluaciones hechas..."
-                        contentBefore={<Search20Filled />}
-                        value={filterText}
-                        style={{ width: "400px" }}
-                        onChange={(e) => setFilterText(e.target.value)} />
-                    {area && (
-                        <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}/evaluar`}>
-                            <Button appearance="primary" icon={<Add20Filled />}>Nueva Evaluación</Button>
-                        </Link>
-                    )}
+            {/**probando */}
+            <section>
+                <div className="my-20">
+                    <h2 className="font-semibold text-xl mb-6"> Lista de Evaluaciones ACIC recabadas del área</h2>
+                    {RegistrosEval && <ListEvalPagAcord evaluaciones={RegistrosEval} />}
                 </div>
-                <TablaEvalACIC ResEvalsACIC={evaluacionesFiltra} borrarResEval={handleDeleteResEval} />
+
+
+                <div className="mt-10">
+                    {RegistrosEval && <FiltEvalPag evaluaciones={RegistrosEval} />}
+                </div>
+
             </section>
         </div>
     )
