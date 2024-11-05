@@ -32,7 +32,7 @@ export function generarDocumentoRegistroMedico(
             children: [
                 new TextRun("Fecha de Creación: "),
                 new TextRun({
-                    text: format(new Date(),"full"),
+                    text: format(new Date(),{ date: "full", time: "short" }),
                     bold: true,
                 }),
             ],
@@ -55,7 +55,7 @@ export function generarDocumentoRegistroMedico(
         new Paragraph({ children: [new TextRun(`Fecha de Nacimiento: ${format(paciente.fechaNacimiento, "long")}`)] }),
         new Paragraph({ children: [new TextRun(`Edad: ${calcularEdad(paciente.fechaNacimiento).texto}`)] }),
         new Paragraph({ children: [new TextRun(`Sexo: ${paciente.sexo}`)] }),
-        new Paragraph({ children: [new TextRun(`Fecha de Registro: ${format(paciente.fechaRegistro, "full")}`)] })
+        new Paragraph({ children: [new TextRun(`Fecha de Registro: ${format(paciente.fechaRegistro, { date: "full", time: "short" })}`)] })
     );
 
 

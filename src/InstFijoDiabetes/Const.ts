@@ -6,13 +6,33 @@ import { QuestArea4 } from "./ResArea4";
 import { QuestArea5 } from "./ResArea5";
 import { QuestArea6 } from "./ResArea6";
 
+
+export const CRITERIOS = [
+    {
+        rango: "Promedio obtendio entre 0 - 2",
+        descripcion: "Soporte limitado para el cuidado de enfermedades crónicas."
+    },
+    {
+        rango: "Promedio obtendio entre 3 - 5",
+        descripcion: "Soporte básico para el cuidado de enfermedades crónicas."
+    },
+    {
+        rango: "Promedio obtendio entre 6 - 8",
+        descripcion: "Soporte razonablemente bueno para el cuidado de enfermedades crónicas."
+    },
+    {
+        rango: "Promedio obtendio entre 9 - 11",
+        descripcion: "Soporte completamente desarrollado para el cuidado de enfermedades crónicas."
+    }
+]
+
 export const AREASFIJAS: AreaFija[] = [
     { id: 1, nombre: "Organización del Sistema de Salud" },
     { id: 2, nombre: "Cooperación Comunitaria" },
     { id: 3, nombre: "Nivel de la práctica" },
     { id: 4, nombre: "Normas de atención de la Diabetes Mellitus" },
     { id: 5, nombre: "Apoyo técnico" },
-    { id: 6, nombre:"Sistema de Información de la Diabetes Mellitus"}
+    { id: 6, nombre: "Sistema de Información de la Diabetes Mellitus" }
 ];
 
 export const INFORMACIONAREAS: InfoArea[] = [
@@ -24,7 +44,7 @@ export const INFORMACIONAREAS: InfoArea[] = [
     { id: 6, nombre: "Sistema de información de la Diabetes Mellitus", descripcion: "Información a tiempo sobre los pacientes individuales y sobre la población de pacientes con diabetes es una característica crítica de los programas efectivos, especialmente aquellos que emplean enfoques basados en la población. El primer paso es establecer un registro de enfermedades para las prácticas individuales, que incluyan información de elementos de atención. Equipo de salud que tienen acceso a un registro, pueden localizar pacientes con necesidades específicas y entregarles una atención planificada, pueden recibir retroalimentación sobre su desempeño y pueden implementar sistemas de recordatorio." }
 ]
 
-export const TITULOSEVAL_AREA:{ [key: number]: string } = {
+export const TITULOSEVAL_AREA: { [key: number]: string } = {
     1: "Organización del Sistema de Salud",
     2: "Cooperación Comunitaria",
     3: "Nivel de la práctica",

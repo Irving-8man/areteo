@@ -1,4 +1,4 @@
-import { isRutaExacta } from "@/utils/IdentificarRutas";
+import { isRutaActiva, isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 
 export default function Instrumentos() {
@@ -12,6 +12,10 @@ export default function Instrumentos() {
                     <li>
                         <Link to="/dashboard/instrumentos" className={`${isRutaExacta(pathName, "/dashboard/instrumentos") ? 'font-medium' : 'text-black'
                             }`}>Lista de Instrumentos</Link>
+                    </li>
+                    <li>
+                        <Link to="/dashboard/instrumentos/instrumentoFijo" className={`${isRutaActiva(pathName, "/dashboard/instrumentos/instrumentoFijo") ? 'font-medium' : 'text-black'
+                            }`}>ACIC</Link>
                     </li>
                 </ul>
             </header>

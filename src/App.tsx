@@ -17,7 +17,6 @@ import ListaInstrumentos from './dashboard/Instrumentos/ListaInstrumentos';
 //Instrumento fijo
 import InstrumentoFijo from './dashboard/Instrumentos/InstrumentoFijo/InstrumentoFijo';
 import AreaEvaluacion from './dashboard/Instrumentos/InstrumentoFijo/AreaEvaluacion';
-import AreaResultados from './dashboard/Instrumentos/InstrumentoFijo/AreaResultados';
 import AreaRespuesta from './dashboard/Instrumentos/InstrumentoFijo/AreaRespuesta';
 import OpcionesInstrumento from './dashboard/Instrumentos/InstrumentoFijo/OpcionesInstrumento';
 //Plantillas
@@ -34,6 +33,7 @@ import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
 import { SesionProvider } from './context/SesionContext';
 import VisualizarPlantilla from './dashboard/Plantillas/VisualizarPlantilla';
+import AreaListEval from './dashboard/Instrumentos/InstrumentoFijo/AreaListEval';
 
 
 
@@ -61,9 +61,9 @@ export default function App() {
 
               <Route path='instrumentoFijo' element={<InstrumentoFijo />} >
                   <Route index element={<OpcionesInstrumento />} /> 
-                  <Route path='area/:areaId' element={<AreaResultados />} />
+                  <Route path='area/:areaId' element={<AreaListEval />} />
                   <Route path='area/:areaId/evaluar' element={<AreaEvaluacion />} />
-                  <Route path='resultados/:respID' element={<AreaRespuesta />} />
+                  <Route path='resultados/:areaId/:respID' element={<AreaRespuesta />} />
               </Route>
             </Route>
 

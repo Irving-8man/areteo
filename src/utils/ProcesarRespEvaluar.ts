@@ -4,7 +4,7 @@ type ResultadoEvaluacion = {
     total: number;
     promedio: number;
     targetTotal: string;
-    targetPromedio:string;
+    targetPromedio: string;
     evaluacion: string;
 };
 
@@ -17,18 +17,21 @@ type Respuesta = {
 
 // Función para evaluar el soporte basado en el promedio
 export function EvaluacionFinalTest(promedio: number): string {
-    if (promedio >= 0 && promedio <= 2) {
+    const promedioRedondeado = Math.round(promedio * 100) / 100;
+
+    if (promedioRedondeado >= 0 && promedioRedondeado < 3) {
         return "Soporte limitado para el cuidado de enfermedades crónicas";
-    } else if (promedio >= 3 && promedio <= 5) {
+    } else if (promedioRedondeado >= 3 && promedioRedondeado < 6) {
         return "Soporte básico para el cuidado de enfermedades crónicas";
-    } else if (promedio >= 6 && promedio <= 8) {
+    } else if (promedioRedondeado >= 6 && promedioRedondeado < 9) {
         return "Soporte razonablemente bueno para el cuidado de enfermedades crónicas";
-    } else if (promedio >= 9 && promedio <= 11) {
+    } else if (promedioRedondeado >= 9 && promedioRedondeado <= 11) {
         return "Soporte completamente desarrollado para el cuidado de enfermedades crónicas";
     } else {
         return "Rango de puntuación no válido";
     }
 }
+
 
 // Función principal para calcular resultados
 export default function CalcularResultadosTest(id: number, resultados: Respuesta[]): ResultadoEvaluacion {
@@ -48,7 +51,7 @@ export default function CalcularResultadosTest(id: number, resultados: Respuesta
         total,
         targetTotal: `${area.msgResult[0]}`,
         promedio,
-        targetPromedio:`${area.msgResult[1]} ${area.num} )`,
+        targetPromedio: `${area.msgResult[1]} ${area.num} )`,
         evaluacion
     };
 }

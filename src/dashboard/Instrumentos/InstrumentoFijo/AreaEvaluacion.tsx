@@ -1,4 +1,4 @@
-import { QuetSeleccion, TITULOSEVAL_AREA } from "@/InstFijoDiabetes/Const";
+import { CRITERIOS, QuetSeleccion, TITULOSEVAL_AREA } from "@/InstFijoDiabetes/Const";
 import { QuestArea } from "@/models/typesFijo";
 import { Button, Card, Divider, Input, Label, Select } from "@fluentui/react-components";
 import { useState } from "react";
@@ -15,14 +15,25 @@ const respuestaSchema = z.object({
     }, {
         message: "La respuesta debe estar entre 0 y 11",
     })),
-    nombreEvaluado: z.string().min(0, {
-        message: "El nombre de la persona evaluada es obligatorio",
-    }),
-    nombreEvaluador: z.string().min(0, {
-        message: "El nombre del evaluador es obligatorio",
-    }),
+    nombreEvaluado: z.string()
+        .min(1, {
+            message: "El nombre de la persona evaluada es obligatorio",
+        })
+        .max(100, {
+            message: "El nombre de la persona evaluada no puede tener más de 60 caracteres",
+        })
+        .refine(val => /^[a-zA-Z\s.,]+$/.test(val), {
+            message: "El nombre solo puede contener letras, espacios, puntos y comas",
+        }),
+    nombreEvaluador: z.string()
+        .max(100)
+        .nullable()
+        .refine(val => val === null || /^[a-zA-Z\s.,]+$/.test(val), {
+            message: "El nombre del evaluador solo puede contener letras, espacios, puntos y comas",
+        }),
     aplicadoPorAdmin: z.boolean()
 });
+
 
 export default function AreaEvaluacion() {
     const { areaId } = useParams();
@@ -120,14 +131,29 @@ export default function AreaEvaluacion() {
                 <p className=" max-w-[80ch] text-lg">{desc}</p>
             </div>
 
+            <section className="mt-6 mb-14">
+                <h3 className="font-semibold text-lg">Criterios por promedio en respuestas</h3>
+                <ul className="grid grid-cols-3 gap-4 list-disc pl-4 mt-2">
+                    {CRITERIOS.map((criterio, idx) => (
+                        <li key={idx}>
+                            <div>
+                                <p className="font-semibold text-base">{criterio.rango}</p>
+                                <p className="text-base">{criterio.descripcion}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+
             <div ref={parent}>
                 <form onSubmit={handleSubmit} className="min-h-[100vh]">
-                    <Card className="mb-20 mt-10" style={{ padding: "20px" }}>
+                    <Card className="mb-20 mt-20" style={{ padding: "20px" }} >
                         <div>
-                            <h2 className="font-bold text-xl">Ingresa los siguientes datos:</h2>
+                            <h2 className="font-bold text-xl text-gray-600">Ingresa los siguientes datos:</h2>
                         </div>
                         <div className="flex flex-col">
-                            <Label required className="font-semibold">Nombre de la persona evaluada:</Label>
+                            <Label required className="font-semibold" style={{fontSize:"14px"}}>Nombre de la persona evaluada:</Label>
                             <Input
                                 type="text"
                                 value={nombreEvaluado}
@@ -139,20 +165,20 @@ export default function AreaEvaluacion() {
                             />
                         </div>
                         <div className="flex flex-col">
-                            <Label required className="font-semibold">Nombre del evaluador:</Label>
+                            <Label required={!aplicadoPorAdmin} className="font-semibold" style={{fontSize:"14px"}}>Nombre del aplicador:</Label>
                             <Input
                                 type="text"
                                 value={nombreEvaluador}
                                 onChange={(e) => setNombreEvaluador(e.target.value)}
-                                required
-                                disabled={isSubmitting || !!resultados}
+                                required={aplicadoPorAdmin}
+                                disabled={isSubmitting || !!resultados || aplicadoPorAdmin}
                                 appearance="outline"
                                 className="mb-4 p-2"
                             />
                         </div>
 
                         <div className="flex gap-2">
-                            <Label className="flex items-center gap-2 font-semibold">
+                            <Label className="flex items-center gap-2 font-semibold" style={{fontSize:"14px"}}>
                                 Aplicado por el administrador
                             </Label>
                             <div className="inline-flex items-center">

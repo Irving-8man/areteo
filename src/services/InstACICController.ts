@@ -1,11 +1,13 @@
-import CalcularResultadosTest from "@/utils/ProcesarRespuesta";
+import CalcularResultadosTest from "@/utils/ProcesarRespEvaluar";
 import { getDbInstance } from "./DatabaseSingleton";
 import { generarID } from "@/utils/GenerarID";
+import { ResEvalACICList } from "@/models/typesFijo";
 
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getDb: any = getDbInstance()
+const getDb: any = getDbInstance();
+const unico = 0;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function crearRegiACIC(data: any) {
@@ -26,8 +28,9 @@ export async function crearRegiACIC(data: any) {
                 puntuacionTotal,
                 promedio,
                 aplicador,
-                respondiente
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7);
+                respondiente,
+                evaluacionDicha
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
         `
 
         const res = await db.execute(sqlQueryRegistro,
@@ -38,7 +41,8 @@ export async function crearRegiACIC(data: any) {
                 resultadosTest.total,
                 resultadosTest.promedio,
                 nombreAplicador,
-                data.nombreEvaluado
+                data.nombreEvaluado,
+                resultadosTest.evaluacion
             ]
         );
 
@@ -69,10 +73,67 @@ export async function crearRegiACIC(data: any) {
                 }
             }
         }
-        
+
         return { ...resultadosTest, registroId: regACID };
     } catch (error) {
         console.error('Database Error:', error);
+        return null;
+    }
+}
+
+
+export async function getRegistrosACIC(areaNum: number) {
+
+
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+                SELECT 
+                *
+                FROM RegistroEvalACIC
+                WHERE area_id = $1
+                ORDER BY fechaEvaluacion ASC;
+            `;
+        // Ejecutar la consulta
+        const resultados: ResEvalACICList[] = await db.select(sqlQuery, [areaNum]);
+        return resultados;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return null;
+    }
+
+}
+
+
+export async function getRegEvalACICComp(idRegistro: string) {
+
+    try {
+        const db = await getDb;
+        const sqlQueryRegistro = `
+            SELECT *
+            FROM RegistroEvalACIC
+            WHERE id = $1
+        `;
+        const registro = await db.select(sqlQueryRegistro, [idRegistro]);
+
+        if (registro.length === 0) {
+            return null;
+        }
+
+        const registroDatos = registro[unico];
+        const sqlQueryRespuestas = `
+            SELECT orden,puntuacion
+            FROM ResEvalACIC
+            WHERE registroEvalACIC_id = $1
+        `;
+        const respuestas = await db.select(sqlQueryRespuestas, [idRegistro]);
+
+        return {
+            registro: registroDatos,
+            respuestas: respuestas
+        };
+    } catch (error) {
+        console.error('Error al obtener el registro y las respuestas:', error);
         return null;
     }
 }

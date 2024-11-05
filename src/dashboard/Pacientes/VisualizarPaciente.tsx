@@ -20,7 +20,7 @@ export default function VisualizarPaciente() {
     const unico = 0
     const navigate = useNavigate();
 
-    const { data: pacienteData, isError } = useQuery(
+    const { data: pacienteData, isError, isLoading} = useQuery(
         {
             queryKey: ['paciente', id],
             queryFn: async () => {
@@ -43,7 +43,9 @@ export default function VisualizarPaciente() {
                     sexo: "N/A",
                 },
                 existe: false,
-            },refetchOnWindowFocus:true
+            },
+            refetchOnWindowFocus: true,
+            refetchOnMount: 'always',
         }
     )
 
@@ -110,33 +112,26 @@ export default function VisualizarPaciente() {
         }
     };
 
-
-
-    if (isError) {
-        return <p>Error al cargar los datos del paciente.</p>;
-    }
+    if (isLoading) return <div>Cargando...</div>;
+    if (isError) return <div>Error al cargar datos.</div>;
 
     return (
         <>
-            <section className="flex justify-between">
+            <section className="flex justify-start">
                 <LinkR to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Pacientes</Button></LinkR>
-                {pacienteData.existe && (
-                    <LinkR to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
-                        <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
-                    </LinkR>
-                )}
+
             </section>
 
             <section className="pt-10">
                 <article>
-                    <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }}>
+                    <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }} className="shadow-sm">
                         <ul className="text-base">
                             <li className="flex gap-4 items-center">
                                 <AvatarPaciente edad={calcularEdad(pacienteData.paciente.fechaNacimiento).valor}
                                     label={`${pacienteData.paciente.primerNombre} ${pacienteData.paciente.apellidoPaterno}`}
                                     tamanio="45px"
                                 />
-                                <h1 className="text-3xl">{pacienteData.paciente.primerNombre} {pacienteData.paciente.segundoNombre} {pacienteData.paciente.apellidoPaterno} {pacienteData.paciente.apellidoMaterno}</h1>
+                                <h1 className="text-3xl font-semibold">{pacienteData.paciente.primerNombre} {pacienteData.paciente.segundoNombre} {pacienteData.paciente.apellidoPaterno} {pacienteData.paciente.apellidoMaterno}</h1>
                             </li>
 
                             <li className="mt-4">
@@ -162,13 +157,20 @@ export default function VisualizarPaciente() {
                                 <ButtonDocxPaciente paciente={pacienteData.paciente} />
                             </li>
                             <li>
-                                <DialogDeletePaciente eliminar={handleDeletePaciente}/>
+                                <DialogDeletePaciente eliminar={handleDeletePaciente} />
                             </li>
                         </ul>
                     </Card>
                 </article>
             </section>
-            <section>
+            <section className="mt-10">
+                <div className="flex justify-end">
+                    {pacienteData.existe && (
+                        <LinkR to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
+                            <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
+                        </LinkR>
+                    )}
+                </div>
                 <TablaRegistros id={safeId} />
             </section>
         </>

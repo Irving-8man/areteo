@@ -8,20 +8,17 @@ fn main() {
     let migrations = vec![
     Migration {
         version: 1,
-        description: "Crear tabla Administrador",
+        description: "Crear tablas para la db",
         sql:"CREATE TABLE IF NOT EXISTS Administrador (
     id TEXT PRIMARY KEY NOT NULL,
     nombreComple TEXT NOT NULL,
     nombreUsuario TEXT NOT NULL,
     contrasenia TEXT NOT NULL
     );
-CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);",
-        kind: MigrationKind::Up,
-    },
-    Migration {
-        version: 2,
-        description: "Crear tabla Paciente",
-        sql:"CREATE TABLE IF NOT EXISTS Paciente (
+CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);
+
+
+CREATE TABLE IF NOT EXISTS Paciente (
             id TEXT PRIMARY KEY NOT NULL,
             primerNombre TEXT NOT NULL,
             segundoNombre TEXT NULL,
@@ -86,13 +83,9 @@ CREATE TABLE IF NOT EXISTS TratamientoOral (
 );
 
 CREATE INDEX IF NOT EXISTS index_id_TratOra ON TratamientoOral(id);
-",
-        kind: MigrationKind::Up,
-    },
-    Migration {
-        version: 3,
-        description: "Crear tabla Instrumento",
-        sql:"CREATE TABLE IF NOT EXISTS Instrumento(
+
+
+CREATE TABLE IF NOT EXISTS Instrumento(
     id TEXT PRIMARY KEY NOT NULL,
     nombre TEXT NOT NULL,
     descripcion TEXT,
@@ -102,22 +95,17 @@ CREATE INDEX IF NOT EXISTS index_id_TratOra ON TratamientoOral(id);
     fechaModific TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS index_id_Instru ON Instrumento(id);
-"
-,
-        kind: MigrationKind::Up,
-    },
-    Migration {
-        version: 4,
-        description: "Crear tabla Respuetas ACIC",
-        sql:"
-    CREATE TABLE IF NOT EXISTS RegistroEvalACIC (
+
+
+CREATE TABLE IF NOT EXISTS RegistroEvalACIC (
     id TEXT PRIMARY KEY NOT NULL,
     area_id INTEGER NOT NULL,
     fechaEvaluacion TEXT NOT NULL,
     puntuacionTotal REAL NOT NULL,
     promedio REAL NOT NULL,
     aplicador TEXT NOT NULL,
-    respondiente TEXT NOT NULL
+    respondiente TEXT NOT NULL,
+    evaluacionDicha TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS index_id_RegEvalACIC ON RegistroEvalACIC(id);
 
@@ -130,12 +118,11 @@ CREATE TABLE IF NOT EXISTS ResEvalACIC (
     FOREIGN KEY (registroEvalACIC_id) REFERENCES RegistroEvalACIC(id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS index_id_ResEvalACIC ON ResEvalACIC(id);
-"
-,
+
+
+",
         kind: MigrationKind::Up,
-    },
-
-
+    }
     ];
 
     tauri::Builder::default()

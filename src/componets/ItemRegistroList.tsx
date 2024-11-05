@@ -25,6 +25,7 @@ const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 interface RowProps {
     registro: RegistroMedicoList;
     paciente_id: string ;
+    num:number;
 }
 
 const CHECKS = {
@@ -52,8 +53,12 @@ export default function ItemRegistroList(props: RowProps) {
 
 
     return (
-        <tr className='w-full border-b text-sm hover:bg-gray-200'>
-            <td className="whitespace-nowrap py-3 pl-6">{format(registro.fechaDiagnostico, "short")}</td>
+        <tr  className={`w-full border-b text-sm ${props.num % 2 === 0 ? "bg-gray-200" : ""}`} >
+            <td className="whitespace-nowrap py-3 pl-6">
+                <Link to={`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`} className="hover:underline">
+                    <span> {format(registro.fechaDiagnostico, { date: "medium", time: "short" })}</span>
+                </Link>
+            </td>
             <td className="whitespace-nowrap px-3 py-3">{registro.edadDicha}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.peso}</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.antecedFamiInfa}</td>

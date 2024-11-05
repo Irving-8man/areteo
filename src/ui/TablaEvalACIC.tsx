@@ -1,8 +1,7 @@
-import { RegistroMedicoList } from '@/models/types';
-import { getRegistrosPaciente } from '@/services/RegistrosMedicoController';
-import React, { useState, useRef, useContext, useEffect } from 'react';
+import React, { useRef, useContext } from 'react';
 import { FixedSizeList, FixedSizeListProps } from 'react-window';
-import ItemRegistroList from '@/componets/ItemRegistroList';
+import { ResEvalACICList } from '@/models/typesFijo';
+import ItemEvalACICList from '@/componets/ItemEvalACICList';
 
 
 
@@ -63,20 +62,18 @@ const Inner = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
     }
 );
 
-interface Props {
-    id: string ;
-}
+
 
 
 const Header_TABLE = () => {
     return (
         <thead className='rounded-lg text-left text-sm font-normal'>
             <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
-                <th scope="col" className="px-3 py-5 font-medium">Edad</th>
-                <th scope="col" className="px-3 py-5 font-medium">Peso</th>
-                <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
-                <th scope="col" className="px-1 py-5 font-medium"><p><span className='mr-1'>Inyectable</span>|<span className='ml-1'>Oral</span></p></th>
+                <th scope="col" className="px-4 py-5 font-medium">Fecha de Evaluación</th>
+                <th scope="col" className="px-3 py-5 font-medium">Promedio</th>
+                <th scope="col" className="px-4 py-5 font-medium">Resultado Evaluación</th>
+                <th scope="col" className="px-3 py-5 font-medium">Aplicador</th>
+                <th scope="col" className="px-3 py-5 font-medium">Respondiente</th>
                 <th scope="col" className="px-3 py-5 font-medium">
                     <span>Acciones</span>
                 </th>
@@ -85,26 +82,26 @@ const Header_TABLE = () => {
     )
 }
 
+
+interface Props {
+    ResEvalsACIC: ResEvalACICList[];
+    borrarResEval: (id: string) => void
+}
+
 // Adaptación del componente principal
-export default function TablaRegistros(props: Props) {
-    const [registrosCarga, setRegistrosCarga] = useState<RegistroMedicoList[]>([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (props.id) {
-                const registros = await getRegistrosPaciente(props.id); // Suponiendo que esta función obtiene los datos
-                setRegistrosCarga(registros);
-            }
-        };
-        fetchData();
-    }, [props.id]);
+export default function TablaEvalACIC(props: Props) {
+    const { ResEvalsACIC, borrarResEval } = props;
 
 
-    // Componente Row que renderiza cada fila de la tabla
-    function Row({ index ,paciente_id }: { index: number; paciente_id:string}) {
-        const registro = registrosCarga[index];
+    function Row({ index }: { index: number }) {
+        const registro = ResEvalsACIC[index];
         return (
-            <ItemRegistroList registro={registro} key={index} num={index} paciente_id={paciente_id} />
+            <ItemEvalACICList
+                ResEvalACIC={registro}
+                borrarResEval={borrarResEval}
+                num={index}
+                key={registro.id}
+            />
         );
     }
 
@@ -114,34 +111,32 @@ export default function TablaRegistros(props: Props) {
             <div className="inline-block min-w-full align-middle">
                 <div className="rounded-lg bg-gray-50">
 
-
-                    {registrosCarga.length > 0 ? (
+                    {ResEvalsACIC.length > 0 ? (
                         <VirtualTable
                             height={400}
                             width="100%"
-                            itemCount={registrosCarga.length}
+                            itemCount={ResEvalsACIC.length}
                             itemSize={35}
                             header={<Header_TABLE />}
-                            row={({ index }) => <Row index={index} paciente_id={props.id} />}
+                            row={({ index }) => <Row index={index} />}
                         />
                     ) : (
                         <table className="hidden min-w-full text-gray-900 md:table">
                             <thead className='rounded-lg text-left text-sm font-normal'>
                                 <tr>
-                                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
-                                    <th scope="col" className="px-3 py-5 font-medium">Edad</th>
-                                    <th scope="col" className="px-3 py-5 font-medium">Peso</th>
-                                    <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
-                                    <th scope="col" className="px-1 py-5 font-medium"><p><span className='mr-1'>Inyectable</span>|<span className='ml-1'>Oral</span></p></th>
+                                    <th scope="col" className="px-4 py-5 font-medium">Fecha de Evaluación</th>
+                                    <th scope="col" className="px-3 py-5 font-medium">Promedio</th>
+                                    <th scope="col" className="px-3 py-5 font-medium">Aplicador</th>
+                                    <th scope="col" className="px-3 py-5 font-medium">Respondiente</th>
                                     <th scope="col" className="px-3 py-5 font-medium">
-                                        <span></span>
+                                        <span>Acciones</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody >
                                 <tr>
                                     <td colSpan={5} className="px-4 py-4 text-center text-gray-500">
-                                        No hay Registros Medicos disponibles.
+                                        No hay evaluaciones hechas
                                     </td>
                                 </tr>
                             </tbody>

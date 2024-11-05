@@ -70,7 +70,7 @@ export default function VerResulRegistro() {
 
     const { pacienteConRe, registro, trataInyec, trataOral } = RegistroData;
 
-    
+
     const handleDeleteRegistro = async () => {
         if (!registro || !RegistroData.registro || !registro.id) {
             console.error("Datos registro no están disponibles para eliminar.");
@@ -108,35 +108,35 @@ export default function VerResulRegistro() {
 
                         <Card style={{ padding: "25px" }}>
                             <article>
-                                <h2 className="font-semibold text-xl">Información del Paciente</h2>
-                                <div className="mt-2 flex flex-col gap-1">
-                                    <p>Nombre: {pacienteConRe.primerNombre} {pacienteConRe.segundoNombre || ''} {pacienteConRe.apellidoPaterno} {pacienteConRe.apellidoMaterno || ''}</p>
-                                    <p>Fecha de Nacimiento:  {format(pacienteConRe.fechaNacimiento, "long")}</p>
-                                    <p>Edad: {calcularEdad(pacienteConRe.fechaNacimiento).texto}</p>
-                                    <p>Sexo: {pacienteConRe.sexo}</p>
-                                    <p>Fecha de Registro: {format(pacienteConRe.fechaRegistro, "full")}</p>
-                                </div>
+                                <h2 className="font-bold text-xl">Información del Paciente</h2>
+                                <ul className="mt-2 flex flex-col gap-1 list-disc pl-4">
+
+                                    <li><p><span className="font-semibold text-stone-700">Nombre:</span> {pacienteConRe.primerNombre} {pacienteConRe.segundoNombre || ''} {pacienteConRe.apellidoPaterno} {pacienteConRe.apellidoMaterno || ''}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Fecha de Nacimiento:</span> {format(pacienteConRe.fechaNacimiento, "long")} </p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Edad:</span> {calcularEdad(pacienteConRe.fechaNacimiento).texto} </p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Sexo:</span> {pacienteConRe.sexo}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Fecha de Registro:</span> {format(pacienteConRe.fechaRegistro, { date: "full", time: "short" })}</p></li>
+                                </ul>
                             </article>
 
                             <article className="mt-5">
-                                <h2 className="font-semibold text-xl">Datos del Registro Médico</h2>
-                                <div className="columns-2">
-                                    <p className="font-semibold">Fecha de Diagnóstico: <span className="font-normal">{format(registro.fechaDiagnostico, "full")}</span></p>
-                                    <p>Edad: {registro.edadDicha}</p>
-                                    <p>Peso: {registro.peso} kg</p>
-                                    <p>Estatura: {registro.estatura} cm</p>
-                                    <p>Presión Arterial (0 min): {registro.presionArterialPAS_0min}/{registro.presionArterialPAD_0min} mmHg</p>
-                                    <p>Presión Arterial (5 min): {registro.presionArterialPAS_5min}/{registro.presionArterialPAD_5min} mmHg</p>
-                                    <p>HbA1c: {registro.hba1c}%</p>
-                                    <p>Año de Diagnóstico: {registro.anioDiagnostico}</p>
-                                    <p>Antecedentes Familiares: {registro.antecedFamiInfa}</p>
-                                    <p>Descripcion de Antecedentes: {registro.descripcionAntecedentes || ''}</p>
-                                    <p>HDL: {registro.hdl} mg/dL</p>
-                                    <p>TGC: {registro.tgc} mg/dL</p>
-                                    <p>Educación: {registro.educacion}</p>
-                                    <p>Detalles de educación: {registro.detalleEducacion || ''}</p>
-                                    <p>Estado civil: {registro.estadoCivil}</p>
-                                </div>
+                                <h2 className="font-bold text-xl">Datos del Registro Médico</h2>
+                                <ul className="columns-2 list-disc pl-4 mt-2">
+                                    <li><p><span className="font-semibold text-stone-700">Fecha de Diagnóstico:</span> {format(registro.fechaDiagnostico, "full")}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Peso:</span> {registro.peso} kg</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Estatura:</span> {registro.estatura} cm</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Presión Arterial (0 min):</span> {registro.presionArterialPAS_0min}/{registro.presionArterialPAD_0min} mmHg</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Presión Arterial (5 min):</span> {registro.presionArterialPAS_5min}/{registro.presionArterialPAD_5min} mmHg</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">HbA1c: </span> {registro.hba1c}%</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Año de Diagnóstico:</span> {registro.anioDiagnostico}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Antecedentes Familiares:</span>  {registro.antecedFamiInfa}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Descripción de Antecedentes:</span> {registro.descripcionAntecedentes || ''}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">HDL: </span> {registro.hdl} mg/dL</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">TGC: </span> {registro.tgc} mg/dL</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Educación: </span> {registro.educacion}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Detalles de educación: </span> {registro.detalleEducacion || ''}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Estado civil: </span> {registro.estadoCivil}</p></li>
+                                </ul>
                             </article>
 
                             {trataInyec && (

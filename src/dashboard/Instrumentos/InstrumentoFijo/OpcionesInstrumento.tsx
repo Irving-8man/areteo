@@ -2,7 +2,8 @@
 import { Accordion, AccordionItem, Button, Card, AccordionHeader, AccordionPanel } from "@fluentui/react-components";
 import { Link } from "react-router-dom";
 import { ArrowLeft20Filled, Pin20Filled } from "@fluentui/react-icons";
-import { AREASFIJAS, INFORMACIONAREAS } from "@/InstFijoDiabetes/Const";
+import { AREASFIJAS, INFORMACIONAREAS, CRITERIOS } from "@/InstFijoDiabetes/Const";
+
 
 
 export default function OpcionesInstrumento() {
@@ -16,7 +17,7 @@ export default function OpcionesInstrumento() {
                 <h2 className="font-semibold text-xl">Assessment of Chronic Illness Care (ACIC)</h2>
             </section>
 
-            <section className="mt-10">
+            <section className="mt-6">
                 <h3 className="font-semibold text-lg">Explicación para completar el cuestionario</h3>
                 <p className="text-base leading-relaxed max-w-[100ch]">
                     Este cuestionario debe de ser llenado por un equipo de trabajadores de la salud que incluya por
@@ -31,13 +32,27 @@ export default function OpcionesInstrumento() {
                 </p>
             </section>
 
+            <section className="my-20">
+                <h3 className="font-semibold text-lg">Criterios por promedio en respuestas</h3>
+                <ul className="grid grid-cols-3 gap-4 list-disc pl-4 mt-2">
+                    {CRITERIOS.map((criterio, idx) => (
+                        <li key={idx}>
+                            <div>
+                                <p className="font-semibold text-base">{criterio.rango}</p>
+                                <p className="text-base">{criterio.descripcion}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
             <section className="mt-10">
                 <h3 className="font-semibold text-lg mb-5"> <Pin20Filled /> Áreas disponibles</h3>
                 <ul className="grid grid-cols-3 gap-10">
                     {AREASFIJAS.map((area) => (
                         <li key={area.id}>
-                            <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${area.id}`} className="block hover:bg-zinc-200 hover:underline">
-                                <Card style={{ padding: "35px", backgroundColor: "transparent" }} >
+                            <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${area.id}`} className="block hover:bg-zinc-200 hover:underline shadow-md">
+                                <Card style={{ padding: "20px", minWidth: "200px", minHeight: "110px", backgroundColor: "transparent" }} className="flex flex-col justify-center" >
                                     <p><span className="font-semibold">Área {area.id}:</span> {area.nombre}</p>
                                 </Card>
                             </Link>
