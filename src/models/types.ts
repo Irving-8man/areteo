@@ -9,6 +9,10 @@ export interface AdminRegistrado extends Admin {
     id: string;
 }
 
+export interface AdminActualizar extends Admin {
+    id: string;
+}
+
 
 //Paciente
 export interface Paciente {

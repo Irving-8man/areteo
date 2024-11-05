@@ -21,6 +21,23 @@ export async function getAdmin() {
     }
 }
 
+export async function actualizarAdmin(data: Admin & { id: string }): Promise<boolean> {
+    try {
+        const db = await getDb;
+        const contraseniaHashed = await hashPass(data.contrasenia); // Hashear la nueva contraseña
+
+        const actualizado = await db.execute(
+            "UPDATE Administrador SET nombreComple = ?, nombreUsuario = ?, contrasenia = ? WHERE id = ?",
+            [data.nombreComple, data.nombreUsuario, contraseniaHashed, data.id] // Usa el ID del administrador
+        );
+
+        return actualizado ? true : false; // Devuelve true si se actualizó correctamente
+    } catch (error) {
+        console.error("Error al actualizar el administrador:", error);
+        return false; // Devuelve false si hubo un error
+    }
+}
+
 // Registrar administrador
 export async function registrarAdmin(data: Admin): Promise<boolean> {
     try {
