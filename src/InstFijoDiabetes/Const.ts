@@ -27,12 +27,12 @@ export const CRITERIOS = [
 ]
 
 export const AREASFIJAS: AreaFija[] = [
-    { id: 1, nombre: "Organización del Sistema de Salud" },
-    { id: 2, nombre: "Cooperación Comunitaria" },
-    { id: 3, nombre: "Nivel de la práctica" },
-    { id: 4, nombre: "Normas de atención de la Diabetes Mellitus" },
-    { id: 5, nombre: "Apoyo técnico" },
-    { id: 6, nombre: "Sistema de Información de la Diabetes Mellitus" }
+    { id: 1, nombre: "Organización del Sistema de Salud", numQ: 6 },
+    { id: 2, nombre: "Cooperación Comunitaria", numQ: 3 },
+    { id: 3, nombre: "Nivel de la práctica", numQ: 4 },
+    { id: 4, nombre: "Normas de atención de la Diabetes Mellitus", numQ: 4 },
+    { id: 5, nombre: "Apoyo técnico", numQ: 6 },
+    { id: 6, nombre: "Sistema de Información de la Diabetes Mellitus", numQ: 5 }
 ];
 
 export const INFORMACIONAREAS: InfoArea[] = [

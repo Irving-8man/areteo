@@ -22,8 +22,9 @@ export default function AreaListEval() {
                 return result || [];
             },
             refetchOnWindowFocus: false,
-            refetchOnMount: 'always',
-            staleTime: 0,
+            refetchOnMount: false,
+            staleTime: 1000 * 60 * 5, // 5 minutos de caché
+            refetchOnReconnect: false,
         }
     )
 

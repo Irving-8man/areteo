@@ -25,12 +25,7 @@ const respuestaSchema = z.object({
         .refine(val => /^[a-zA-Z\s.,]+$/.test(val), {
             message: "El nombre solo puede contener letras, espacios, puntos y comas",
         }),
-    nombreEvaluador: z.string()
-        .max(100)
-        .nullable()
-        .refine(val => val === null || /^[a-zA-Z\s.,]+$/.test(val), {
-            message: "El nombre del evaluador solo puede contener letras, espacios, puntos y comas",
-        }),
+    nombreEvaluador: z.string().max(100).nullable().optional(),
     aplicadoPorAdmin: z.boolean()
 });
 
@@ -55,6 +50,8 @@ export default function AreaEvaluacion() {
     const [nombreEvaluador, setNombreEvaluador] = useState<string>("");
     const [aplicadoPorAdmin, setAplicadoPorAdmin] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const nomEvaluadorDef = "admin";
+
     // Estado para almacenar los resultados del servidor
     const [resultados, setResultados] = useState<{
         targetPromedio: string | null;
@@ -83,12 +80,18 @@ export default function AreaEvaluacion() {
         setError(null);
 
         try {
+            // Verificar que el nombre del evaluador no esté vacío si no es aplicado por el admin
+            if (!aplicadoPorAdmin && (!nombreEvaluador || nombreEvaluador.trim() === "")) {
+                throw new Error("El nombre del evaluador es obligatorio cuando no es aplicado por el administrador.");
+            }
+
             const data = {
                 nombreEvaluado,
-                nombreEvaluador,
+                nombreEvaluador: aplicadoPorAdmin ? nomEvaluadorDef : nombreEvaluador,
                 aplicadoPorAdmin,
                 respuestas
             };
+
 
             respuestaSchema.parse(data);
 
@@ -153,7 +156,7 @@ export default function AreaEvaluacion() {
                             <h2 className="font-bold text-xl text-gray-600">Ingresa los siguientes datos:</h2>
                         </div>
                         <div className="flex flex-col">
-                            <Label required className="font-semibold" style={{fontSize:"14px"}}>Nombre de la persona evaluada:</Label>
+                            <Label required className="font-semibold" style={{ fontSize: "14px" }}>Nombre de la persona evaluada:</Label>
                             <Input
                                 type="text"
                                 value={nombreEvaluado}
@@ -165,20 +168,23 @@ export default function AreaEvaluacion() {
                             />
                         </div>
                         <div className="flex flex-col">
-                            <Label required={!aplicadoPorAdmin} className="font-semibold" style={{fontSize:"14px"}}>Nombre del aplicador:</Label>
+                            <Label required={!aplicadoPorAdmin} className="font-semibold" style={{ fontSize: "14px" }}>
+                                Nombre del aplicador:
+                            </Label>
                             <Input
                                 type="text"
                                 value={nombreEvaluador}
                                 onChange={(e) => setNombreEvaluador(e.target.value)}
-                                required={aplicadoPorAdmin}
-                                disabled={isSubmitting || !!resultados || aplicadoPorAdmin}
+                                required={!aplicadoPorAdmin} // El campo es obligatorio solo si *no* es el administrador
+                                disabled={isSubmitting || !!resultados || aplicadoPorAdmin} // El campo se desactiva si es el admin
                                 appearance="outline"
                                 className="mb-4 p-2"
                             />
+
                         </div>
 
                         <div className="flex gap-2">
-                            <Label className="flex items-center gap-2 font-semibold" style={{fontSize:"14px"}}>
+                            <Label className="flex items-center gap-2 font-semibold" style={{ fontSize: "14px" }}>
                                 Aplicado por el administrador
                             </Label>
                             <div className="inline-flex items-center">
@@ -285,9 +291,7 @@ export default function AreaEvaluacion() {
                         </ul>
 
                         <div className="flex justify-between mt-5">
-
-
-                            <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}>
+                            <Link to={`/dashboard/instrumentos/instrumentoFijo/resultados/${String(id)}/${String(resultados.registroId)}`}>
                                 <Button appearance="secondary" className="p-6" style={{ padding: "5px", width: "150px" }}>
                                     Ver Evaluación
                                 </Button>

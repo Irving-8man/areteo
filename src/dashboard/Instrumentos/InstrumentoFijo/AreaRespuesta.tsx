@@ -7,6 +7,7 @@ import { format } from "@formkit/tempo";
 import { useMemo } from "react";
 import { AREASFIJAS } from "@/InstFijoDiabetes/Const";
 import { ProcesarRespACIC } from "@/utils/ProcesarRespACIC";
+import ButtonDocxResEvalAC from "@/Docx/DatosPaciente/ButtonDocxResEvalAC";
 
 export default function AreaRespuesta() {
     const { respID, areaId } = useParams();
@@ -39,11 +40,8 @@ export default function AreaRespuesta() {
         return <div>Cargando...</div>;
     }
 
-    const { registro, respuestas } = evalResACICData;
+    const { registro , respuestas }= evalResACICData;
     const respuestasProcesadas = ProcesarRespACIC(areaIdSafe, respuestas);
-
-
-
 
 
     return (
@@ -58,25 +56,26 @@ export default function AreaRespuesta() {
                 {registro ? (
                     <div>
                         <div className="text-center mb-12 flex justify-center">
-                            <h1 className="font-bold text-2xl underline max-w-[37ch]">Respuestas de Evaluación ACIC a Área {area?.id} : {area?.nombre}</h1>
+                            <h1 className="font-bold text-2xl underline max-w-[37ch]">Respuestas de Evaluación ACIC para Área {area?.id} : {area?.nombre}</h1>
                         </div>
-                        <div className="flex justify-center items-center gap-6 my-5">
 
+                        <div className="flex justify-center items-center gap-6 my-5">
+                            <ButtonDocxResEvalAC evalACIC={registro} respuestas={respuestasProcesadas} />
                         </div>
 
                         <Card style={{ padding: "25px" }}>
                             <article>
                                 <h2 className="font-bold text-xl">Información de la Evaluación</h2>
                                 <ul className="mt-2 flex flex-col gap-2 list-disc pl-4">
-                                    <li><p><span className="font-semibold text-stone-700">Fecha de Evaluacion:</span>  {format(registro.fechaRegistro, { date: "full", time: "short" })}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Fecha de Evaluacion:</span>  {format(registro.fechaEvaluacion, { date: "full", time: "short" })}</p></li>
                                     <li><p><span className="font-semibold text-stone-700">Persona Evaluada:</span> {registro.respondiente}</p></li>
-                                    <li><p> <span className="font-semibold text-stone-700">Aplicador:</span>  {registro.aplicador}</p></li>
-                                    <li><p> <span className="font-semibold text-stone-700">Puntuacion total:</span>  {registro.puntuacionTotal} </p></li>
-                                    <li><p> <span className="font-semibold text-stone-700">Puntucion promedio:</span>   {parseFloat(registro.promedio!.toFixed(2))}</p></li>
-                                    <li><p> <span className="font-semibold text-stone-700"> Según las directrices del ACIC, se indica:</span>  {registro.evaluacionDicha} </p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Aplicador:</span>  {registro.aplicador}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Puntuación total:</span>  {registro.puntuacionTotal} </p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Puntución promedio:</span>   {parseFloat(registro.promedio!.toFixed(2))}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700">Componentes totales:</span>   {area?.numQ}</p></li>
+                                    <li><p><span className="font-semibold text-stone-700"> Según las directrices del ACIC, se indica:</span>  {registro.evaluacionDicha} </p></li>
                                 </ul>
                             </article>
-
                             <article className="mt-5">
                                 <h2 className="font-bold text-xl">Respuestas dadas por componente</h2>
                                 <ul className="mt-2 flex flex-col gap-7 ">

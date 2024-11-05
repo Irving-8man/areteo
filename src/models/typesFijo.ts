@@ -1,6 +1,7 @@
 export interface AreaFija {
     id: number;
     nombre: string;
+    numQ: number;
 }
 
 export interface InfoArea {
@@ -29,6 +30,15 @@ export interface ResEvalACICList extends RegistroEvalACIRegis {
 
 }
 
+
+//para el word
+export interface respuestaACIC {
+    orden: number;
+    puntuacion: number,
+    componente: string; // Añadiendo el componente aquí
+    nivel: string;
+    descripcion: string;
+}
 
 
 
