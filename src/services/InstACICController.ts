@@ -157,4 +157,22 @@ export async function eliminarRegEvalACIC(id: string) {
 }
 
 
+export async function eliminarRegEvalACICAREA(area_id: number) {
+
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+        DELETE FROM RegistroEvalACIC
+        WHERE area_id = $1
+    `;
+        const resultado = await db.execute(sqlQuery, [area_id]);
+        return resultado
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Fallo al eliminar registro de evalaución ACIC del area.');
+    }
+}
+
+
+
 

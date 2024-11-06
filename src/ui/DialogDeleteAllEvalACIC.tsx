@@ -22,12 +22,12 @@ const useStyles = makeStyles({
     },
 });
 
-export default function DialogDeleteEvalACIC({ eliminar }: {  eliminar: () => Promise<void>; }) {
+export default function DialogDeleteEvalACICAREA({ eliminar }: {  eliminar: () => Promise<void> }) {
     //hooks
     const styles = useStyles();
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
-    
+
     const handleDelete = async () => {
         setLoading(true);
         try {
@@ -39,11 +39,12 @@ export default function DialogDeleteEvalACIC({ eliminar }: {  eliminar: () => Pr
             setLoading(false);
         }
     };
+
     return (
         <>
             <Dialog open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
                 <DialogTrigger disableButtonEnhancement >
-                    <Button style={{ "backgroundColor": "red", "color": "white" }} icon={<Delete20Regular />}>Eliminar Evaluación</Button>
+                    <Button style={{ "backgroundColor": "red", "color": "white" }} icon={<Delete20Regular />}>Eliminar Evaluaciones</Button>
                 </DialogTrigger>
                 <DialogSurface aria-describedby={undefined}>
                 
@@ -64,7 +65,7 @@ export default function DialogDeleteEvalACIC({ eliminar }: {  eliminar: () => Pr
                                 </span>
                             </DialogTitle>
                             <DialogContent className={styles.content} >
-                                <p className="text-base">Al eliminar este Registro  de Evaluación ACIC de su Área, se borraran todas las respuestas y este afectará a los datos de las gráficas, ¿Desea continuar?</p>
+                                <p className="text-base">Esta a punto de borrar todos los Registros de Evaluación ACIC de esta Área, se borraran todas las respuestas y este afectará a los datos de las gráficas, ¿Desea continuar?</p>
                             </DialogContent>
 
                             <DialogActions className="mt-4">

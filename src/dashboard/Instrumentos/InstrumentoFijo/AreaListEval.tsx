@@ -3,16 +3,18 @@ import { Button, Card } from "@fluentui/react-components";
 import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
-import { useQuery } from "@tanstack/react-query";
-import { getRegistrosACIC } from "@/services/InstACICController";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { eliminarRegEvalACICAREA, getRegistrosACIC } from "@/services/InstACICController";
 import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
 import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
+import DialogDeleteEvalACICAREA from "@/ui/DialogDeleteAllEvalACIC";
 
 
 
 export default function AreaListEval() {
     const { areaId } = useParams();
     const areaIdSafe = parseInt(areaId!, 10);
+    const queryClient = useQueryClient();
 
     const { data: RegistrosEval, isError, isLoading } = useQuery(
         {
@@ -22,15 +24,33 @@ export default function AreaListEval() {
                 return result || [];
             },
             refetchOnWindowFocus: false,
-            refetchOnMount:true
+            refetchOnMount: true
         }
     )
 
-    /*
-    const handleDeleteResEval = (id: string) => {
-        console.log('hola desde', id)
+
+    const deleteMutation = useMutation({
+        mutationFn: async () => {
+            return await eliminarRegEvalACICAREA(areaIdSafe);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['Evaluaciones', areaIdSafe] });
+            queryClient.refetchQueries({ queryKey: ['Evaluaciones', areaIdSafe] });
+        },
+        onError: (error) => {
+            console.error('Error al borrar las evaluaciones:', error);
+        },
+    });
+
+    const handleDeleteAllResEval = async () => {
+        try {
+            await deleteMutation.mutateAsync();
+            alert("Evaluaciones borradas")
+        } catch (error) {
+            console.error('Error al eliminar las evaluaciones:', error);
+        }
     };
-*/
+
     //Fucniones de busqueda por defecto
     const area = useMemo(() => {
         return AREASFIJAS.find(a => a.id === areaIdSafe);
@@ -82,7 +102,7 @@ export default function AreaListEval() {
                                 )}
                             </li>
                             <li>
-                                <Button appearance="outline">en contruccion</Button>
+                                <DialogDeleteEvalACICAREA eliminar={handleDeleteAllResEval} />
                             </li>
                         </ul>
                     </div>

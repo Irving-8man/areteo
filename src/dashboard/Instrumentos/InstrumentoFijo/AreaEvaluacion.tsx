@@ -4,7 +4,7 @@ import { Button, Card, Divider, Input, Label, Select } from "@fluentui/react-com
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { z } from 'zod';
-import { ArrowLeft20Filled } from "@fluentui/react-icons";
+import { ArrowLeft20Filled, ArrowRight20Filled } from "@fluentui/react-icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { crearRegiACIC } from "@/services/InstACICController";
 import { formSchemaFijo } from "@/schemas/formSchemaFijo";
@@ -87,7 +87,7 @@ export default function AreaEvaluacion() {
             if (res) {
                 setIsSubmitting(false);
                 setResultados(res);
-                alert("Evaluación registrada, baje un poco para ver sus resultados.")
+                alert("Evaluación registrada, revise sus resultados.")
             } else {
                 setIsSubmitting(false);
                 setResultados(res);
@@ -240,30 +240,31 @@ export default function AreaEvaluacion() {
 
                         {error && <p style={{ color: 'red' }} className="text-base">{error}</p>}
 
-                        <div className="flex flex-col gap-3">
-                            <Button type="submit" className="mt-4" style={{ padding: "10px" }} appearance="primary" disabled={isSubmitting || !!resultados}>
-                                {isSubmitting ? 'Enviando...' : 'Enviar Respuestas'}
-                            </Button>
-
-                            {isSubmitting || !!resultados ? (
-                                <Button className="p-6" appearance="outline" style={{ padding: "10px" }} disabled>
-                                    Cancelar
+                        {
+                            !resultados ? (<div className="flex flex-col gap-3">
+                                <Button type="submit" className="mt-4" style={{ padding: "10px" }} appearance="primary" disabled={isSubmitting || !!resultados}>
+                                    {isSubmitting ? 'Enviando...' : 'Enviar Respuestas'}
                                 </Button>
-                            ) : (
 
-                                <Button className="p-6" appearance="outline" style={{ padding: "10px" }}>
-                                    <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}>
+                                {isSubmitting || !!resultados ? (
+                                    <Button className="p-6" appearance="outline" style={{ padding: "10px" }} disabled>
                                         Cancelar
-                                    </Link>
-                                </Button>
-                            )}
+                                    </Button>
+                                ) : (
 
-                        </div>
+                                    <Button className="p-6" appearance="outline" style={{ padding: "10px" }}>
+                                        <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}>
+                                            Cancelar
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>) : (<span className="hidden"></span>)
+                        }
                     </div>
                 </form>
-                {/* Muestra el resultado cuando esté disponible */}
+
                 {resultados && (
-                    <div className="mt-16 border-2 text-base bg-gray-100 border-gray-300 shadow-sm rounded-md p-6 text-gray-800">
+                    <div className="mt-16 border-2 text-base bg-gray-100 border-gray-300 shadow-sm rounded-md p-10 text-gray-800">
                         <h3 className="font-bold text-lg">Resultados de la Evaluación del ACIC</h3>
                         <ul className="flex flex-col gap-1 mt-4 list-disc pl-2">
                             <li><p className="max-w-[80ch]">{resultados.targetTotal}:  <span className="font-bold">{resultados.total}</span></p></li>
@@ -271,19 +272,20 @@ export default function AreaEvaluacion() {
                             <li><p className="max-w-[80ch]"> Según las directrices del ACIC, este resultado indica: <span className="font-bold">{resultados.evaluacion}</span></p></li>
                         </ul>
 
-                        <div className="flex justify-between mt-5">
-                            <Link to={`/dashboard/instrumentos/instrumentoFijo/resultados/${String(id)}/${String(resultados.registroId)}`}>
-                                <Button appearance="secondary" className="p-6" style={{ padding: "5px", width: "150px" }}>
-                                    Revisar evaluación
-                                </Button>
-                            </Link>
-
+                        <div className="flex justify-between pt-10">
                             <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}>
-                                <Button appearance="primary" className="p-6" style={{ padding: "5px", width: "150px" }}>
+                                <Button icon={<ArrowLeft20Filled />} style={{ padding: "5px", width: "160px" }}>
                                     Volver a Área {id}
                                 </Button>
                             </Link>
+
                             <ButtonDocxPostRes evalRegi_id={String(resultados.registroId)} />
+
+                            <Link to={`/dashboard/instrumentos/instrumentoFijo/resultados/${String(id)}/${String(resultados.registroId)}`}>
+                                <Button style={{ padding: "5px", width: "160px" }}>
+                                    Revisar evaluación<ArrowRight20Filled className="ml-1" />
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 )}
