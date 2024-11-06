@@ -26,14 +26,13 @@ import CargarPlantilla from './dashboard/Plantillas/CargarPlantilla';
 import CrearPlantilla from './dashboard/Plantillas/CrearPlantilla';
 //Analiticas
 import Analiticas from './dashboard/Analiticas';
-//Almacenamiento
-import Almacenamiento from './dashboard/Almacenamiento';
 //Proteccion de rutas
 import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
 import { SesionProvider } from './context/SesionContext';
 import VisualizarPlantilla from './dashboard/Plantillas/VisualizarPlantilla';
 import AreaListEval from './dashboard/Instrumentos/InstrumentoFijo/AreaListEval';
+import Perfil from './dashboard/Perfil';
 
 
 
@@ -58,7 +57,6 @@ export default function App() {
 
             <Route path='instrumentos' element={<Instrumentos />} >
               <Route index element={<ListaInstrumentos />} /> 
-
               <Route path='instrumentoFijo' element={<InstrumentoFijo />} >
                   <Route index element={<OpcionesInstrumento />} /> 
                   <Route path='area/:areaId' element={<AreaListEval />} />
@@ -67,10 +65,7 @@ export default function App() {
               </Route>
             </Route>
 
-
             <Route path='analiticas' element={<Analiticas />} />
-            <Route path='almacenamiento' element={<Almacenamiento />} />
-
             {/**PAuta */}
             <Route path='plantillas' element={<Plantillas />} >
               <Route index element={<ListaPlantillas />} />
@@ -78,6 +73,9 @@ export default function App() {
               <Route path='cargar-plantilla' element={<CargarPlantilla />} />
               <Route path=':id' element={<VisualizarPlantilla />} />
             </Route>
+
+            <Route path='perfil' element={<Perfil />} />
+
           </Route>
         </Routes>
       </SesionProvider>

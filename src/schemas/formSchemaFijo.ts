@@ -11,12 +11,15 @@ export const formSchemaFijo = z.object({
         .min(1, {
             message: "El nombre de la persona evaluada es obligatorio",
         })
-        .max(100, {
+        .max(60, {
             message: "El nombre de la persona evaluada no puede tener más de 60 caracteres",
         })
-        .refine(val => /^[a-zA-Z\s.,]+$/.test(val), {
-            message: "El nombre solo puede contener letras, espacios, puntos y comas",
-        }),
+        .refine(
+            val => /^[\p{L}\s.,]+$/u.test(val), 
+            {
+                message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos y comas",
+            }
+        ),
     nombreEvaluador: z.string().max(100).nullable().optional(),
     aplicadoPorAdmin: z.boolean()
 });

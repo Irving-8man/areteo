@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Admin } from "@/models/types";
 import RegistrarAdmin from "./ProcesarAdmin/RegistrarAdmin";
 import Login from "./ProcesarAdmin/Login";
-import { Link } from "react-router-dom";
-import { Button } from "@fluentui/react-components";
+
 
 export default function Bienvendida() {
     //Reconocer la existencia de un Admin en db
@@ -24,7 +23,6 @@ export default function Bienvendida() {
             </div>
             {/**Renderizar el componente que sea necesario */}
             { admin ? ( <Login />) : ( <RegistrarAdmin /> )}
-            <Link to="/dashboard"><Button appearance="outline">Ir a Dashboard</Button></Link>
         </main>
     )
 }

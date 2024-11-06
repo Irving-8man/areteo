@@ -1,5 +1,5 @@
 import { getDbInstance } from "./DatabaseSingleton";
-import { Admin, AdminRegistrado } from '../models/types';
+import { Admin, AdminLogin, AdminRegistrado } from '../models/types';
 import { generarID } from "@/utils/GenerarID";
 import { hashPass, verificarContrasenia } from "@/utils/ProcesCredenciales";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +22,7 @@ export async function getAdmin() {
 }
 
 // Registrar administrador
+
 export async function registrarAdmin(data: Admin): Promise<boolean> {
     try {
         const db = await getDb;
@@ -30,12 +31,13 @@ export async function registrarAdmin(data: Admin): Promise<boolean> {
 
         const nuevoAdmin: AdminRegistrado = {
             id: nuevoID,
-            nombre: data.nombre,
+            nombreComple: data.nombreComple,
+            nombreUsuario: data.nombreUsuario,
             contrasenia: contraseniaHashed
         }
         const registrado = await db.execute(
-            "INSERT into Administrador (id, nombre, contrasenia) VALUES (?, ?, ?)",
-            [nuevoAdmin.id, nuevoAdmin.nombre, nuevoAdmin.contrasenia],
+            "INSERT into Administrador (id, nombreComple, nombreUsuario, contrasenia) VALUES ($1, $2, $3, $4)",
+            [nuevoAdmin.id, nuevoAdmin.nombreComple, nuevoAdmin.nombreUsuario, nuevoAdmin.contrasenia],
         );
 
         if (registrado) {
@@ -50,8 +52,11 @@ export async function registrarAdmin(data: Admin): Promise<boolean> {
 }
 
 
+
+
+
 //Verificar administrador
-export async function verificarAdmin(data: Admin): Promise<AdminRegistrado | null> {
+export async function verificarAdmin(data: AdminLogin): Promise<AdminRegistrado | null> {
     const adminUnico = 1;
     try {
         const db = await getDb;
@@ -61,7 +66,7 @@ export async function verificarAdmin(data: Admin): Promise<AdminRegistrado | nul
             const admin = adminArray[0];
             
             //Comprueba el nombre
-            if(admin.nombre === data.nombre){
+            if(admin.nombreUsuario === data.nombreUsuario){
                 //Valida la contraseña
                 const isContrasenia =  await verificarContrasenia(data.contrasenia,admin.contrasenia);
 
@@ -80,5 +85,22 @@ export async function verificarAdmin(data: Admin): Promise<AdminRegistrado | nul
     } catch (error) {
         console.error("Error al consultar la base de datos:", error);
         return null;
+    }
+}
+
+
+
+export async function actualizarAdminNombres(nuevoUsuario: string, nuevoNomCom: string, id: string ) {
+    try {
+        const db = await getDb;
+
+        const actualizado = await db.execute(
+            "UPDATE Administrador SET nombreUsuario = $1, nombreComple = $2 WHERE id = $3",
+            [nuevoUsuario,nuevoNomCom , id] 
+        );
+
+        return actualizado
+    } catch (error) {
+        console.error("Error al actualizar el administrador:", error);
     }
 }

@@ -12,11 +12,10 @@ const unico = 0;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function crearRegiACIC(data: any) {
     const regACID = generarID();
-    const aplicoAdmin = data.aplicadoPorAdmin;
     const fechaRegistro = new Date().toISOString();
     const respuestasDadas = data.respuestasPuntos
     const resultadosTest = CalcularResultadosTest(data.id, respuestasDadas)
-    const nombreAplicador = aplicoAdmin ? "Administrador" : data.nombreEvaluador;
+    const nombreAplicador = data.nombreEvaluador;
 
     try {
         const db = await getDb;

@@ -1,11 +1,18 @@
 //Administrador
 export interface Admin {
-    nombre: string;
+    nombreComple:string;
+    nombreUsuario:string;
     contrasenia: string;
 }
 
 export interface AdminRegistrado extends Admin {
     id: string;
+}
+
+//Admin login
+export interface AdminLogin {
+    nombreUsuario:string;
+    contrasenia: string;
 }
 
 

@@ -9,6 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { crearRegiACIC } from "@/services/InstACICController";
 import { formSchemaFijo } from "@/schemas/formSchemaFijo";
 import ButtonDocxPostRes from "@/Docx/DatosPaciente/ButtonDocxPostRes";
+import { useSesion } from "@/hooks/useSesion";
 
 
 export default function AreaEvaluacion() {
@@ -18,6 +19,7 @@ export default function AreaEvaluacion() {
     const AreaPreguntas: QuestArea = QuetSeleccion(id);
     const { quests, desc } = AreaPreguntas;
     const tituloArea = TITULOSEVAL_AREA[id];
+    const { isAdmin } = useSesion();
 
 
     const [respuestas, setRespuestas] = useState<{ [key: number]: string }>(
@@ -31,7 +33,7 @@ export default function AreaEvaluacion() {
     const [nombreEvaluador, setNombreEvaluador] = useState<string>("");
     const [aplicadoPorAdmin, setAplicadoPorAdmin] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-    const nomEvaluadorDef = "admin";
+    const nomEvaluadorDef = isAdmin?.nombreComple;
 
     // Estado para almacenar los resultados del servidor
     const [resultados, setResultados] = useState<{
@@ -64,7 +66,7 @@ export default function AreaEvaluacion() {
             // Verificar que el nombre del evaluador no esté vacío si no es aplicado por el admin
             if (!aplicadoPorAdmin && (!nombreEvaluador || nombreEvaluador.trim() === "")) {
                 throw new Error("El nombre del evaluador es obligatorio cuando no es aplicado por el administrador.");
-            }
+            }   
 
             const data = {
                 nombreEvaluado,
@@ -73,7 +75,6 @@ export default function AreaEvaluacion() {
                 respuestas
             };
 
-
             formSchemaFijo.parse(data);
 
             // Convertir las respuestas a enteros antes de procesar
@@ -81,10 +82,11 @@ export default function AreaEvaluacion() {
                 orden: parseInt(orden),
                 respuesta: parseInt(valor)
             }));
-
-            const datosEnvio = { id, nombreEvaluado, nombreEvaluador, aplicadoPorAdmin, respuestasPuntos }
+            const datosEnvio = { id, nombreEvaluado, nombreEvaluador : data.nombreEvaluador, aplicadoPorAdmin, respuestasPuntos }
+            
             const res = await crearRegiACIC(datosEnvio);
             if (res) {
+                
                 setIsSubmitting(false);
                 setResultados(res);
                 alert("Evaluación registrada, revise sus resultados.")
@@ -146,6 +148,7 @@ export default function AreaEvaluacion() {
                                 disabled={isSubmitting || !!resultados}
                                 appearance="outline"
                                 className="mb-4 p-2"
+                                placeholder="Ej. José Sanches Gómez"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -160,13 +163,14 @@ export default function AreaEvaluacion() {
                                 disabled={isSubmitting || !!resultados || aplicadoPorAdmin} // El campo se desactiva si es el admin
                                 appearance="outline"
                                 className="mb-4 p-2"
+                                placeholder="Ej. Dr. Fabian Alejandro Pérez Gómez"
                             />
 
                         </div>
 
                         <div className="flex gap-2">
                             <Label className="flex items-center gap-2 font-semibold" style={{ fontSize: "14px" }}>
-                                Aplicado por el administrador
+                                Aplicado por el Administrador
                             </Label>
                             <div className="inline-flex items-center">
                                 <label className="flex items-center cursor-pointer relative">
