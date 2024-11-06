@@ -1,4 +1,17 @@
-import { Input, Card, CardFooter, Button, InfoLabel } from "@fluentui/react-components";
+import {
+    Dialog,
+    DialogTrigger,
+    DialogSurface,
+    DialogTitle,
+    DialogContent,
+    DialogBody,
+    DialogActions,
+    Button,
+    Input,
+    InfoLabel,
+    makeStyles,
+} from "@fluentui/react-components";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -8,14 +21,29 @@ import { actualizarAdmin, getAdmin } from "@/services/AdminController";
 import { formSchemaActualizar } from "@/schemas/formSchemaAdmin";
 import { z } from "zod";
 
+const useStyles = makeStyles({
+    content: {
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "15px",
+    },
+    inputColumn: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+    },
+});
+
 export default function Actualizar() {
     const [adminData, setAdminData] = useState<AdminActualizar | null>(null);
+    const [open, setOpen] = useState(false);
+    const styles = useStyles();
 
     // Obtener datos del administrador al montar el componente
     const fetchAdmin = async () => {
-        const admin = await getAdmin(); // Obtener admin desde la base de datos
+        const admin = await getAdmin();
         if (admin) {
-            setAdminData(admin as AdminActualizar); // Forzamos el tipo a AdminActualizar
+            setAdminData(admin as AdminActualizar);
         }
     };
 
@@ -40,13 +68,14 @@ export default function Actualizar() {
                 id: adminData.id,
                 nombreComple: data.nombreComple || adminData.nombreComple,
                 nombreUsuario: data.nombreUsuario || adminData.nombreUsuario,
-                contrasenia: data.contrasenia // Asumimos que se desea cambiar siempre la contraseña si se proporciona
+                contrasenia: data.contrasenia
             };
 
             const success = await actualizarAdmin(updatedData);
             if (success) {
                 alert("Datos actualizados correctamente");
-                fetchAdmin(); // Refrescar los datos después de la actualización
+                fetchAdmin();
+                setOpen(false);
             } else {
                 alert("Error al actualizar los datos");
             }
@@ -67,32 +96,53 @@ export default function Actualizar() {
     }, [adminData, reset]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Card style={{ padding: "40px" }} className="min-w-[450px]">
-                <div>
-                    <p className="text-center font-bold text-[20px] pb-[30px]"> Datos del Administrador</p>
-                </div>
-                <div className="flex flex-col items-center gap-[25px]">
-                    <div className="flex-col">
-                        <InfoLabel className="block">Nombre de usuario</InfoLabel>
-                        <Input appearance="underline" placeholder="Nombre de usuario" {...register("nombreUsuario")} />
-                        {errors.nombreUsuario && <p>{errors.nombreUsuario.message}</p>}
-                    </div>
-                    <div className="flex-col">
-                        <InfoLabel className="block">Nombre completo</InfoLabel>
-                        <Input appearance="underline" placeholder="Nombre completo" {...register("nombreComple")} />
-                        {errors.nombreComple && <p>{errors.nombreComple.message}</p>}
-                    </div>
-                    <div>
-                        <InfoLabel className="block">Contraseña</InfoLabel>
-                        <Input appearance="underline" placeholder="Nueva contraseña" type="password" {...register("contrasenia")} />
-                        {errors.contrasenia && <p>{errors.contrasenia.message}</p>}
-                    </div>
-                </div>
-                <CardFooter className="mt-[30px] flex justify-center">
-                    <Button appearance="primary" type="submit" onClick={fetchAdmin} >Actualizar</Button>
-                </CardFooter>
-            </Card>
-        </form>
+        <>
+            <Dialog open={open} onOpenChange={(_, data) => setOpen(data.open)}>
+                <DialogTrigger>
+                    <Button appearance="primary">Actualizar Datos de Administrador</Button>
+                </DialogTrigger>
+                <DialogSurface>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <DialogBody>
+                            <DialogTitle>Actualizar Datos</DialogTitle>
+                            <DialogContent className={styles.content}>
+                                <div className={styles.inputColumn}>
+                                    <InfoLabel>Nombre de usuario</InfoLabel>
+                                    <Input
+                                        appearance="underline"
+                                        placeholder="Nombre de usuario"
+                                        {...register("nombreUsuario")}
+                                    />
+                                    {errors.nombreUsuario && <p className="text-red-600">{errors.nombreUsuario.message}</p>}
+
+                                    <InfoLabel>Nombre completo</InfoLabel>
+                                    <Input
+                                        appearance="underline"
+                                        placeholder="Nombre completo"
+                                        {...register("nombreComple")}
+                                    />
+                                    {errors.nombreComple && <p className="text-red-600">{errors.nombreComple.message}</p>}
+
+                                    <InfoLabel>Contraseña</InfoLabel>
+                                    <Input
+                                        appearance="underline"
+                                        placeholder="Nueva contraseña"
+                                        type="password"
+                                        {...register("contrasenia")}
+                                    />
+                                    {errors.contrasenia && <p className="text-red-600">{errors.contrasenia.message}</p>}
+                                </div>
+                            </DialogContent>
+                            <DialogActions>
+                                <DialogTrigger>
+                                    <Button appearance="secondary">Cancelar</Button>
+                                </DialogTrigger>
+                                <Button appearance="primary" type="submit">Actualizar</Button>
+                            </DialogActions>
+                        </DialogBody>
+                    </form>
+                </DialogSurface>
+            </Dialog>
+        </>
     );
 }
