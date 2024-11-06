@@ -9,6 +9,7 @@ import { AREASFIJAS } from "@/InstFijoDiabetes/Const";
 import { ProcesarRespACIC } from "@/utils/ProcesarRespACIC";
 import ButtonDocxResEvalAC from "@/Docx/DatosPaciente/ButtonDocxResEvalAC";
 
+
 export default function AreaRespuesta() {
     const { respID, areaId } = useParams();
     const respIDSafe = respID!
@@ -22,7 +23,6 @@ export default function AreaRespuesta() {
         },
         refetchOnWindowFocus: false
     })
-
 
 
     //Fucniones de busqueda por defecto

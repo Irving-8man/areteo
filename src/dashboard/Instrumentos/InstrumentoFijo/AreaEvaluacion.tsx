@@ -297,8 +297,6 @@ export default function AreaEvaluacion() {
                                 </Button>
                             </Link>
 
-                            
-
                             <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}>
                                 <Button appearance="primary" className="p-6" style={{ padding: "5px", width: "150px" }}>
                                     Regresar a Área {id}

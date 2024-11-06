@@ -83,7 +83,7 @@ export default function AreaListEval() {
                         <li>
                             {area && (
                                 <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}/evaluar`}>
-                                    <Button appearance="primary" icon={<Add20Filled />}>Evaluar Ahora</Button>
+                                    <Button appearance="primary" icon={<Add20Filled />}>Evaluar Ahorawww</Button>
                                 </Link>
                             )}
                         </li>
