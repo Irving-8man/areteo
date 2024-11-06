@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { PacienteRegistrado, Paciente } from "@/models/types";
 import { eliminarPaciente, getAllPacientesRegistrados,  registrarPaciente } from "@/services/PacienteController";
-import { mockpacientesRegis } from "@/mocks/listPacientesRe";
 
 interface PacienteState {
     pacientes: PacienteRegistrado[];
@@ -16,7 +15,7 @@ export const usePacienteStore = create<PacienteState>((set) => ({
         try {
             const pacientes: PacienteRegistrado[] = await getAllPacientesRegistrados();
             if (pacientes.length < 0) {
-                set({ pacientes: mockpacientesRegis });
+                set({ pacientes: [] });
             }
             set({ pacientes });
         } catch (error) {

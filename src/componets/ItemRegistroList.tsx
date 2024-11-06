@@ -63,7 +63,7 @@ export default function ItemRegistroList(props: RowProps) {
                 </Link>
             </td>
             <td className="whitespace-nowrap px-3 py-3">{registro.edadDicha}</td>
-            <td className="whitespace-nowrap px-3 py-3">{registro.peso}</td>
+            <td className="whitespace-nowrap px-3 py-3">{registro.peso} kg</td>
             <td className="whitespace-nowrap px-3 py-3">{registro.antecedFamiInfa}</td>
             <td className="whitespace-nowrap px-3 py-3"> <p> <span> {tratamientos[0]}</span> | <span> {tratamientos[1]}</span></p></td>
             <td className="whitespace-nowrap px-3 py-3">

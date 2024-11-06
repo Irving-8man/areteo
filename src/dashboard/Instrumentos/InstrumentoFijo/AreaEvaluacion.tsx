@@ -7,27 +7,8 @@ import { z } from 'zod';
 import { ArrowLeft20Filled } from "@fluentui/react-icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { crearRegiACIC } from "@/services/InstACICController";
-
-const respuestaSchema = z.object({
-    respuestas: z.record(z.string(), z.string().refine(val => {
-        const numVal = parseInt(val);
-        return numVal >= 0 && numVal <= 11;
-    }, {
-        message: "La respuesta debe estar entre 0 y 11",
-    })),
-    nombreEvaluado: z.string()
-        .min(1, {
-            message: "El nombre de la persona evaluada es obligatorio",
-        })
-        .max(100, {
-            message: "El nombre de la persona evaluada no puede tener más de 60 caracteres",
-        })
-        .refine(val => /^[a-zA-Z\s.,]+$/.test(val), {
-            message: "El nombre solo puede contener letras, espacios, puntos y comas",
-        }),
-    nombreEvaluador: z.string().max(100).nullable().optional(),
-    aplicadoPorAdmin: z.boolean()
-});
+import { formSchemaFijo } from "@/schemas/formSchemaFijo";
+import ButtonDocxPostRes from "@/Docx/DatosPaciente/ButtonDocxPostRes";
 
 
 export default function AreaEvaluacion() {
@@ -93,7 +74,7 @@ export default function AreaEvaluacion() {
             };
 
 
-            respuestaSchema.parse(data);
+            formSchemaFijo.parse(data);
 
             // Convertir las respuestas a enteros antes de procesar
             const respuestasPuntos = Object.entries(respuestas).map(([orden, valor]) => ({
@@ -257,7 +238,7 @@ export default function AreaEvaluacion() {
                             </div>
                         ))}
 
-                        {error && <p style={{ color: 'red' }}>{error}</p>}
+                        {error && <p style={{ color: 'red' }} className="text-base">{error}</p>}
 
                         <div className="flex flex-col gap-3">
                             <Button type="submit" className="mt-4" style={{ padding: "10px" }} appearance="primary" disabled={isSubmitting || !!resultados}>
@@ -299,10 +280,10 @@ export default function AreaEvaluacion() {
 
                             <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(id)}`}>
                                 <Button appearance="primary" className="p-6" style={{ padding: "5px", width: "150px" }}>
-                                    Regresar a Área {id}
+                                    Volver a Área {id}
                                 </Button>
                             </Link>
-                            <Button className="p-6" appearance="secondary" style={{ padding: "5px", width: "150px" }}>Evaluación en Word</Button>
+                            <ButtonDocxPostRes evalRegi_id={String(resultados.registroId)} />
                         </div>
                     </div>
                 )}

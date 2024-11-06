@@ -15,13 +15,13 @@ export default function Pacientes() {
                     <div>
                         <ul className="flex flex-row gap-12 items-center justify-center">
                             <li>
-                                <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
+                                <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium underline' : 'text-black'
                                     }`}>Lista Pacientes</Link>
                             </li>
 
                             <li>
-                                <Link to="/dashboard/pacientes/datos-pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes/datos-pacientes") ? 'font-medium' : 'text-black'
-                                    }`}>Datos de pacientes</Link>
+                                <Link to="/dashboard/pacientes/datos-pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes/datos-pacientes") ? 'font-medium underline' : 'text-black'
+                                    }`}>Datos de Pacientes</Link>
                             </li>
                         </ul>
                     </div>
