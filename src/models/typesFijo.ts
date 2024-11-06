@@ -22,6 +22,8 @@ export interface RegistroEvalACIC {
     evaluacionDicha: string;
 }
 
+
+
 export interface RegistroEvalACIRegis extends RegistroEvalACIC {
     id: string;
 }

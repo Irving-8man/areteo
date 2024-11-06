@@ -8,6 +8,7 @@ import { getRegistrosACIC } from "@/services/InstACICController";
 import { ResEvalACICList } from "@/models/typesFijo";
 import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
 import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
+import ButtonExportExcel from "@/ui/ProcesarArea/ButtonExportExcel";
 
 
 
@@ -65,6 +66,7 @@ export default function AreaListEval() {
     if (isError) return <p>Error al cargar las evaluaciones.</p>;
 
 
+
     return (
         <div>
             <section className="flex justify-start">
@@ -86,7 +88,7 @@ export default function AreaListEval() {
                             )}
                         </li>
                         <li>
-                            <Button appearance="outline">en contruccion</Button>
+                             {RegistrosEval && <ButtonExportExcel evaluaciones={RegistrosEval} />}
                         </li>
                     </ul>
                 </Card>
@@ -103,6 +105,7 @@ export default function AreaListEval() {
                 <div className="mt-10">
                     {RegistrosEval && <FiltEvalPag evaluaciones={RegistrosEval} />}
                 </div>
+                
 
             </section>
         </div>
