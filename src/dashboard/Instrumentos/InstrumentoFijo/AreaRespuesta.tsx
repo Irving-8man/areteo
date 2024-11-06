@@ -1,18 +1,21 @@
-import { getRegEvalACICComp } from "@/services/InstACICController";
+import { eliminarRegEvalACIC, getRegEvalACICComp } from "@/services/InstACICController";
 import { Button, Card } from "@fluentui/react-components";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft20Filled } from "@fluentui/react-icons";
 import { format } from "@formkit/tempo";
 import { useMemo } from "react";
 import { AREASFIJAS } from "@/InstFijoDiabetes/Const";
 import { ProcesarRespACIC } from "@/utils/ProcesarRespACIC";
 import ButtonDocxResEvalAC from "@/Docx/DatosPaciente/ButtonDocxResEvalAC";
+import DialogDeleteEvalACIC from "@/ui/DialogDeleteEvalACIC";
+
 
 export default function AreaRespuesta() {
     const { respID, areaId } = useParams();
     const respIDSafe = respID!
     const areaIdSafe = parseInt(areaId!, 10);
+    const navigate = useNavigate();
 
     const { data: evalResACICData, isError } = useQuery({
         queryKey: ['evalResACIC', respIDSafe],
@@ -43,6 +46,24 @@ export default function AreaRespuesta() {
     const { registro , respuestas }= evalResACICData;
     const respuestasProcesadas = ProcesarRespACIC(areaIdSafe, respuestas);
 
+    //Funcion para borra evaluacion
+    const handleDeleteEval = async () => {
+        if (!registro || !evalResACICData.registro || !registro.id) {
+            console.error("Datos de Evaluación no están disponibles para eliminar.");
+            return;
+        }
+        try {
+            const res = await eliminarRegEvalACIC(respIDSafe);
+            if (res) {
+                alert("Registro de Evaluación Eliminado")
+                navigate(`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}`);
+            }
+        } catch (error) {
+            console.error("Error al eliminar el registro de evalución:", error);
+            alert("Fallo en eliminar Registro de Evaluación Eliminado")
+        }
+    };
+
 
     return (
         <>
@@ -61,6 +82,7 @@ export default function AreaRespuesta() {
 
                         <div className="flex justify-center items-center gap-6 my-5">
                             <ButtonDocxResEvalAC evalACIC={registro} respuestas={respuestasProcesadas} />
+                            <DialogDeleteEvalACIC eliminar={handleDeleteEval}/>
                         </div>
 
                         <Card style={{ padding: "25px" }}>
@@ -77,7 +99,7 @@ export default function AreaRespuesta() {
                                 </ul>
                             </article>
                             <article className="mt-5">
-                                <h2 className="font-bold text-xl">Respuestas dadas por componente</h2>
+                                <h2 className="font-bold text-xl">Respuestas puntuadas por Componente</h2>
                                 <ul className="mt-2 flex flex-col gap-7 ">
                                 {
                                     respuestasProcesadas.map((valor) => (

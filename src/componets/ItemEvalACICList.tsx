@@ -8,6 +8,7 @@ import {
 } from "@fluentui/react-components";
 
 import {
+    ArrowDownload20Regular,
     bundleIcon,
     EyeFilled,
     EyeRegular,
@@ -15,7 +16,8 @@ import {
 } from "@fluentui/react-icons";
 import { ResEvalACICList } from "@/models/typesFijo";
 import { format } from "@formkit/tempo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { generarDocxRegEvalPost } from "@/Docx/DatosPaciente/FucGenRegEvalPost";
 
 const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 
@@ -23,12 +25,15 @@ const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 interface RowProps {
     ResEvalACIC: ResEvalACICList;
     num: number;
-    designado:number;
+    designado: number;
 }
 
 
 export function ItemEvalACICList(props: RowProps) {
-    const { ResEvalACIC, num ,designado} = props
+    const navigate = useNavigate();
+    const { ResEvalACIC, num, designado } = props
+
+
     return (
         <tr className={`w-full border-b text-sm ${num % 2 === 0 ? "bg-zinc-100" : ""}`}>
             <td className="whitespace-nowrap py-3 pl-5"><span className="font-semibold">({designado})</span></td>
@@ -48,8 +53,11 @@ export function ItemEvalACICList(props: RowProps) {
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
-                            <MenuItem>
-                                <Button icon={<CopyEye />}>Ver Respuestas</Button>
+                            <MenuItem className="font-semibold" icon={<CopyEye />} onClick={() => { navigate(`/dashboard/instrumentos/instrumentoFijo/resultados/${String(ResEvalACIC.area_id)}/${String(ResEvalACIC.id)}`) }}>
+                                Ver Evaluación
+                            </MenuItem>
+                            <MenuItem className="font-semibold" icon={<ArrowDownload20Regular />} onClick={() =>{ generarDocxRegEvalPost(ResEvalACIC.id)}} >
+                                Descargar Evaluación
                             </MenuItem>
                         </MenuList>
                     </MenuPopover>

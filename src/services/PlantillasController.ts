@@ -142,7 +142,7 @@ export async function eliminarPlantilla(id: string) {
         DELETE FROM Plantilla
         WHERE id = $1
     `;
-        const resultado = await db.select(sqlQuery, [id]);
+        const resultado = await db.execute(sqlQuery, [id]);
         return resultado
     } catch (error) {
         console.error('Database Error:', error);

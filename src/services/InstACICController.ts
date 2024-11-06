@@ -137,3 +137,24 @@ export async function getRegEvalACICComp(idRegistro: string) {
         return null;
     }
 }
+
+
+
+export async function eliminarRegEvalACIC(id: string) {
+
+    try {
+        const db = await getDb;
+        const sqlQuery = `
+        DELETE FROM RegistroEvalACIC
+        WHERE id = $1
+    `;
+        const resultado = await db.execute(sqlQuery, [id]);
+        return resultado
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Fallo al eliminar registro de evalaución ACIC.');
+    }
+}
+
+
+

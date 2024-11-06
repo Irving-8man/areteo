@@ -38,10 +38,8 @@ export default function VerResulRegistro() {
                         inyectable = await getTratamientoInyectable(idRegiSafe);
                         oral = await getTratamientoOral(idRegiSafe);
 
-
-
                         return { pacienteConRe: { ...paciente }, registro: { ...registroMedico }, trataInyec: inyectable[unico], trataOral: oral[unico] };
-
+                        
                     } else if (usaTratamientoInyectable) {
                         inyectable = await getTratamientoInyectable(idRegiSafe);
                         return { pacienteConRe: { ...paciente }, registro: { ...registroMedico }, trataInyec: inyectable[unico] };

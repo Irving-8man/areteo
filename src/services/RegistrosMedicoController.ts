@@ -78,7 +78,7 @@ export async function borrarRegistroMedico(registro_id:string) {
         return resultados;
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Fallo en borrar registro medico.');
+        throw new Error('Fallo en borrar registro médico.');
     }
 }
 

@@ -34,7 +34,7 @@ const ButtonDocxResEvalAC: React.FC<DocxButtonProps> = ({ evalACIC, respuestas }
         }
     };
 
-    return <Button onClick={generarDocumento} icon={<ArrowDownload20Regular />}>Descargar Evaluación ACIC</Button>;
+    return <Button onClick={generarDocumento} appearance="primary" icon={<ArrowDownload20Regular />}>Descargar Evaluación</Button>;
 };
 
 export default ButtonDocxResEvalAC;

@@ -50,12 +50,12 @@ export function FiltEvalPag({ evaluaciones }: FiltroEvaluacionesProps) {
                 value={filterText}
                 onChange={handleChange}
                 style={{ width: "400px" }}
-                className='mb-3'
+                className='mb-5'
                 contentBefore={<Search20Filled />}
             />
 
             {/* Mostrar la tabla solo si hay resultados */}
-            <table className="border-2 min-h-[40vh] hidden min-w-full text-gray-900 md:table">
+            <table className="border-2 min-h-[35vh] hidden min-w-full text-gray-900 md:table">
                 <thead className='rounded-lg text-left text-sm font-normal'>
                     <tr>
                         <th scope="col" className="px-2 py-5"></th>

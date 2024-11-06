@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function DialogDeleteRegistro({ eliminar }: {  eliminar: () => Promise<void>; }) {
+export default function DialogDeleteEvalACIC({ eliminar }: {  eliminar: () => Promise<void>; }) {
     //hooks
     const styles = useStyles();
     const [loading, setLoading] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export default function DialogDeleteRegistro({ eliminar }: {  eliminar: () => Pr
         <>
             <Dialog open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
                 <DialogTrigger disableButtonEnhancement >
-                    <Button style={{ "backgroundColor": "red", "color": "white" }} icon={<Delete20Regular />}>Eliminar Registro</Button>
+                    <Button style={{ "backgroundColor": "red", "color": "white" }} icon={<Delete20Regular />}>Eliminar Evaluación</Button>
                 </DialogTrigger>
                 <DialogSurface aria-describedby={undefined}>
                 
@@ -55,11 +55,11 @@ export default function DialogDeleteRegistro({ eliminar }: {  eliminar: () => Pr
                                 }
                             >
                                 <span className="text-zinc-600">
-                                    Eliminar Registro
+                                    Eliminar Evaluación
                                 </span>
                             </DialogTitle>
                             <DialogContent className={styles.content} >
-                                <p className="text-base">Al eliminar este Registro Médico se borrara del historial del paciente, junto a los datos de los tratamientos, ¿Desea continuar?</p>
+                                <p className="text-base">Al eliminar este Registro  de Evaluación ACIC de su Área, se borraran todas las respuestas y este afectará a los datos de las gráficas, ¿Desea continuar?</p>
                             </DialogContent>
 
                             <DialogActions className="mt-4">

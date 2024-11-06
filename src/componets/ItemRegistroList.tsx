@@ -8,6 +8,7 @@ import {
 } from "@fluentui/react-components";
 
 import {
+    ArrowDownload20Regular,
     bundleIcon,
     EyeFilled,
     EyeRegular,
@@ -15,8 +16,8 @@ import {
 } from "@fluentui/react-icons";
 import { RegistroMedicoList } from "@/models/types";
 import { format } from "@formkit/tempo";
-import ButtonDocxRegistro from "@/Docx/DatosPaciente/ButtonDocxRegistro";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { generarDocxRegistroMedico } from "@/Docx/DatosPaciente/FucGenRegistroMedico";
 
 
 const CopyEye = bundleIcon(EyeFilled, EyeRegular);
@@ -40,6 +41,7 @@ export default function ItemRegistroList(props: RowProps) {
     const usaTratamientoInyectable = registro.usaTratamientoInyectable === "true";
     const usaTratamientoOral = registro.usaTratamientoOral === "true";
     let tratamientos;
+    const navigate = useNavigate();
 
     if (usaTratamientoInyectable && usaTratamientoOral) {
         tratamientos = CHECKS[0];
@@ -73,11 +75,11 @@ export default function ItemRegistroList(props: RowProps) {
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
-                            <MenuItem>
-                                <Link to={`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`}><Button icon={<CopyEye />}>Ver Registro</Button></Link>
+                            <MenuItem icon={<CopyEye />} onClick={()=>{navigate(`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`)}}>
+                                Ver Registro
                             </MenuItem>
-                            <MenuItem>
-                                <ButtonDocxRegistro paciente_id={props.paciente_id} registro_id={props.registro.id} />
+                            <MenuItem icon={<ArrowDownload20Regular />} onClick={()=>{generarDocxRegistroMedico(props.paciente_id,props.registro.id)}} >
+                                Descargar Registro
                             </MenuItem>
                         </MenuList>
                     </MenuPopover>
