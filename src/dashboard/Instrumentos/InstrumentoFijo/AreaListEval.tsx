@@ -1,21 +1,18 @@
 import { AREASFIJAS, INFORMACIONAREAS } from "@/InstFijoDiabetes/Const";
 import { Button, Card } from "@fluentui/react-components";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getRegistrosACIC } from "@/services/InstACICController";
-import { ResEvalACICList } from "@/models/typesFijo";
 import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
 import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
-
 
 
 
 export default function AreaListEval() {
     const { areaId } = useParams();
     const areaIdSafe = parseInt(areaId!, 10);
-    const [evaluacionesFiltradas, setEvaluacionesFiltradas] = useState<ResEvalACICList[]>([]);
 
     const { data: RegistrosEval, isError, isLoading } = useQuery(
         {
@@ -25,16 +22,9 @@ export default function AreaListEval() {
                 return result || [];
             },
             refetchOnWindowFocus: false,
+            refetchOnMount:true
         }
     )
-
-
-    useEffect(() => {
-        if (RegistrosEval && evaluacionesFiltradas.length === 0) {
-            setEvaluacionesFiltradas([]);
-        }
-    }, [RegistrosEval, evaluacionesFiltradas.length]);
-
 
     /*
     const handleDeleteResEval = (id: string) => {
@@ -49,8 +39,6 @@ export default function AreaListEval() {
     const infoArea = useMemo(() => {
         return INFORMACIONAREAS.find(a => a.id === areaIdSafe);
     }, [areaIdSafe])
-
-
 
 
     if (!area) {
@@ -68,40 +56,53 @@ export default function AreaListEval() {
     return (
         <div>
             <section className="flex justify-start">
-                <Link to="/dashboard/instrumentos/instrumentoFijo"><Button icon={<ArrowLeft20Filled />}>ACIC</Button></Link>
+                <Link to="/dashboard/instrumentos/instrumentoFijo" ><Button icon={<ArrowLeft20Filled />}>ACIC</Button></Link>
             </section>
             <section className="pt-10">
-                <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }}>
+                <Card style={{ padding: "25px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }}>
                     <div className="text-base">
                         <h1 className="text-3xl mb-4 font-semibold">Área {area.id} : {area.nombre}</h1>
                         <p className="max-w-[65ch]">{infoArea.descripcion}</p>
                     </div>
 
-                    <ul className="flex flex-col gap-3 justify-center">
-                        <li>
-                            {area && (
-                                <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}/evaluar`}>
-                                    <Button appearance="primary" icon={<Add20Filled />}>Evaluar Ahora</Button>
-                                </Link>
-                            )}
-                        </li>
-                        <li>
-                            <Button appearance="outline">en contruccion</Button>
-                        </li>
-                    </ul>
+                    <div>
+                        <div className="mb-10 font-semibold text-base">
+                            <p>Total de evaluaciones registradas:</p>
+                            <p className="text-red-600">
+                                {RegistrosEval ? (<span>{RegistrosEval.length}</span>) : (<span>Recargar ARETEO</span>)}
+                            </p>
+                        </div>
+
+                        <ul className="flex flex-col gap-3 justify-center">
+                            <li>
+                                {area && (
+                                    <Link to={`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}/evaluar`}>
+                                        <Button appearance="primary" icon={<Add20Filled />}>Evaluar Ahora</Button>
+                                    </Link>
+                                )}
+                            </li>
+                            <li>
+                                <Button appearance="outline">en contruccion</Button>
+                            </li>
+                        </ul>
+                    </div>
+
                 </Card>
             </section>
 
             {/**probando */}
             <section>
                 <div className="my-20">
-                    <h2 className="font-semibold text-xl mb-6"> Lista de Evaluaciones ACIC recabadas del área</h2>
+                    <div className="mb-6">
+                        <h2 className="font-semibold text-xl"> Lista de Evaluaciones ACIC recabadas del área.</h2>
+                        <p className="font-thin text-base">Las evaluaciones estan páginadas de 10 en 10 *</p>
+                    </div>
                     {RegistrosEval && <ListEvalPagAcord evaluaciones={RegistrosEval} />}
                 </div>
 
-
                 <div className="mt-10">
-                    {RegistrosEval && <FiltEvalPag evaluaciones={RegistrosEval} />}
+                    <h2 className="font-semibold text-xl mb-6"> Buscar en las Evaluaciones.</h2>
+                    {RegistrosEval && RegistrosEval.length !== 0 ? (<FiltEvalPag evaluaciones={RegistrosEval} />) : (<p className="text-base">No hay evaluaciones disponibles para filtrar.</p>)}
                 </div>
 
             </section>

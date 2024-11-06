@@ -3,6 +3,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import clsx from "clsx";
 import { ResEvalACICList } from "@/models/typesFijo";
 import { ChevronDown24Filled, ClipboardTaskListLtr20Regular } from "@fluentui/react-icons"
+import TablaEvalACIC from "../TablaEvalACIC";
 
 interface ListEvaluacionesAcordeonProps {
     evaluaciones: ResEvalACICList[];
@@ -19,7 +20,7 @@ const ListEvalPagAcord: React.FC<ListEvaluacionesAcordeonProps> = ({ evaluacione
     }, [evaluaciones]);
 
     if (evaluaciones.length === 0) {
-        return <p>No se encontraron resultados.</p>;
+        return <p className="text-base">No hay evaluaciones hechas.</p>;
     }
 
     return (
@@ -30,17 +31,9 @@ const ListEvalPagAcord: React.FC<ListEvaluacionesAcordeonProps> = ({ evaluacione
 
                 return (
                     <Accordion.Item className="overflow-hidden AccordionItem" value={`item-${index}`} key={index}>
-                        <AccordionTrigger className="font-semibold text-base"> <p className="inline-flex items-center gap-1"><ClipboardTaskListLtr20Regular />{`Evaluaciones: ${inicio} - ${fin}`}</p></AccordionTrigger>
+                        <AccordionTrigger className="font-semibold text-base hover:bg-gray-200"> <p className="inline-flex items-center gap-1"><ClipboardTaskListLtr20Regular />{`Evaluaciones: ${inicio} - ${fin}`}</p></AccordionTrigger>
                         <AccordionContent className="">
-                            {pagina.map((evaluation) => (
-
-                                <div key={evaluation.id} className="grid grid-cols-4">
-                                    <p><strong>Fecha:</strong> {evaluation.fechaEvaluacion}</p>
-                                    <p><strong>Promedio:</strong> {evaluation.promedio}</p>
-                                    <p><strong>Aplicador:</strong> {evaluation.aplicador}</p>
-                                    {/* Agrega más detalles si es necesario */}
-                                </div>
-                            ))}
+                            <TablaEvalACIC ResEvalsACIC={pagina} inicio={inicio}/>
                         </AccordionContent>
                     </Accordion.Item>
                 );
@@ -72,7 +65,7 @@ const AccordionContent = React.forwardRef<
     React.ComponentPropsWithoutRef<typeof Accordion.Content>
 >(({ children, className, ...props }, forwardedRef) => (
     <Accordion.Content
-        className={clsx("overflow-hidden text-base AccordionContent", className)}
+        className={clsx("overflow-hidden text-[15px] AccordionContent", className)}
         {...props}
         ref={forwardedRef}
     >

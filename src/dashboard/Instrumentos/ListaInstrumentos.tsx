@@ -8,7 +8,7 @@ export default function ListaInstrumentos() {
     return (
         <section className="min-h-[80vh]">
             <article className="mb-20">
-                <Card>
+                <Card style={{padding:"25px"}}>
                     <h1 className="font-semibold text-2xl">Instrumento disponibles</h1>
                     <ul className="mt-6">
                         <li>

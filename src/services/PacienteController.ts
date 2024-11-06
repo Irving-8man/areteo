@@ -23,24 +23,6 @@ export async function getAllPacientesRegistrados() {
 }
 
 
-export async function numeroPacientes() {
-
-    try {
-        const db = await getDb;
-        const sqlQuery = `
-        SELECT COUNT(*)
-        FROM Paciente
-      `;
-
-        // Ejecutar la consulta
-        const count = await db.select(sqlQuery);
-        return Number(count[0]['COUNT(*)']) | 0
-    } catch (error) {
-        console.error('Database Error:', error);
-        return 0;
-    }
-}
-
 
 export async function getPaciente(id: string) {
     try {

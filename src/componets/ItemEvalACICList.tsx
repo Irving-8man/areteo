@@ -22,25 +22,26 @@ const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 
 interface RowProps {
     ResEvalACIC: ResEvalACICList;
-    borrarResEval: (id: string) => void
     num: number;
+    designado:number;
 }
 
 
 export function ItemEvalACICList(props: RowProps) {
-    const { ResEvalACIC, borrarResEval, num } = props
+    const { ResEvalACIC, num ,designado} = props
     return (
-        <tr className={`w-full border-b text-sm ${num % 2 === 0 ? "bg-gray-200" : ""}`}>
+        <tr className={`w-full border-b text-sm ${num % 2 === 0 ? "bg-zinc-100" : ""}`}>
+            <td className="whitespace-nowrap py-3 pl-5"><span className="font-semibold">({designado})</span></td>
             <td className="whitespace-nowrap py-3 pl-3">
-                <Link to={`/dashboard/instrumentos/instrumentoFijo/resultados/${String(ResEvalACIC.area_id)}/${String(ResEvalACIC.id)}`} className="hover:underline">
+                <Link to={`/dashboard/instrumentos/instrumentoFijo/resultados/${String(ResEvalACIC.area_id)}/${String(ResEvalACIC.id)}`} className="underline">
                     <span>{format(ResEvalACIC.fechaEvaluacion, { date: "medium", time: "short" })}</span>
                 </Link>
             </td>
             <td className="whitespace-nowrap py-3 pl-3">{parseFloat(ResEvalACIC.promedio!.toFixed(2))}</td>
             <td className="py-3 pl-3"><p className="max-w-[28ch]">{ResEvalACIC.evaluacionDicha}</p></td>
-            <td className="py-3 pl-3"><p className="max-w-[25ch]">{ResEvalACIC.aplicador}</p></td>
-            <td className="py-3 pl-3"><p className="max-w-[25ch]">{ResEvalACIC.respondiente}</p></td>
-            <td className="whitespace-nowrap px-3 py-3">
+            <td className="py-3 pl-3"><p className="max-w-[24ch]">{ResEvalACIC.respondiente}</p></td>
+            <td className="py-3 pl-3"><p className="max-w-[24ch]">{ResEvalACIC.aplicador}</p></td>
+            <td className="whitespace-nowrap px-3 py-5">
                 <Menu>
                     <MenuTrigger disableButtonEnhancement>
                         <Button icon={<MoreVerticalFilled />}></Button>
@@ -48,7 +49,7 @@ export function ItemEvalACICList(props: RowProps) {
                     <MenuPopover>
                         <MenuList>
                             <MenuItem>
-                                <Button icon={<CopyEye />} onClick={() => borrarResEval(ResEvalACIC.id)}>Ver Respuestas</Button>
+                                <Button icon={<CopyEye />}>Ver Respuestas</Button>
                             </MenuItem>
                         </MenuList>
                     </MenuPopover>

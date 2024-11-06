@@ -3,7 +3,8 @@ import { Input } from '@fluentui/react-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-
+import { Search20Filled } from "@fluentui/react-icons";
+import { ItemEvalACICList } from '@/componets/ItemEvalACICList';
 
 const TIEMPO_CAMBIO = 400
 
@@ -45,37 +46,35 @@ export function FiltEvalPag({ evaluaciones }: FiltroEvaluacionesProps) {
         <div>
             <Input
                 type="text"
-                placeholder="Filtrar las evaluaciones hechas..."
+                placeholder="Ej. Fatima del Rosio..."
                 value={filterText}
                 onChange={handleChange}
                 style={{ width: "400px" }}
+                className='mb-3'
+                contentBefore={<Search20Filled />}
             />
 
             {/* Mostrar la tabla solo si hay resultados */}
-
-            <table style={{ marginTop: '20px', width: '100%', borderCollapse: 'collapse' }} className='min-h-[40vh]'>
-                <thead>
+            <table className="border-2 min-h-[40vh] hidden min-w-full text-gray-900 md:table">
+                <thead className='rounded-lg text-left text-sm font-normal'>
                     <tr>
-                        <th style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>Fecha de Evaluación</th>
-                        <th style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>Promedio</th>
-                        <th style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>Aplicador</th>
-                        <th style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>Respondiente</th>
-                        <th style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>Evaluación Dicha</th>
+                        <th scope="col" className="px-2 py-5"></th>
+                        <th scope="col" className="px-5 py-5 font-medium">Fecha de Evaluación</th>
+                        <th scope="col" className="px-3 py-5 font-medium">Promedio</th>
+                        <th scope="col" className="px-4 py-5 font-medium">Resultado</th>
+                        <th scope="col" className="px-3 py-5 font-medium">Evaluado</th>
+                        <th scope="col" className="px-3 py-5 font-medium">Aplicador</th>
+                        <th scope="col" className="px-3 py-5 font-medium">
+                            <span>Acciones</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody ref={parent}>
-                    {filtradas.map((evaluation) => (
-                        <tr key={evaluation.id}>
-                            <td style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>{evaluation.fechaEvaluacion}</td>
-                            <td style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>{evaluation.promedio}</td>
-                            <td style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>{evaluation.aplicador}</td>
-                            <td style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>{evaluation.respondiente}</td>
-                            <td style={{ borderBottom: '1px solid #ddd', padding: '10px' }}>{evaluation.evaluacionDicha}</td>
-                        </tr>
+                    {filtradas.map((evaluacion, idx) => (
+                        <ItemEvalACICList ResEvalACIC={evaluacion} key={idx} num={idx} designado={idx+1}/>
                     ))}
                 </tbody>
             </table>
-
         </div>
     );
 }

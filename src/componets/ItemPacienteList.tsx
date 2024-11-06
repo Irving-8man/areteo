@@ -20,7 +20,7 @@ export default function ItemPacienteList(props: propsI) {
         <tr
             key={props.paciente.id}
             className={`w-full border py-3 text-sm 
-                ${props.num % 2 === 0 ? "bg-gray-200" : ""}
+                ${props.num % 2 === 0 ? "bg-zinc-200" : ""}
             `}
         >
             <td className="whitespace-nowrap py-3 pl-6 pr-3 flex flex-row items-center gap-[5px]">
@@ -31,7 +31,7 @@ export default function ItemPacienteList(props: propsI) {
                     tamanio="35px"
                 />
                 <div className="flex items-center gap-3">
-                    <Link to={`/dashboard/pacientes/${props.paciente.id}`} className="hover:underline">
+                    <Link to={`/dashboard/pacientes/${props.paciente.id}`} className="underline">
                         <p>{props.paciente.primerNombre} {props.paciente.segundoNombre} {props.paciente.apellidoPaterno} {props.paciente.apellidoMaterno}</p>
                     </Link>
                 </div>

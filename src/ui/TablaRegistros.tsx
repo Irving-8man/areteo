@@ -64,7 +64,7 @@ const Inner = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
 );
 
 interface Props {
-    id: string ;
+    id: string;
 }
 
 
@@ -72,7 +72,8 @@ const Header_TABLE = () => {
     return (
         <thead className='rounded-lg text-left text-sm font-normal'>
             <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
+                <th scope="col" className="px-2 py-5 "></th>
+                <th scope="col" className="px-4 py-5 font-medium">Fecha de Diagnostico</th>
                 <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                 <th scope="col" className="px-3 py-5 font-medium">Peso</th>
                 <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
@@ -101,7 +102,7 @@ export default function TablaRegistros(props: Props) {
 
 
     // Componente Row que renderiza cada fila de la tabla
-    function Row({ index ,paciente_id }: { index: number; paciente_id:string}) {
+    function Row({ index, paciente_id }: { index: number; paciente_id: string }) {
         const registro = registrosCarga[index];
         return (
             <ItemRegistroList registro={registro} key={index} num={index} paciente_id={paciente_id} />
@@ -128,19 +129,20 @@ export default function TablaRegistros(props: Props) {
                         <table className="hidden min-w-full text-gray-900 md:table">
                             <thead className='rounded-lg text-left text-sm font-normal'>
                                 <tr>
-                                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">Fecha de Diagnostico</th>
+                                    <th scope="col" className="px-2 py-5 "></th>
+                                    <th scope="col" className="px-4 py-5 font-medium">Fecha de Diagnostico</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Peso</th>
                                     <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
                                     <th scope="col" className="px-1 py-5 font-medium"><p><span className='mr-1'>Inyectable</span>|<span className='ml-1'>Oral</span></p></th>
                                     <th scope="col" className="px-3 py-5 font-medium">
-                                        <span></span>
+                                        <span>Acciones</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody >
                                 <tr>
-                                    <td colSpan={5} className="px-4 py-4 text-center text-gray-500">
+                                    <td colSpan={7} className="px-4 py-4 text-center text-gray-500">
                                         No hay Registros Medicos disponibles.
                                     </td>
                                 </tr>

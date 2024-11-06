@@ -45,12 +45,17 @@
 .AccordionTrigger {
   padding: 20px 20px;
   flex: 1;
-  border:1px solid #b9bcc2;
-  border-radius: 3px;
+  border: 2px solid #b9bcc2;
+  border-radius: 1px;
 }
 
 .AccordionTrigger:hover {
   text-decoration: underline;
+}
+
+.evalLook{
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
 }
 
 
@@ -81,7 +86,7 @@
 
 .AccordionTrigger[data-state="open"] {
   @apply underline;
-  @apply bg-gray-200;
+  @apply -border--color-3;
 }
 
 @keyframes slideDown {

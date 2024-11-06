@@ -24,8 +24,8 @@ const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 
 interface RowProps {
     registro: RegistroMedicoList;
-    paciente_id: string ;
-    num:number;
+    paciente_id: string;
+    num: number;
 }
 
 const CHECKS = {
@@ -53,9 +53,12 @@ export default function ItemRegistroList(props: RowProps) {
 
 
     return (
-        <tr  className={`w-full border-b text-sm ${props.num % 2 === 0 ? "bg-gray-200" : ""}`} >
-            <td className="whitespace-nowrap py-3 pl-6">
-                <Link to={`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`} className="hover:underline">
+        <tr className={`w-full border-b text-sm ${props.num % 2 === 0 ? "bg-zinc-200" : ""}`} >
+            <td className="whitespace-nowrap py-3 pl-5">
+                <span className="font-bold">{props.num + 1}.</span>
+            </td>
+            <td className="whitespace-nowrap py-3 pl-5">
+                <Link to={`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`} className="underline">
                     <span> {format(registro.fechaDiagnostico, { date: "medium", time: "short" })}</span>
                 </Link>
             </td>
@@ -66,7 +69,7 @@ export default function ItemRegistroList(props: RowProps) {
             <td className="whitespace-nowrap px-3 py-3">
                 <Menu>
                     <MenuTrigger disableButtonEnhancement>
-                        <Button icon={<MoreVerticalFilled/>}></Button>
+                        <Button icon={<MoreVerticalFilled />}></Button>
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
