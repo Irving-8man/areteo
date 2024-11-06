@@ -26,6 +26,64 @@ export interface RegistroEvalACIRegis extends RegistroEvalACIC {
     id: string;
 }
 
+//procesar excels
+//area 1
+export interface RegistroEvalACIC_Area1 extends RegistroEvalACIC {
+    respuesta1: number;
+    respuesta2: number;
+    respuesta3: number;
+    respuesta4: number;
+    respuesta5: number;
+    respuesta6: number;
+}
+
+//area 2
+export interface RegistroEvalACIC_Area2 extends RegistroEvalACIC {
+    respuesta1: number;
+    respuesta2: number;
+    respuesta3: number;
+}
+
+
+export interface RegistroEvalACIC_Area3 extends RegistroEvalACIC {
+    respuesta1: number;
+    respuesta2: number;
+    respuesta3: number;
+    respuesta4: number;
+}
+
+export interface RegistroEvalACIC_Area4 extends RegistroEvalACIC {
+    respuesta1: number;
+    respuesta2: number;
+    respuesta3: number;
+    respuesta4: number;
+}
+
+export interface RegistroEvalACIC_Area5 extends RegistroEvalACIC {
+    respuesta1: number;
+    respuesta2: number;
+    respuesta3: number;
+    respuesta4: number;
+    respuesta5: number;
+    respuesta6: number;
+}
+
+export interface RegistroEvalACIC_Area6 extends RegistroEvalACIC {
+    respuesta1: number;
+    respuesta2: number;
+    respuesta3: number;
+    respuesta4: number;
+    respuesta5: number;
+}
+
+
+
+
+
+
+
+
+
 export interface ResEvalACICList extends RegistroEvalACIRegis {
 
 }
@@ -38,6 +96,14 @@ export interface respuestaACIC {
     componente: string; // Añadiendo el componente aquí
     nivel: string;
     descripcion: string;
+}
+
+//respuestas de evaluacion
+export interface RespuestasEvalACIC{
+    id:string;
+    registroEvalACIC_id: string;
+    orden:number;
+    puntuacion:number;
 }
 
 

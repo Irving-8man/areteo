@@ -15,7 +15,7 @@ export async function getRegistrosPaciente(paciente_id: string) {
             SELECT id,fechaDiagnostico,edadDicha,peso,antecedFamiInfa,usaTratamientoInyectable,usaTratamientoOral
             FROM RegistroMedico
             WHERE paciente_id = $1
-            ORDER BY fechaDiagnostico ASC;
+            ORDER BY fechaDiagnostico DESC;
         `;
         // Ejecutar la consulta
         const resultados: RegistroMedicoList[] = await db.select(sqlQuery, [paciente_id]);

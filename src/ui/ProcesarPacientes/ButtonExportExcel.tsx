@@ -5,7 +5,6 @@ import {  PacienteRegistrado } from "@/models/types";
 import { Button } from "@fluentui/react-components";
 import { format } from '@formkit/tempo';
 import { ArrowDownload20Regular } from "@fluentui/react-icons";
-
 import { calcularEdad } from '@/utils/CalcularEdad';
 
 const schema: Schema<PacienteRegistrado> = [

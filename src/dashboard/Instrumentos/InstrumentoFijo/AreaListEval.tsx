@@ -8,6 +8,7 @@ import { eliminarRegEvalACICAREA, getRegistrosACIC } from "@/services/InstACICCo
 import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
 import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
 import DialogDeleteEvalACICAREA from "@/ui/DialogDeleteAllEvalACIC";
+import ButtonExportExcelAreasE from "@/ui/ProcesarPacientes/ButtonExportExcelAREA";
 
 
 
@@ -100,6 +101,9 @@ export default function AreaListEval() {
                                         <Button appearance="primary" icon={<Add20Filled />}>Evaluar Ahora</Button>
                                     </Link>
                                 )}
+                            </li>
+                            <li>
+                                <ButtonExportExcelAreasE area_id={area.id}  />
                             </li>
                             <li>
                                 <DialogDeleteEvalACICAREA eliminar={handleDeleteAllResEval} />

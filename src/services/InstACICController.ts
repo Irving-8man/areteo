@@ -1,7 +1,7 @@
 import CalcularResultadosTest from "@/utils/ProcesarRespEvaluar";
 import { getDbInstance } from "./DatabaseSingleton";
 import { generarID } from "@/utils/GenerarID";
-import { ResEvalACICList } from "@/models/typesFijo";
+import { RegistroEvalACIRegis, ResEvalACICList, RespuestasEvalACIC } from "@/models/typesFijo";
 
 
 
@@ -92,7 +92,7 @@ export async function getRegistrosACIC(areaNum: number) {
                 *
                 FROM RegistroEvalACIC
                 WHERE area_id = $1
-                ORDER BY fechaEvaluacion ASC;
+                ORDER BY fechaEvaluacion DESC;
             `;
         // Ejecutar la consulta
         const resultados: ResEvalACICList[] = await db.select(sqlQuery, [areaNum]);
@@ -126,7 +126,7 @@ export async function getRegEvalACICComp(idRegistro: string) {
             FROM ResEvalACIC
             WHERE registroEvalACIC_id = $1
         `;
-        const respuestas = await db.select(sqlQueryRespuestas, [idRegistro]);
+        const respuestas: RespuestasEvalACIC[] = await db.select(sqlQueryRespuestas, [idRegistro]);
 
         return {
             registro: registroDatos,
@@ -174,5 +174,55 @@ export async function eliminarRegEvalACICAREA(area_id: number) {
 }
 
 
+//para excels//para excels
+export async function getRegEvalACICAREA(areas_id: number) {
+    try {
+        const db = await getDb;
+        const sqlQueryRegistro = `
+            SELECT 
+                *
+            FROM RegistroEvalACIC
+            WHERE area_id = $1
+            ORDER BY fechaEvaluacion DESC;
+        `;
+        const registros: RegistroEvalACIRegis[] = await db.select(sqlQueryRegistro, [areas_id]);
 
+        if (registros.length === 0) {
+            return [];
+        }
+
+        // Para cada registro de evaluación, obtenemos sus respuestas y formateamos el objeto
+        const registrosConPuntuaciones: RegistroEvalACIRegis[] = [];
+
+        for (const registro of registros) {
+            const sqlQueryRespuestas = `
+                SELECT *
+                FROM ResEvalACIC
+                WHERE registroEvalACIC_id = $1
+                ORDER BY orden ASC
+            `;
+            const respuestas: RespuestasEvalACIC[] = await db.select(sqlQueryRespuestas, [registro.id]);
+
+            // Formateamos las respuestas como atributos de puntuaciones
+            const listaPuntuaciones: Record<string, number> = {};
+            respuestas.forEach((respuesta, index) => {
+                listaPuntuaciones[`respuesta${index + 1}`] = respuesta.puntuacion;
+            });
+
+            // Creamos el registro completo con las puntuaciones añadidas
+            const registroFormateado = {
+                ...registro,
+                ...listaPuntuaciones,
+            };
+
+            registrosConPuntuaciones.push(registroFormateado);
+        }
+
+        return registrosConPuntuaciones;
+
+    } catch (error) {
+        console.error('Error al obtener el registros con sus respuestas', error);
+        return [];
+    }
+}
 
