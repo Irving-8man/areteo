@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from 'react';
-import { actualizarAdminNombres, verificarAdmin } from '../services/AdminController';
+import { actualizarAdminNombres, actualizarContra, verificarAdmin } from '../services/AdminController';
 import { useNavigate } from 'react-router-dom';
 import { AdminLogin, AdminRegistrado } from '@/models/types';
 
@@ -8,7 +8,7 @@ export type Sesion = {
     login: (data: AdminLogin) => Promise<boolean>;
     logout: () => void;
     actualizarNombres: (nuevoNomusuario: string, nuevoNomCom: string) => Promise<boolean>;
-    cambiarContrasena: (nuevaContra: string) => Promise<void>;
+    cambiarContrasenia: (nuevaContra: string) => Promise<boolean>;
     dataPrueba: number;
     isAdmin: AdminRegistrado | null;
 };
@@ -32,7 +32,6 @@ export function SesionProvider({ children }: { children: ReactNode }) {
                 navigate('/dashboard');
                 return true;
             } else {
-                alert('Nombre de usuario o contraseña incorrecta');
                 return false;
             }
         } catch (error) {
@@ -53,22 +52,31 @@ export function SesionProvider({ children }: { children: ReactNode }) {
         if (isAdmin) {
             const res = await actualizarAdminNombres(nuevoNomusuario, nuevoNomCom, isAdmin.id)
             if (res) {
-                setAdmin({ 
-                    ...isAdmin, 
-                    nombreUsuario: nuevoNomusuario, 
-                    nombreComple: nuevoNomCom 
+                setAdmin({
+                    ...isAdmin,
+                    nombreUsuario: nuevoNomusuario,
+                    nombreComple: nuevoNomCom
                 });
             }
             return res
-        }else{
+        } else {
             return false
         }
     };
 
     // Función para cambiar la contraseña
-    const cambiarContrasena = async (nuevaContra: string) => {
+    const cambiarContrasenia = async (nuevaContra: string) => {
         if (isAdmin) {
-            console.log(nuevaContra)
+            const res = await actualizarContra(nuevaContra, isAdmin.id)
+            if (res) {
+                setAdmin({
+                    ...isAdmin,
+                    contrasenia: nuevaContra,
+                });
+            }
+            return res
+        } else {
+            return false
         }
     };
 
@@ -78,7 +86,7 @@ export function SesionProvider({ children }: { children: ReactNode }) {
             login,
             logout,
             actualizarNombres,
-            cambiarContrasena,
+            cambiarContrasenia,
             dataPrueba,
             isAdmin
         }}>

@@ -104,3 +104,18 @@ export async function actualizarAdminNombres(nuevoUsuario: string, nuevoNomCom: 
         console.error("Error al actualizar el administrador:", error);
     }
 }
+
+
+
+export async function actualizarContra(contra: string, id: string ) {
+    try {
+        const db = await getDb;
+        const actualizado = await db.execute(
+            "UPDATE Administrador SET contrasenia = $1 WHERE id = $2",
+            [contra, id] 
+        );
+        return actualizado
+    } catch (error) {
+        console.error("Error al actualizar el administrador:", error);
+    }
+}

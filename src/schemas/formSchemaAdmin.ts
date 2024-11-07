@@ -65,8 +65,21 @@ export const formSchemaActualizarNombres = z.object({
 
 
 export const formSchemaActualizarContra = z.object({
-    nombreComple: z.string().min(3, { message: "El nombre completo es requerido." }),
-    nombreUsuario: z.string().min(3, { message: "El nombre de usuario es requerido." }),
-    contrasenia: z.string().min(8, { message: "La contraseña debe tener al menos 8 caracteres." }),
-});
+    contrasenia: z.string().min(4, {
+        message: "La Contraseña debe tener mínimo 4 caracteres.",
+    }).max(8, {
+        message: "La Contraseña debe tener máximo 8 caracteres",
+    }),
+    confirmContrasenia: z.string(),
 
+}).refine((data) => data.contrasenia === data.confirmContrasenia, {
+    message: "Las contraseñas no son iguales.",
+    path: ["confirmContrasenia"],
+})
+
+
+export const formSchemaComprobarContra = z.object({
+    contrasenia: z.string().min(0, {
+        message: "Por favor, escriba la Contraseña",
+    })
+})

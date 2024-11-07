@@ -6,13 +6,15 @@ import { z } from "zod"
 import { formSchemaActualizarNombres } from "@/schemas/formSchemaAdmin";
 import { Button, Card, Input, Label } from "@fluentui/react-components";
 import { Checkmark20Filled, SpinnerIos20Filled } from "@fluentui/react-icons";
+import ActualizarContra from "@/ui/ProcesarAdmin/ActulizarContra";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Perfil() {
     // Estado local para capturar el nuevo nombre completo y sincronizarlo con `isAdmin.nombreCompleto`
-    const { isAdmin ,actualizarNombres} = useSesion();
+    const { isAdmin, actualizarNombres } = useSesion();
     const [loading, setLoading] = useState<boolean>(false);
     const Schema = formSchemaActualizarNombres
-
+    const [parent] = useAutoAnimate()
 
     // useForm con validacion de zod
     const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof Schema>>({
@@ -22,7 +24,6 @@ export default function Perfil() {
             nombreUsuario: isAdmin?.nombreUsuario
         },
     });
-
 
     // Actualizar los valores cuando `paciente` cambie
     useEffect(() => {
@@ -34,30 +35,29 @@ export default function Perfil() {
         }
     }, [isAdmin, reset]);
 
-
-
-
     // Procesar información
-    const onSubmit = async (data: z.infer<typeof Schema>) => {
+    const onSubmitNombres = async (data: z.infer<typeof Schema>) => {
         try {
             setLoading(true);
-            const res = await actualizarNombres(data.nombreUsuario,data.nombreComple);
+            const res = await actualizarNombres(data.nombreUsuario, data.nombreComple);
             if (res) {
                 setLoading(false);
                 alert("Nombres actualizados.")
-            }else{
+            } else {
                 setLoading(false);
                 alert("Ha fallado actulizar los nombres, intentelo de nuevo.")
-            }   
+            }
         } catch (error) {
             console.error('Error al actualizar los nombres:', error);
             alert('Hubo un problema al actualizar los nombres');
         }
     };
 
+
+
     return (
         <main className="relative">
-            <div className="border border-red-400 min-h-[100vh]  px-[30px] py-[30px]">
+            <div className="border min-h-[100vh] px-[30px] py-[30px]">
 
                 <header>
                     <h1 className="font-bold text-3xl">Mi perfil</h1>
@@ -65,13 +65,12 @@ export default function Perfil() {
 
                 <section className="flex flex-col mt-20 gap-20">
                     <article className="w-2/3">
-                        <form onSubmit={handleSubmit(onSubmit)}>
-
-                            <Card style={{padding:"25px"}}>
-                                <h2 className="font-bold text-xl text-zinc-600 mb-5">Actualizar nombres</h2>
-                                <div className="mb-5">
+                        <form onSubmit={handleSubmit(onSubmitNombres)}>
+                            <Card style={{ padding: "25px" }}>
+                                <h2 className="font-bold text-xl text-zinc-600 mb-5">Actualizar Nombres</h2>
+                                <div className="mb-5" >
                                     <ul className="flex flex-col gap-8">
-                                        <li className="flex flex-col gap-2">
+                                        <li className="flex flex-col gap-2"  ref={parent}>
                                             <Label required htmlFor="primerNombre" className="font-semibold">
                                                 Nombre de Usuario
                                             </Label>
@@ -88,7 +87,7 @@ export default function Perfil() {
                                             )}
                                         </li>
 
-                                        <li className="flex flex-col gap-2">
+                                        <li className="flex flex-col gap-2"  ref={parent}>
                                             <Label htmlFor="segundoNombre" required className="font-semibold">
                                                 Nombre Completo
                                             </Label>
@@ -111,21 +110,12 @@ export default function Perfil() {
                                     {loading ? 'Espere...' : 'Actualizar Nombres'}
                                 </Button>
                             </Card>
-
                         </form>
                     </article>
 
-                    <article className="w-2/3">
-                        <Card >
-
-
-                        </Card>
-                    </article>
+                    <ActualizarContra />
                 </section>
-
-
-
-
+                        
             </div>
         </main>
     )
