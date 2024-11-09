@@ -41,11 +41,11 @@ const ChartExporter: React.FC<ChartExporterProps> = ({ title, children }) => {
     }, [ref, title]);
 
     return (
-        <div>
+        <div className='inline-flex flex-col items-start'>
             <div ref={ref} className="bg-white inline-flex">
                 {children} 
             </div>
-            <Button onClick={onButtonClick} appearance="outline">Guardar como JPG</Button>
+            <Button onClick={onButtonClick} appearance="transparent">Guardar como JPG</Button>
         </div>
     );
 };

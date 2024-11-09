@@ -1,10 +1,10 @@
 import Search from "@/componets/Search"
 import Paginacion from "@/ui/Paginacion"
-import TablaPacientes from "@/ui/TablaPacientes"
+import TablaPacientes from "@/ui/Tablas/TablaPacientes"
 import { usePacienteStore } from '@/store/storePacientes';
-import DialogRegiPaciente from "@/ui/DialogRegiPaciente"
+import DialogRegiPaciente from "@/ui/ProcesarPacientes/DialogRegiPaciente"
 import { useEffect } from "react";
-import LeyenPacientes from "@/ui/LeyenPacientes";
+import InfoPacientes from "@/ui/ProcesarPacientes/InfoPacientes";
 import { Card } from "@fluentui/react-components";
 
 export default function ListaPacientes() {
@@ -18,7 +18,7 @@ export default function ListaPacientes() {
     return (
         <section>
             <div>
-                <LeyenPacientes pacientes={todosPacientes.length} />
+                <InfoPacientes pacientes={todosPacientes.length} />
                 <div className="mt-10">
                     <Card style={{ padding: "25px" }}>
                         <div className="flex justify-between">

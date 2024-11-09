@@ -3,7 +3,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import clsx from "clsx";
 import { ResEvalACICList } from "@/models/typesFijo";
 import { ChevronDown24Filled, ClipboardTaskListLtr20Regular } from "@fluentui/react-icons"
-import TablaEvalACIC from "../TablaEvalACIC";
+import TablaEvalACIC from "../Tablas/TablaEvalACIC";
 
 interface ListEvaluacionesAcordeonProps {
     evaluaciones: ResEvalACICList[];

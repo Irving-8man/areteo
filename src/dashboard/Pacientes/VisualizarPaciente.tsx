@@ -2,15 +2,15 @@ import { actualizarPaciente, eliminarPaciente, getPaciente } from "@/services/Pa
 import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
 import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
-import TablaRegistros from "@/ui/TablaRegistros";
+import TablaRegistros from "@/ui/Tablas/TablaRegistros";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
 import { AvatarPaciente } from "@/componets/AvatarPaciente";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PacienteActualizar } from "@/models/types";
-import DialogActualiPaciente from "@/ui/DialogActualiPaciente";
+import DialogActualiPaciente from "@/ui/ProcesarPacientes/DialogActualiPaciente";
 import ButtonDocxPaciente from "@/Docx/DatosPaciente/ButtonDocxPaciente";
-import DialogDeletePaciente from "@/ui/DialogDeletePaciente";
+import DialogDeletePaciente from "@/ui/ProcesarPacientes/DialogDeletePaciente";
 
 
 export default function VisualizarPaciente() {

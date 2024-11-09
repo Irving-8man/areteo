@@ -11,6 +11,7 @@ import useRedirecSesion from "@/hooks/useRedirecSesion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
 
+
 const useStyles = makeStyles({
     card: {
         padding: "50px"
@@ -42,16 +43,16 @@ export default function RegistrarAdmin() {
 
             if (isRegistrado) {
                 reset();
-                alert("Administrador Registrado");
+                alert("Administrador registrado");
                 setIsSubmitting(false);
                 navigate("/dashboard");
             } else {
                 setIsSubmitting(false);
-                alert("El administrador ha fallado en registrarse, intentelo de nuevo.");
+                alert("El Administrador ha fallado en registrarse, intentelo de nuevo.");
             }
         } catch (error) {
             setIsSubmitting(false);
-            console.log("Error durante el registro:", error);
+            alert("");
         }
     };
 
@@ -88,7 +89,7 @@ export default function RegistrarAdmin() {
                     </div>
 
                     <div>
-                        <Label className="block font-medium" required>Confirmar contraseña</Label>
+                        <Label className="block font-medium" required>Confirmar Contraseña</Label>
                         <Input disabled={isSubmitting} appearance="underline" className="min-w-[300px]" required contentBefore={<PasswordRegular />} placeholder="****" type="password" {...register("confirmContrasenia")} />
                         {errors.confirmContrasenia && <p className="max-w-[25ch] text-sm">{errors.confirmContrasenia?.message}</p>}
                     </div>

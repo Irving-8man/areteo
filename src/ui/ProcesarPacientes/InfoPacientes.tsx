@@ -38,7 +38,7 @@ const COLORES: Color[] = [
     }
 ]
 
-export default function LeyenPacientes({ pacientes }: { pacientes: number }) {
+export default function InfoPacientes({ pacientes }: { pacientes: number }) {
 
     return (
         <article>

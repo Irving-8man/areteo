@@ -215,6 +215,7 @@ export default function DialogRegiPaciente() {
                                             {...register("fechaNacimiento")}
                                             disabled={loading}
                                             max={format(new Date(), "YYYY-MM-DD")}
+                                            min="1890-01-01"
                                             required
                                         />
                                         {errors.fechaNacimiento && (

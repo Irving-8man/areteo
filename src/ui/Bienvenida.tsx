@@ -2,7 +2,7 @@ import { getAdmin } from "@/services/AdminController";
 import { useEffect, useState } from "react";
 import { Admin } from "@/models/types";
 import RegistrarAdmin from "./ProcesarAdmin/RegistrarAdmin";
-import Login from "./ProcesarAdmin/Login";
+import LoginAdmin from "./ProcesarAdmin/LoginAdmin";
 
 
 export default function Bienvendida() {
@@ -12,7 +12,7 @@ export default function Bienvendida() {
         getAdmin().then((admin) => {
             if (admin) {
                 setAdmin(admin);
-            } 
+            }
         });
     }, []);
 
@@ -21,8 +21,11 @@ export default function Bienvendida() {
             <div className="py-10">
                 <h1 className="text-4xl font-medium">Bienvenido a ARETEO</h1>
             </div>
-            {/**Renderizar el componente que sea necesario */}
-            { admin ? ( <Login />) : ( <RegistrarAdmin /> )}
+            <section className="min-h-[60vh] grid place-content-center">
+                {/**Renderizar el componente que sea necesario */}
+                {admin ? (<LoginAdmin />) : (<RegistrarAdmin />)}
+            </section>
+
         </main>
     )
 }

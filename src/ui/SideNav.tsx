@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useSesion } from "@/hooks/useSesion";
 import { ArrowCounterclockwise20Filled, PersonHome20Filled } from "@fluentui/react-icons";
 import { isRutaExacta } from "@/utils/IdentificarRutas";
+import GitHubButton from "@/componets/GitHub";
 
 export default function SideNav() {
     const { logout } = useSesion();
@@ -39,10 +40,11 @@ export default function SideNav() {
                 </div>
 
                 <div>
-                    <Button appearance='transparent' style={{ width: "100%", justifyContent: "flex-start" }} onClick={handleReloadPage} icon={<ArrowCounterclockwise20Filled className="w-3 hover:underline" id="spin" />}>
+                    <GitHubButton />
+                    <Button appearance='outline' className='h-[48px] hover:underline' style={{ width: "100%",borderRight:"0px",  borderRadius:"0px",justifyContent: "flex-start" }} onClick={handleReloadPage} icon={<ArrowCounterclockwise20Filled className="w-3 hover:underline" id="spin" />}>
                         <span>Recargar app</span>
                     </Button>
-                    <Button appearance='transparent' icon={<PersonHome20Filled />} style={{ width: "100%", justifyContent: "flex-start" }} >
+                    <Button appearance='outline' icon={<PersonHome20Filled />} style={{borderRight:"0px", width: "100%",paddingBlock:"0px", borderRadius:"0px",justifyContent: "flex-start" }} >
                         <Link
                             to="/dashboard/perfil"
                             className={`flex w-full h-[48px] items-center justify-start text-sm font-medium 
@@ -51,7 +53,7 @@ export default function SideNav() {
                             <p>Mi Perfil</p>
                         </Link>
                     </Button>
-                    <Button onClick={logout} appearance='transparent' style={{ width: "100%", margin: "0", padding: "0", border: "0", borderRadius: "0" }}>
+                    <Button onClick={logout} appearance='outline' style={{borderRight:"0px", width: "100%", borderRadius: "0px" }}>
                         <div
                             className="flex w-full h-[48px] items-center justify-start gap-2 text-sm font-medium p-4"
                         >

@@ -132,7 +132,7 @@ export default function CrearRegistro() {
     //hooks form
     // useForm con validacion de zod
     const Schema = formSchemaCrearRegistro
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm<z.infer<typeof Schema>>({
         resolver: zodResolver(Schema), defaultValues: {
             paciente_id: id,

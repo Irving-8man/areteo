@@ -9,7 +9,6 @@ export type Sesion = {
     logout: () => void;
     actualizarNombres: (nuevoNomusuario: string, nuevoNomCom: string) => Promise<boolean>;
     cambiarContrasenia: (nuevaContra: string) => Promise<boolean>;
-    dataPrueba: number;
     isAdmin: AdminRegistrado | null;
 };
 
@@ -21,7 +20,6 @@ export function SesionProvider({ children }: { children: ReactNode }) {
     const [isAutenticado, setIsAutenticado] = useState<boolean>(false);
     const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null);
     const navigate = useNavigate();
-    const dataPrueba = 100;
 
     const login = async (data: AdminLogin): Promise<boolean> => {
         try {
@@ -87,7 +85,6 @@ export function SesionProvider({ children }: { children: ReactNode }) {
             logout,
             actualizarNombres,
             cambiarContrasenia,
-            dataPrueba,
             isAdmin
         }}>
             {children}

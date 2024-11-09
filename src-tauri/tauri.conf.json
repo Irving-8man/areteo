@@ -4,11 +4,11 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:5173",
-    "distDir": "../build"
+    "distDir": "../dist"
   },
   "package": {
-    "productName": "areteo",
-    "version": "0.1.0"
+    "productName": "ARETEO",
+    "version": "0.2.0"
   },
   "tauri": {
     "allowlist": {
@@ -47,6 +47,9 @@
       },
       "dialog": {
         "all": true
+      },
+      "notification": {
+        "all": true
       }
     },
     "bundle": {
@@ -64,7 +67,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.vitabox.areteo",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -91,10 +94,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 700,
         "resizable": true,
         "title": "ARETEO",
-        "width": 1200,
+        "width": 1240,
         "center": true,
         "decorations": true
       }

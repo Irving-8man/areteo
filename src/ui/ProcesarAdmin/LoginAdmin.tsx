@@ -37,7 +37,7 @@ export default function Login() {
                 setIsSubmitting(false);
             } else {
                 setIsSubmitting(false);
-                alert("Error en las credenciales, intentelo de nuevo.");
+                alert("Credenciales incorrectas, intentelo de nuevo.");
             }
         } catch (error) {
             console.log("Error durante el registro:", error);
@@ -69,7 +69,6 @@ export default function Login() {
                         </Button>
                 </CardFooter>
             </Card>
-
         </form>
     )
 }

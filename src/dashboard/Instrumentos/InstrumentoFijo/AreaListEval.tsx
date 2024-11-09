@@ -7,8 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { eliminarRegEvalACICAREA, getRegistrosACIC } from "@/services/InstACICController";
 import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
 import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
-import DialogDeleteEvalACICAREA from "@/ui/DialogDeleteAllEvalACIC";
-import ButtonExportExcelAreasE from "@/ui/ProcesarPacientes/ButtonExportExcelAREA";
+import DialogDeleteEvalACICAREA from "@/ui/ProcesarEvalACIC/DialogDeleteAllEvalACIC";
+import ButtonExportExcelAreasE from "@/ui/ProcesarEvalACIC/ButtonExportExcelAREA";
 
 
 

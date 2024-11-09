@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { DataArea24Filled, Home24Regular, PeopleCommunity24Regular,TextBulletListSquareEdit24Regular } from "@fluentui/react-icons";
+import { DataArea24Filled, Home24Regular, PeopleCommunity24Regular, TextBulletListSquareEdit24Regular } from "@fluentui/react-icons";
 import { Button } from '@fluentui/react-components';
 import { isRutaActiva } from '@/utils/IdentificarRutas';
 
@@ -15,7 +15,7 @@ const links = [
 export default function NavLinks() {
     const location = useLocation();
     const pathName = location.pathname;
-    
+
     return (
         <>
             {links.map((link) => {

@@ -8,7 +8,7 @@ import { ArrowLeft20Filled } from "@fluentui/react-icons";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
 import ButtonDocxReEx from "@/Docx/DatosPaciente/ButtonDocxReEx";
-import DialogDeleteRegistro from "@/ui/DialogDeleteRegistro";
+import DialogDeleteRegistro from "@/ui/ProcesarPacientes/DialogDeleteRegistro";
 
 export default function VerResulRegistro() {
     const { id, idRegis } = useParams();

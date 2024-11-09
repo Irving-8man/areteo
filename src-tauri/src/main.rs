@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri_plugin_sql::{Migration, MigrationKind};
+use tauri::api::notification::Notification;
 
 
 fn main() {
@@ -126,7 +127,14 @@ CREATE INDEX IF NOT EXISTS index_id_ResEvalACIC ON ResEvalACIC(id);
     ];
 
     tauri::Builder::default()
-        .plugin(tauri_plugin_store::Builder::default().build())
+        .plugin(tauri_plugin_single_instance::init(|app, _, cwd| {
+            Notification::new(&app.config().tauri.bundle.identifier)
+                .title("El programa ya esta iniciada. Por favor, no comenzar comenzar otro.")
+                .body(cwd)
+                
+                .show()
+                .unwrap();
+        }))
         .setup(|app| {
             let app_handle = app.handle();
             //1. Configuracion de la db
