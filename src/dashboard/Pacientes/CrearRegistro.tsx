@@ -179,7 +179,7 @@ export default function CrearRegistro() {
         try {
             const registrado = await crearRegistrosPaciente(data);
             if (registrado) {
-                alert("Registro medico agregado")
+                alert("Registro médico agregado")
             } else {
                 alert("Ha fallado el registro")
             }
@@ -214,9 +214,9 @@ export default function CrearRegistro() {
                 </Card>
             </section>
 
-            <section className="ml-10">
+            <section className="ml-10 capitalize">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <ul className="list-decimal flex flex-col gap-8">
+                    <ul className="list-decimal flex flex-col gap-12">
                         {/**Datos invisibles */}
                         <div>
                             <input type="hidden" defaultValue={FECHA_HOY}   {...register("fechaDiagnostico")} />
@@ -344,7 +344,7 @@ export default function CrearRegistro() {
                         <li>
                             <div className="flex flex-row min-w-[400px] max-w-[900px] gap-10" ref={parent}>
                                 <div className="flex flex-col max-w-[400px]">
-                                    <Label className="font-semibold" required>Antecedentes familiares de infarto o muerte cardiovascular de los padres a edades menores de 60 años</Label>
+                                    <Label className="font-bold normal-case" required>Antecedentes familiares de infarto o muerte cardiovascular de los padres a edades menores de 60 años</Label>
                                     <Select {...register("antecedFamiInfa")} required>
                                         <option value="0">No</option>
                                         <option value="1">Sí</option>
@@ -367,7 +367,7 @@ export default function CrearRegistro() {
                         <li>
                             <div className="flex flex-col max-w-[400px]" ref={parent}>
                                 <Field label={
-                                    <Label className="font-bold" required>HDL, ultimos 6 meses</Label>
+                                    <Label className="font-bold" required>HDL, últimos 6 meses</Label>
                                 }>
                                     <Input required min={0} max={99} step={0.01} type="number" {...register("hdl", { valueAsNumber: true })} />
                                 </Field>
@@ -380,7 +380,7 @@ export default function CrearRegistro() {
                         <li>
                             <div className="flex flex-col max-w-[400px]" ref={parent}>
                                 <Field label={
-                                    <Label className="font-bold" required>TGC, ultimos 6 meses</Label>
+                                    <Label className="font-bold" required>TGC, últimos 6 meses</Label>
                                 }>
                                     <Input  required min={0} max={999} step={0.01} type="number" {...register("tgc", { valueAsNumber: true })} />
                                 </Field>
@@ -405,7 +405,7 @@ export default function CrearRegistro() {
                                 {
                                     watchShowEdu === "5" && (
                                         <div className="flex flex-col max-w-[450px]">
-                                            <Label htmlFor="desde-cuando" required>¿Cuál otra educación?</Label>
+                                            <Label htmlFor="desde-cuando" className="normal-case font-semibold" required>¿Cuál otra educación?</Label>
                                             <Textarea style={{ width: "500px", height: "200px" }} {...register('detalleEducacion', {
                                                 required: watchShowEdu === '5',
                                             })}></Textarea>
@@ -452,7 +452,7 @@ export default function CrearRegistro() {
                                             })}></Textarea>
                                         </div>
                                         <div className="flex flex-col max-w-[300px]">
-                                            <Label className="font-semibold" htmlFor="tipoNom" required>Tipo o nombre</Label>
+                                            <Label className="font-semibold normal-case" htmlFor="tipoNom" required>Tipo o nombre</Label>
                                             <Textarea style={{ width: "300px", height: "100px" }} {...register('tipoNombreIn', {
                                                 required: watchShowIny === 1,
                                             })}></Textarea>
@@ -486,7 +486,7 @@ export default function CrearRegistro() {
                                             })}></Textarea>
                                         </div>
                                         <div className="flex flex-col max-w-[300px]">
-                                            <Label className="font-semibold" htmlFor="tipoNom" required>Nombre del Medicamento</Label>
+                                            <Label className="font-semibold normal-case" htmlFor="tipoNom" required>Nombre del Medicamento</Label>
                                             <Textarea style={{ width: "300px", height: "100px" }} {...register('nombreMedicamentoOr', {
                                                 required: watchShowOr === 1,
                                             })}></Textarea>

@@ -62,7 +62,7 @@ export default function DialogDeletePaciente({ eliminar }: { eliminar: () => Pro
                             </span>
                         </DialogTitle>
                         <DialogContent className={styles.content} >
-                            <p className="text-base">Al eliminar este paciente, se perdera todos sus Registros Médicos y afectará a los datos de las graficas, ¿Desea continuar?</p>
+                            <p className="text-base">Al eliminar este paciente, se perderá todos sus Registros Médicos y afectará a los datos de las gráficas, ¿Desea continuar?</p>
                         </DialogContent>
 
                         <DialogActions className="mt-4">

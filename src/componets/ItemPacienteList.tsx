@@ -19,7 +19,7 @@ export default function ItemPacienteList(props: propsI) {
     return (
         <tr
             key={props.paciente.id}
-            className={`w-full border py-3 text-sm 
+            className={`w-full border py-3 text-sm normal-case
                 ${props.num % 2 === 0 ? "bg-zinc-200" : ""}
             `}
         >

@@ -134,7 +134,7 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
         <>
             <Dialog open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
                 <DialogTrigger disableButtonEnhancement >
-                    <Button appearance="secondary" icon={<Pen20Regular />}>Actualizar datos</Button>
+                    <Button appearance="secondary" icon={<Pen20Regular />}>Actualizar Datos</Button>
                 </DialogTrigger>
                 <DialogSurface aria-describedby={undefined}>
                     <form onSubmit={handleSubmit(onSubmit)}>

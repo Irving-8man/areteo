@@ -125,26 +125,26 @@ export default function VisualizarPaciente() {
             <section className="pt-10">
                 <article>
                     <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }} className="shadow-sm">
-                        <ul className="text-base">
+                        <ul className="text-base capitalize">
                             <li className="flex gap-4 items-center">
                                 <AvatarPaciente edad={calcularEdad(pacienteData.paciente.fechaNacimiento).valor}
                                     label={`${pacienteData.paciente.primerNombre} ${pacienteData.paciente.apellidoPaterno}`}
                                     tamanio="45px"
                                 />
-                                <h1 className="text-3xl font-semibold">{pacienteData.paciente.primerNombre} {pacienteData.paciente.segundoNombre} {pacienteData.paciente.apellidoPaterno} {pacienteData.paciente.apellidoMaterno}</h1>
+                                <h1 className="text-3xl font-semibold normal-case">{pacienteData.paciente.primerNombre} {pacienteData.paciente.segundoNombre} {pacienteData.paciente.apellidoPaterno} {pacienteData.paciente.apellidoMaterno}</h1>
                             </li>
 
                             <li className="mt-4">
-                                <h2 className="font-semibold">Fecha de registro: <span className="font-normal">{format(pacienteData.paciente.fechaRegistro, "long")}</span> </h2>
+                                <h2 className="font-semibold">Fecha de registro: <span className="font-normal normal-case">{format(pacienteData.paciente.fechaRegistro, "long")}</span> </h2>
                             </li>
 
                             <li className="grid grid-cols-2 gap-10 mt-4">
-                                <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal">{format(pacienteData.paciente.fechaNacimiento, "long")}</span></h2>
+                                <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal normal-case">{format(pacienteData.paciente.fechaNacimiento, "long")}</span></h2>
                                 <h2 className="font-semibold">Edad: <span className="font-normal">{calcularEdad(pacienteData.paciente.fechaNacimiento).texto}</span></h2>
                             </li>
 
                             <li>
-                                <h2 className="font-semibold">Sexo: <span className="font-normal">{pacienteData.paciente.sexo}</span></h2>
+                                <h2 className="font-semibold">Sexo: <span className="font-normal normal-case">{pacienteData.paciente.sexo}</span></h2>
                             </li>
                         </ul>
 

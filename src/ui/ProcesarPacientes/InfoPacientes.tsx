@@ -45,7 +45,7 @@ export default function InfoPacientes({ pacientes }: { pacientes: number }) {
 
             <Card style={{ padding: "25px" }}>
                 <div className="flex justify-between">
-                    <h1 className="font-medium text-2xl mb-2">Información</h1><p className="font-semibold text-lg mb-6">Total de pacientes registrados: <span className="text-red-600 font-medium">{pacientes}</span></p>
+                    <h1 className="font-medium text-2xl mb-2">Información</h1><p className="font-semibold text-lg mb-6 capitalize">Total de pacientes registrados: <span className="text-red-600 font-medium">{pacientes}</span></p>
                 </div>
 
                 <div className="flex justify-between">

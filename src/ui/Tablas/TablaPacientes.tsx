@@ -24,7 +24,7 @@ export default function TablaPacientes() {
 
 
     return (
-        <div className="flow-root min-h-[40vh]">
+        <div className="flow-root min-h-[40vh] capitalize">
             <div className="inline-block min-w-full align-middle">
                 <div className="rounded-lg bg-gray-50">
 

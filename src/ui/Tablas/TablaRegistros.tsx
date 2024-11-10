@@ -73,7 +73,7 @@ const Header_TABLE = () => {
         <thead className='rounded-lg text-left text-sm font-normal'>
             <tr>
                 <th scope="col" className="px-2 py-5 "></th>
-                <th scope="col" className="px-4 py-5 font-medium">Fecha de Diagnostico</th>
+                <th scope="col" className="px-4 py-5 font-medium">Fecha de Diagnóstico</th>
                 <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                 <th scope="col" className="px-3 py-5 font-medium">Peso</th>
                 <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
@@ -130,7 +130,7 @@ export default function TablaRegistros(props: Props) {
                             <thead className='rounded-lg text-left text-sm font-normal'>
                                 <tr>
                                     <th scope="col" className="px-2 py-5 "></th>
-                                    <th scope="col" className="px-4 py-5 font-medium">Fecha de Diagnostico</th>
+                                    <th scope="col" className="px-4 py-5 font-medium">Fecha de Diagnóstico</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Edad</th>
                                     <th scope="col" className="px-3 py-5 font-medium">Peso</th>
                                     <th scope="col" className="px-3 py-5 font-medium"><p><span className='block'>Antecedentes</span> <span className='block'>Familiares</span> </p></th>
@@ -143,7 +143,7 @@ export default function TablaRegistros(props: Props) {
                             <tbody >
                                 <tr>
                                     <td colSpan={7} className="px-4 py-4 text-center text-gray-500">
-                                        No hay Registros Medicos disponibles.
+                                        No hay Registros Médicos disponibles.
                                     </td>
                                 </tr>
                             </tbody>
