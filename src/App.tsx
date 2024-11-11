@@ -22,7 +22,7 @@ import AreaRespuesta from './dashboard/Instrumentos/InstrumentoFijo/AreaRespuest
 import OpcionesInstrumento from './dashboard/Instrumentos/InstrumentoFijo/OpcionesInstrumento';
 import AreaListEval from './dashboard/Instrumentos/InstrumentoFijo/AreaListEval';
 //Analiticas
-import Analiticas from './dashboard/Analiticas';
+//import Analiticas from './dashboard/Analiticas';
 //Perfil
 import Perfil from './dashboard/Perfil';
 //Proteccion de rutas
@@ -56,7 +56,6 @@ export default function App() {
                 <Route path='resultados/:areaId/:respID' element={<AreaRespuesta />} />
               </Route>
             </Route>
-            <Route path='analiticas' element={<Analiticas />} />
             <Route path='perfil' element={<Perfil />} />
           </Route>
           
