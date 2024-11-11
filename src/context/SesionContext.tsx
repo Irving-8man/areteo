@@ -1,13 +1,14 @@
 import { createContext, ReactNode, useState } from 'react';
-import { verificarAdmin } from '../services/AdminController';
+import { actualizarAdminNombres, actualizarContra, verificarAdmin } from '../services/AdminController';
 import { useNavigate } from 'react-router-dom';
-import { Admin, AdminRegistrado } from '@/models/types';
+import { AdminLogin, AdminRegistrado } from '@/models/types';
 
 export type Sesion = {
     isAutenticado: boolean;
-    login: (data:Admin) => Promise<boolean>;
+    login: (data: AdminLogin) => Promise<boolean>;
     logout: () => void;
-    dataPrueba: number;
+    actualizarNombres: (nuevoNomusuario: string, nuevoNomCom: string) => Promise<boolean>;
+    cambiarContrasenia: (nuevaContra: string) => Promise<boolean>;
     isAdmin: AdminRegistrado | null;
 };
 
@@ -16,22 +17,19 @@ export const SesionContext = createContext<Sesion | undefined>(undefined);
 
 // Proveer el contexto, lo que ofrece la lógica
 export function SesionProvider({ children }: { children: ReactNode }) {
-    const [isAutenticado, setIsAutenticado] = useState<boolean>(true); //Cambiar a true para acceder sin loguear
-    const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null); 
+    const [isAutenticado, setIsAutenticado] = useState<boolean>(true);
+    const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null);
     const navigate = useNavigate();
-    const dataPrueba = 100;
 
-    const login = async (data:Admin):Promise<boolean> => {
+    const login = async (data: AdminLogin): Promise<boolean> => {
         try {
             const admin = await verificarAdmin(data);
-
             if (admin) {
                 setIsAutenticado(true);
                 setAdmin(admin);
                 navigate('/dashboard');
                 return true;
             } else {
-                alert('Nombre de usuario o contraseña incorrecta');
                 return false;
             }
         } catch (error) {
@@ -43,12 +41,52 @@ export function SesionProvider({ children }: { children: ReactNode }) {
 
     const logout = () => {
         setIsAutenticado(false);
-        setAdmin(null); 
+        setAdmin(null);
         navigate('/'); // Redirigir a la ruta de login
     };
 
+    // Función para actualizar solo el nombre completo
+    const actualizarNombres = async (nuevoNomusuario: string, nuevoNomCom: string) => {
+        if (isAdmin) {
+            const res = await actualizarAdminNombres(nuevoNomusuario, nuevoNomCom, isAdmin.id)
+            if (res) {
+                setAdmin({
+                    ...isAdmin,
+                    nombreUsuario: nuevoNomusuario,
+                    nombreComple: nuevoNomCom
+                });
+            }
+            return res
+        } else {
+            return false
+        }
+    };
+
+    // Función para cambiar la contraseña
+    const cambiarContrasenia = async (nuevaContra: string) => {
+        if (isAdmin) {
+            const res = await actualizarContra(nuevaContra, isAdmin.id)
+            if (res) {
+                setAdmin({
+                    ...isAdmin,
+                    contrasenia: nuevaContra,
+                });
+            }
+            return res
+        } else {
+            return false
+        }
+    };
+
     return (
-        <SesionContext.Provider value={{ isAutenticado, login, logout, dataPrueba, isAdmin }}>
+        <SesionContext.Provider value={{
+            isAutenticado,
+            login,
+            logout,
+            actualizarNombres,
+            cambiarContrasenia,
+            isAdmin
+        }}>
             {children}
         </SesionContext.Provider>
     );

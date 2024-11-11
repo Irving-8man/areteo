@@ -1,12 +1,11 @@
 import { create } from "zustand";
 import { PacienteRegistrado, Paciente } from "@/models/types";
-import { eliminarPaciente, getAllPacientesRegistrados, registrarPaciente } from "@/services/PacienteController";
-import { mockpacientesRegis } from "@/mocks/listPacientesRe";
+import { eliminarPaciente, getAllPacientesRegistrados,  registrarPaciente } from "@/services/PacienteController";
 
 interface PacienteState {
     pacientes: PacienteRegistrado[];
-    cargarTodosPacientes:() => Promise<void>;
-    registrarPaciente: (nuevoPaciente: Paciente) => Promise<boolean>;
+    cargarTodosPacientes: () => Promise<void>;
+    registrarPaciente: (nuevoPaciente: Paciente) => Promise<PacienteRegistrado | null>;
     eliminarPaciente: (id: string) => Promise<void>;
 }
 
@@ -15,15 +14,15 @@ export const usePacienteStore = create<PacienteState>((set) => ({
     cargarTodosPacientes: async () => {
         try {
             const pacientes: PacienteRegistrado[] = await getAllPacientesRegistrados();
-            if (pacientes.length<0) {
-                set({ pacientes:mockpacientesRegis });
+            if (pacientes.length < 0) {
+                set({ pacientes: [] });
             }
             set({ pacientes });
         } catch (error) {
             console.error("Error al cargar pacientes:", error);
         }
     },
-    
+
     // Registrar un nuevo paciente
     registrarPaciente: async (nuevoPaciente: Paciente) => {
         try {
@@ -32,14 +31,14 @@ export const usePacienteStore = create<PacienteState>((set) => ({
                 set((state) => ({
                     pacientes: [...state.pacientes, pacienteRegistrado],
                 }));
-                return true;
+                return pacienteRegistrado;
             } else {
                 console.error("Error al registrar paciente:");
-                return false;
+                return null;
             }
         } catch (error) {
             console.error("Error al registrar paciente:", error);
-            return false;
+            return null;
         }
     },
 
@@ -56,4 +55,6 @@ export const usePacienteStore = create<PacienteState>((set) => ({
             console.error("Error al eliminar paciente:", error);
         }
     },
+
+   
 }));

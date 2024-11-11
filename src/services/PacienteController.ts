@@ -1,12 +1,12 @@
 import { getDbInstance } from "./DatabaseSingleton";
-import { Paciente, PacienteRegistrado } from '../models/types';
+import { Paciente, PacienteActualizar, PacienteRegistrado } from '../models/types';
 import { generarID } from "@/utils/GenerarID";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDb: any = getDbInstance()
-const PACIENTES_POR_PAGINA = 5
+const PACIENTES_POR_PAGINA = 10
 
-//Recuperar administrador
+
 export async function getAllPacientesRegistrados() {
     try {
         const db = await getDb;
@@ -22,7 +22,24 @@ export async function getAllPacientesRegistrados() {
     }
 }
 
-// Registrar administrador
+
+
+export async function getPaciente(id: string) {
+    try {
+        const db = await getDb;
+        const paciente = await db.select("SELECT * FROM Paciente WHERE id= $1", [id]);
+        if (paciente) {
+            return paciente;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error("Error al consultar la base de datos:", error);
+        return null;
+    }
+}
+
+
 export async function registrarPaciente(data: Paciente): Promise<PacienteRegistrado | null> {
     try {
         const db = await getDb;
@@ -38,12 +55,12 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
             id: nuevoID,
             ...otrosDatos, // Agregar todos los demás atributos de data
             fechaNacimiento: fechaNacimientoISO, // Agregar fecha de nacimiento tratada
-            fechaRegistro: horaRegistro.toISOString() // Guardar la fecha de registro en formato ISO
+            fechaRegistro: horaRegistro.toISOString(), // Guardar la fecha de registro en formato ISO
         };
 
 
         const registrado = await db.execute(
-            "INSERT INTO Paciente (id, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaRegistro) VALUES ($1, $2, $3,$4,$5,$6,$7)",
+            "INSERT INTO Paciente (id, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaRegistro, sexo) VALUES ($1, $2, $3,$4,$5,$6,$7,$8)",
             [
                 nuevoPaciente.id,
                 nuevoPaciente.primerNombre,
@@ -52,6 +69,7 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
                 nuevoPaciente.apellidoMaterno || null,
                 nuevoPaciente.fechaNacimiento,
                 nuevoPaciente.fechaRegistro,
+                nuevoPaciente.sexo
             ]
         );
 
@@ -62,10 +80,40 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
             return null;
         }
     } catch (error) {
-        console.error("Error en registrarAdmin:", error);
+        console.error("Error en registrar paciente:", error);
         return null;
     }
 }
+
+
+export async function actualizarPaciente(data:PacienteActualizar): Promise<boolean> {
+    try {
+        const db = await getDb;
+
+        // Convertir la fecha de nacimiento a formato ISO, en caso de que haya sido modificada
+        const fechaNacimientoISO = new Date(data.fechaNacimiento).toISOString();
+
+        const actualizado = await db.execute(
+            "UPDATE Paciente SET primerNombre = $1, segundoNombre = $2, apellidoPaterno = $3, apellidoMaterno = $4, fechaNacimiento = $5, sexo = $6 WHERE id = $7",
+            [
+                data.primerNombre,
+                data.segundoNombre || null,
+                data.apellidoPaterno,
+                data.apellidoMaterno || null,
+                fechaNacimientoISO,
+                data.sexo,
+                data.id
+            ]
+        );
+
+        return actualizado;
+    } catch (error) {
+        console.error("Error al actualizar paciente:", error);
+        return false;
+    }
+}
+
+
 
 export async function getPacientesFiltradoPaginado(query: string, currentPage: number) {
     const offset = (currentPage - 1) * PACIENTES_POR_PAGINA; // Define el offset
@@ -83,7 +131,7 @@ export async function getPacientesFiltradoPaginado(query: string, currentPage: n
                 LOWER(segundoNombre) LIKE "%${normalizedQuery}%" OR
                 LOWER(apellidoPaterno) LIKE "%${normalizedQuery}%" OR
                 LOWER(apellidoMaterno) LIKE "%${normalizedQuery}%"
-            ORDER BY fechaRegistro ASC
+            ORDER BY fechaRegistro DESC
             LIMIT $1 OFFSET $2
         `;
 
@@ -92,7 +140,7 @@ export async function getPacientesFiltradoPaginado(query: string, currentPage: n
         return resultados;
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch pacientes.');
+        return [];
     }
 }
 
@@ -131,14 +179,13 @@ export async function eliminarPaciente(id: string) {
         DELETE FROM Paciente
         WHERE id = $1
       `;
-        const resultado = await db.select(sqlQuery,[id]);
+        const resultado = await db.execute(sqlQuery, [id]);
         return resultado
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch total number of pacientes.');
+        throw new Error('Fallo en borrar paciente.');
     }
 }
-
 
 
 

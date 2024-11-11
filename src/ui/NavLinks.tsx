@@ -1,22 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
-import { AccessTimeRegular, Home24Regular, PeopleCommunity24Regular } from "@fluentui/react-icons";
+import { DataArea24Filled, Home24Regular, PeopleCommunity24Regular, TextBulletListSquareEdit24Regular } from "@fluentui/react-icons";
 import { Button } from '@fluentui/react-components';
 import { isRutaActiva } from '@/utils/IdentificarRutas';
+
 
 const links = [
     { name: 'Inicio', href: `/dashboard`, icon: Home24Regular },
     { name: 'Pacientes', href: `/dashboard/pacientes`, icon: PeopleCommunity24Regular },
-    { name: 'Instrumentos', href: `/dashboard/instrumentos`, icon: AccessTimeRegular },
-    { name: 'Plantillas', href: `/dashboard/plantillas`, icon: AccessTimeRegular },
-    { name: 'Analiticas', href: `/dashboard/analiticas`, icon: AccessTimeRegular },
-    { name: 'Almacenamiento', href: `/dashboard/almacenamiento`, icon: AccessTimeRegular },
+    { name: 'Instrumentos', href: `/dashboard/instrumentos`, icon: TextBulletListSquareEdit24Regular },
+    { name: 'Analíticas', href: `/dashboard/analiticas`, icon: DataArea24Filled },
 ];
 
 
 export default function NavLinks() {
     const location = useLocation();
     const pathName = location.pathname;
-    
+
     return (
         <>
             {links.map((link) => {

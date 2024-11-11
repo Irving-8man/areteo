@@ -1,4 +1,3 @@
-import DialogRegiPaciente from "@/componets/DialogRegiPaciente"
 import { isRutaExacta } from "@/utils/IdentificarRutas";
 import { Link, Outlet, useLocation } from "react-router-dom"
 
@@ -16,18 +15,16 @@ export default function Pacientes() {
                     <div>
                         <ul className="flex flex-row gap-12 items-center justify-center">
                             <li>
-                                <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium' : 'text-black'
+                                <Link to="/dashboard/pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes") ? 'font-medium underline' : 'text-black'
                                     }`}>Lista Pacientes</Link>
                             </li>
+
                             <li>
-                                <Link to="/dashboard/pacientes/registrar-paciente" className={`${isRutaExacta(pathName, "/dashboard/pacientes/registrar-paciente") ? 'font-medium' : 'text-black'
-                                    }`}>Historial Medico</Link>
+                                <Link to="/dashboard/pacientes/datos-pacientes" className={`${isRutaExacta(pathName, "/dashboard/pacientes/datos-pacientes") ? 'font-medium underline' : 'text-black'
+                                    }`}>Datos de Pacientes</Link>
                             </li>
                         </ul>
                     </div>
-                    <li>
-                        <DialogRegiPaciente />
-                    </li>
                 </ul>
             </header>
             <div className="border px-[30px] py-[30px]">
