@@ -20,6 +20,8 @@ export const formSchemaFijo = z.object({
                 message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos y comas",
             }
         ),
-    nombreEvaluador: z.string().max(100).nullable().optional(),
+    nombreEvaluador: z.string().max(60).nullable().optional().refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
+    }),
     aplicadoPorAdmin: z.boolean()
 });

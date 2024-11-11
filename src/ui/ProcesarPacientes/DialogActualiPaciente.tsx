@@ -10,13 +10,6 @@ import {
     Input,
     Label,
     makeStyles,
-    useId,
-    useToastController,
-    Toast,
-    ToastTitle,
-    ToastTrigger,
-    Link,
-    Toaster,
     Select,
 } from "@fluentui/react-components";
 
@@ -51,51 +44,30 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
 
-    //Tostada
-    const toasterId = useId("toaster");
-    const { dispatchToast } = useToastController(toasterId);
-    const notify = (message: string, type: "success" | "error") => {
-        dispatchToast(
-            <Toast>
-                <ToastTitle
-                    action={
-                        <ToastTrigger>
-                            <Link>Cerrar</Link>
-                        </ToastTrigger>
-                    }
-                >
-                    {message}
-                </ToastTitle>
-            </Toast>,
-            { intent: type } // success o error
-        );
-    };
-
 
     // useForm con validacion de zod
     const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof Schema>>({
         resolver: zodResolver(Schema),
         defaultValues: {
             id: paciente.id,
-            primerNombre: paciente?.primerNombre || "",
-            segundoNombre: paciente?.segundoNombre || "",
-            apellidoPaterno: paciente?.apellidoPaterno || "",
-            apellidoMaterno: paciente?.apellidoMaterno || "",
-            sexo: paciente?.sexo || "Masculino",
+            primerNombre: paciente.primerNombre || "",
+            segundoNombre: paciente.segundoNombre ?? "", // Aplica un valor vacío si es nulo o indefinido
+            apellidoPaterno: paciente.apellidoPaterno || "",
+            apellidoMaterno: paciente.apellidoMaterno ?? "", // Aplica un valor vacío si es nulo o indefinido
+            sexo: paciente.sexo || "Masculino",
         },
     });
 
 
-    // Actualizar los valores cuando `paciente` cambie
     useEffect(() => {
         if (paciente) {
             reset({
                 id: paciente.id,
                 primerNombre: paciente.primerNombre,
-                segundoNombre: paciente.segundoNombre,
+                segundoNombre: paciente.segundoNombre ?? "", // Asegura valor vacío si es nulo o indefinido
                 apellidoPaterno: paciente.apellidoPaterno,
-                apellidoMaterno: paciente.apellidoMaterno,
-                sexo: paciente.sexo, // Establecer sexo al valor actual
+                apellidoMaterno: paciente.apellidoMaterno ?? "", // Asegura valor vacío si es nulo o indefinido
+                sexo: paciente.sexo,
             });
         }
     }, [paciente, reset]);
@@ -112,17 +84,16 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
             if (success) {
                 setLoading(false);
                 setOpen(false)
-                alert("Paciente actulizado")
-                notify(`Paciente ${data.primerNombre} actualizado`, "success");
+                alert(`Paciente ${data.primerNombre} actualizado`)
             } else {
-                notify("Error durante la actualizacion de paciente, reintentar", "error");
+                alert("Error durante la actualizacion de paciente, reintentar");
             }
             reset();
         } catch (error) {
             // Notificar error
             setLoading(false);
-            notify("Error durante la actualizacion de paciente, reintentar", "error");
-            console.log("Error durante la actualizacion:", error);
+            alert("Error durante la actualizacion de paciente, reintentar");
+            alert(`Error durante la actualizacion:${error}`);
         } finally {
             setLoading(false);
         }
@@ -183,7 +154,7 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
                                             placeholder="Ej. Andrés"
                                             {...register("segundoNombre")}
                                             disabled={loading}
-                                            defaultValue={paciente.segundoNombre}
+                                            defaultValue={paciente.segundoNombre!}
                                         />
                                         {errors.segundoNombre && (
                                             <p className="text-sm text-red-600">{errors.segundoNombre.message}</p>
@@ -216,7 +187,7 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
                                             placeholder="Ej. Gómez"
                                             {...register("apellidoMaterno")}
                                             disabled={loading}
-                                            defaultValue={paciente.apellidoMaterno}
+                                            defaultValue={paciente.apellidoMaterno!}
                                         />
                                         {errors.apellidoMaterno && (
                                             <p className="text-red-600 text-sm">{errors.apellidoMaterno.message}</p>
@@ -273,7 +244,6 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
                     </form>
                 </DialogSurface>
             </Dialog>
-            <Toaster toasterId={toasterId} />
         </>
     );
 }

@@ -82,9 +82,7 @@ export default function DialogRegiPaciente() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof Schema>>({
         resolver: zodResolver(Schema), defaultValues: {
             primerNombre: "",
-            segundoNombre: "",
             apellidoPaterno: "",
-            apellidoMaterno: "",
             fechaNacimiento: "",
             sexo: "Masculino"
         },

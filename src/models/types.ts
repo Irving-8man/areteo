@@ -19,9 +19,9 @@ export interface AdminLogin {
 //Paciente
 export interface Paciente {
     primerNombre: string;
-    segundoNombre?: string;  // Opcional
+    segundoNombre?: string | null;  // Opcional
     apellidoPaterno: string;
-    apellidoMaterno?: string; // Opcional
+    apellidoMaterno?: string | null; // Opcional
     fechaNacimiento: string;
     sexo: string;
 }

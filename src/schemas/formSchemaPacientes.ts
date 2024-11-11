@@ -3,20 +3,20 @@ import { z } from "zod";
 export const formSchemaPacienteRegistro = z.object({
     primerNombre: z.string().min(1, {
         message: "El primer nombre no puede estar vacío.",
-    }).refine((nombre) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(nombre), {
-        message: "No debe tener espacios o caracteres extraños.",
+    })  .refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
-    segundoNombre: z.string().optional().refine((nombre) => !nombre || /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(nombre), {
-        message: "No debe tener espacios o caracteres extraños.",
+    segundoNombre: z.string().nullable().optional()  .refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }), // Opcional
     apellidoPaterno: z.string().min(1, {
         message: "El apellido paterno no puede estar vacío.",
-    }).refine((apellido) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(apellido), {
-        message: "No debe tener espacios o caracteres extraños.",
+    }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
-    apellidoMaterno: z.string().optional().refine((apellido) => !apellido || /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(apellido), {
-        message: "No debe tener espacios o caracteres extraños.",
-    }), // Opcional
+    apellidoMaterno: z.string().nullable().optional().refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+            message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
+        }),
     fechaNacimiento: z.string()
         .min(1, {
             message: "La fecha de nacimiento no puede estar vacía.",
@@ -45,20 +45,20 @@ export const formSchemaPacienteActua = z.object({
     }),
     primerNombre: z.string().min(1, {
         message: "El primer nombre no puede estar vacío.",
-    }).refine((nombre) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(nombre), {
-        message: "No debe tener espacios o caracteres extraños.",
+    })  .refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
-    segundoNombre: z.string().optional().refine((nombre) => !nombre || /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(nombre), {
-        message: "No debe tener espacios o caracteres extraños.",
+    segundoNombre: z.string().nullable().optional()  .refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }), // Opcional
     apellidoPaterno: z.string().min(1, {
         message: "El apellido paterno no puede estar vacío.",
-    }).refine((apellido) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(apellido), {
-        message: "No debe tener espacios o caracteres extraños.",
+    }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
-    apellidoMaterno: z.string().optional().refine((apellido) => !apellido || /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(apellido), {
-        message: "No debe tener espacios o caracteres extraños.",
-    }), // Opcional
+    apellidoMaterno: z.string().nullable().optional().refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+            message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
+        }),
     fechaNacimiento: z.string()
     .min(1, {
         message: "La fecha de nacimiento no puede estar vacía.",

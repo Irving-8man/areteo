@@ -16,8 +16,8 @@ export const formSchemaAdminRegistro = z.object({
 
     nombreUsuario: z.string().min(3, {
         message: "El Nombre de usuario debe tener mínimo 3 caracteres.",
-    }).refine((nombre) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(nombre), {
-        message: "No debe tener espacios o caracteres extraños.",
+    }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
 
     contrasenia: z.string().min(4, {
@@ -57,10 +57,9 @@ export const formSchemaActualizarNombres = z.object({
 
     nombreUsuario: z.string().min(3, {
         message: "El Nombre de usuario debe tener mínimo 3 caracteres.",
-    }).refine((nombre) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/.test(nombre), {
-        message: "No debe tener espacios o caracteres extraños.",
+    }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
+        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
-
 });
 
 
