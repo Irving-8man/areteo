@@ -27,7 +27,7 @@ export const formSchemaPacienteRegistro = z.object({
         .refine((fecha) => {
             const fechaNacimiento = new Date(fecha);
             const fechaActual = new Date();
-            const minDate = new Date('1900-01-01');
+            const minDate = new Date('1890-01-01');
             return (
                 fechaNacimiento >= minDate && fechaNacimiento <= fechaActual
             );
@@ -69,7 +69,7 @@ export const formSchemaPacienteActua = z.object({
     .refine((fecha) => {
         const fechaNacimiento = new Date(fecha);
         const fechaActual = new Date();
-        const minDate = new Date('1900-01-01');
+        const minDate = new Date('1890-01-01');
         return (
             fechaNacimiento >= minDate && fechaNacimiento <= fechaActual
         );

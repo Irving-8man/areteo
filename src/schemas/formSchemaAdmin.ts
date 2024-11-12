@@ -4,15 +4,15 @@ export const formSchemaAdminRegistro = z.object({
     nombreComple: z.string().min(3, {
         message: "El Nombre completo debe tener mínimo 3 caracteres.",
     })
-    .max(60, {
-        message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
-    })
-    .refine(
-        val => /^[\p{L}\s.,]+$/u.test(val), 
-        {
-            message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos y comas",
-        }
-    ),
+        .max(60, {
+            message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
+        })
+        .refine(
+            val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
+            {
+                message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
+            }
+        ),
 
     nombreUsuario: z.string().min(3, {
         message: "El Nombre de usuario debe tener mínimo 3 caracteres.",
@@ -35,7 +35,7 @@ export const formSchemaAdminRegistro = z.object({
 
 export const formSchemaAdminLogin = z.object({
     nombreUsuario: z.string().min(0, {
-        message:"Por favor, escriba el Nombre",
+        message: "Por favor, escriba el Nombre",
     }),
     contrasenia: z.string().min(0, {
         message: "Por favor, escriba la Contraseña",
@@ -49,12 +49,12 @@ export const formSchemaActualizarNombres = z.object({
         message: "El Nombre completo debe tener mínimo 3 caracteres.",
     })
     .max(60, {
-        message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
+            message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
     })
-    .refine(val => /^[a-zA-Z\s.,]+$/.test(val), {
-        message: "El nombre solo puede contener letras, espacios, puntos y comas",
+    .refine(val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
+            {
+                message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
     }),
-
     nombreUsuario: z.string().min(3, {
         message: "El Nombre de usuario debe tener mínimo 3 caracteres.",
     }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {

@@ -15,13 +15,14 @@ export const formSchemaFijo = z.object({
             message: "El nombre de la persona evaluada no puede tener más de 60 caracteres",
         })
         .refine(
-            val => /^[\p{L}\s.,]+$/u.test(val), 
+            val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
             {
-                message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos y comas",
+                message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
             }
         ),
-    nombreEvaluador: z.string().max(60).nullable().optional().refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
-        message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
-    }),
+    nombreEvaluador: z.string().max(60).nullable().optional().refine(val => !val || /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
+        {
+            message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
+        }),
     aplicadoPorAdmin: z.boolean()
 });

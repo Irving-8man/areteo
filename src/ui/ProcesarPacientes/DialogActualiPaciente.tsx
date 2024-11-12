@@ -209,6 +209,8 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
                                             disabled={loading}
                                             max={format(new Date(), "YYYY-MM-DD")}
                                             required
+                                            min="1890-01-01"
+                                        
                                         />
                                         {errors.fechaNacimiento && (
                                             <p className="text-red-600 text-sm">{errors.fechaNacimiento.message}</p>
