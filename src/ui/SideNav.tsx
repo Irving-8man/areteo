@@ -1,13 +1,11 @@
 import { Button } from "@fluentui/react-components";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
-import { useSesion } from "@/hooks/useSesion";
 import { ArrowCounterclockwise20Filled, PersonHome20Filled } from "@fluentui/react-icons";
 import { isRutaExacta } from "@/utils/IdentificarRutas";
 import GitHubButton from "@/componets/GitHub";
 
 export default function SideNav() {
-    const { logout } = useSesion();
     const location = useLocation();
     const pathName = location.pathname;
 
@@ -52,13 +50,6 @@ export default function SideNav() {
                         >
                             <p>Mi Perfil</p>
                         </Link>
-                    </Button>
-                    <Button onClick={logout} appearance='outline' style={{borderRight:"0px", width: "100%", borderRadius: "0px" }}>
-                        <div
-                            className="flex w-full h-[48px] items-center justify-start gap-2 text-sm font-medium p-4"
-                        >
-                            <p className="text-red-600 hover:underline">Cerrar Sesión</p>
-                        </div>
                     </Button>
                 </div>
 

@@ -55,6 +55,7 @@ export async function registrarAdmin(data: Admin): Promise<boolean> {
 
 
 
+
 //Verificar administrador
 export async function verificarAdmin(data: AdminLogin): Promise<AdminRegistrado | null> {
     const adminUnico = 1;
@@ -64,18 +65,18 @@ export async function verificarAdmin(data: AdminLogin): Promise<AdminRegistrado 
 
         if (adminArray.length == adminUnico) {
             const admin = adminArray[0];
-            
-            //Comprueba el nombre
-            if(admin.nombreUsuario === data.nombreUsuario){
-                //Valida la contraseña
-                const isContrasenia =  await verificarContrasenia(data.contrasenia,admin.contrasenia);
 
-                if(isContrasenia){
+            //Comprueba el nombre
+            if (admin.nombreUsuario === data.nombreUsuario) {
+                //Valida la contraseña
+                const isContrasenia = await verificarContrasenia(data.contrasenia, admin.contrasenia);
+
+                if (isContrasenia) {
                     return admin;
-                }else{
+                } else {
                     return null;
                 }
-            }else{
+            } else {
                 return null
             }
         } else {
@@ -89,14 +90,39 @@ export async function verificarAdmin(data: AdminLogin): Promise<AdminRegistrado 
 }
 
 
+export async function getAdminBase(): Promise<AdminRegistrado | null> {
+    const adminUnico = 1;
+    try {
+        const db = await getDb;
+        const adminArray: AdminRegistrado[] = await db.select("SELECT * FROM Administrador");
 
-export async function actualizarAdminNombres(nuevoUsuario: string, nuevoNomCom: string, id: string ) {
+        if (adminArray.length == adminUnico) {
+            const admin = adminArray[0];
+            if (admin) {
+                return admin;
+            } else {
+                return null;
+            }
+        } else {
+            console.log("Administrador no registrado");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error al consultar la base de datos:", error);
+        return null;
+    }
+}
+
+
+
+
+export async function actualizarAdminNombres(nuevoUsuario: string, nuevoNomCom: string, id: string) {
     try {
         const db = await getDb;
 
         const actualizado = await db.execute(
             "UPDATE Administrador SET nombreUsuario = $1, nombreComple = $2 WHERE id = $3",
-            [nuevoUsuario,nuevoNomCom , id] 
+            [nuevoUsuario, nuevoNomCom, id]
         );
 
         return actualizado
@@ -107,12 +133,12 @@ export async function actualizarAdminNombres(nuevoUsuario: string, nuevoNomCom: 
 
 
 
-export async function actualizarContra(contra: string, id: string ) {
+export async function actualizarContra(contra: string, id: string) {
     try {
         const db = await getDb;
         const actualizado = await db.execute(
             "UPDATE Administrador SET contrasenia = $1 WHERE id = $2",
-            [contra, id] 
+            [contra, id]
         );
         return actualizado
     } catch (error) {

@@ -6,7 +6,6 @@ import { z } from "zod"
 import { formSchemaActualizarNombres } from "@/schemas/formSchemaAdmin";
 import { Button, Card, Input, Label } from "@fluentui/react-components";
 import { Checkmark20Filled, SpinnerIos20Filled } from "@fluentui/react-icons";
-import ActualizarContra from "@/ui/ProcesarAdmin/ActulizarContra";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Perfil() {
@@ -113,9 +112,7 @@ export default function Perfil() {
                         </form>
                     </article>
 
-                    <ActualizarContra />
-                </section>
-                        
+                </section>                        
             </div>
         </main>
     )

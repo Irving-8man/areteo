@@ -10,7 +10,9 @@ fn main() {
     Migration {
         version: 1,
         description: "Crear tablas para la db",
-        sql:"CREATE TABLE IF NOT EXISTS Administrador (
+        sql:"
+        
+CREATE TABLE IF NOT EXISTS Administrador (
     id TEXT PRIMARY KEY NOT NULL,
     nombreComple TEXT NOT NULL,
     nombreUsuario TEXT NOT NULL,
@@ -18,6 +20,7 @@ fn main() {
     );
 CREATE INDEX IF NOT EXISTS index_id ON Administrador (id);
 
+INSERT into Administrador (id, nombreComple, nombreUsuario, contrasenia) VALUES ('id-1', 'cambiarNombreCompleto','administrador', '12345');
 
 CREATE TABLE IF NOT EXISTS Paciente (
             id TEXT PRIMARY KEY NOT NULL,

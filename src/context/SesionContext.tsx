@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useState } from 'react';
-import { actualizarAdminNombres, actualizarContra, verificarAdmin } from '../services/AdminController';
+import { createContext, ReactNode, useEffect, useState } from 'react';
+import { actualizarAdminNombres, actualizarContra, getAdminBase, verificarAdmin } from '../services/AdminController';
 import { useNavigate } from 'react-router-dom';
 import { AdminLogin, AdminRegistrado } from '@/models/types';
 
@@ -17,7 +17,7 @@ export const SesionContext = createContext<Sesion | undefined>(undefined);
 
 // Proveer el contexto, lo que ofrece la lógica
 export function SesionProvider({ children }: { children: ReactNode }) {
-    const [isAutenticado, setIsAutenticado] = useState<boolean>(false);
+    const [isAutenticado, setIsAutenticado] = useState<boolean>(true);
     const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null);
     const navigate = useNavigate();
 
@@ -77,6 +77,17 @@ export function SesionProvider({ children }: { children: ReactNode }) {
             return false
         }
     };
+
+    useEffect(() => {
+        const data = async () => {
+            const adminBase = await getAdminBase();
+            console.log(adminBase)
+            if (adminBase) {
+                setAdmin(adminBase)
+            }
+        }
+        data()
+    }, [isAutenticado])
 
     return (
         <SesionContext.Provider value={{
