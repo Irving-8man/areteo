@@ -14,15 +14,19 @@ export default function Inicio() {
                     <p className="text-8xl">ARETEO</p>
                 </article>
 
+                <article className="mt-10">
+                    <p className="max-w-[70ch] text-lg">Apoyo para especialistas y personal de la salud en la gestión de pacientes e instrumentos para la evaluación y control.</p>
+                </article>
+
                 <article className="mt-20">
-                    <h2 className="text-2xl font-semibold">Lider de proyecto: Irving Geyler Cupul Uc</h2>
                     <div className="mt-10">
-                        <h2 className="text-xl font-semibold">Equipo</h2>
-                        <ul className="list-disc">
-                            <li className="text-xl">Sub-lider: Joar Ruiz Peraza</li>
-                            <li className="text-xl">Desarrollo: Jesus Be hau</li>
-                            <li className="text-xl">Desarrollo: Didier Tec Ezquivel</li>
-                            <li className="text-xl">Desarrollo: Juan Carlos Conde </li>
+                        <h2 className="text-xl font-semibold">Desarrollo</h2>
+                        <ul className="list-disc text-base">
+                            <li className="text-base">Lider de proyecto: Br. Irving Geyler Cupul Uc</li>
+                            <li className="text-base">Br. Joar Ruiz Peraza</li>
+                            <li className="">Br. Jesus Be hau</li>
+                            <li className="">Br. Didier Tec Ezquivel</li>
+                            <li className="">Br. Juan Carlos Conde </li>
                         </ul>
                     </div>
 
