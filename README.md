@@ -34,6 +34,7 @@ El objetivo de este proyecto es crear una aplicación de escritorio que sirva de
 Este diseño ilustra la interacción entre el actor y casos de uso, resaltando cómo el usuario interactúa con la aplicación de escritorio.
 
 ![Diagrama de caso de uso](/github/caso_uso_ARETEO.png)
+
 Sea el Administrador una persona especialista de la salud o a fin, responsable del uso de la aplicación ARETEO.
 
 ## Arquitectura Utilizada
