@@ -82,7 +82,7 @@ export default function AreaListEval() {
             <section className="pt-10">
                 <Card style={{ padding: "25px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }}>
                     <div className="text-base">
-                        <h1 className="text-3xl mb-4 font-semibold">Área {area.id} : {area.nombre}</h1>
+                        <h1 className="text-3xl mb-4 font-semibold max-w-[30ch]">Área {area.id} : {area.nombre}</h1>
                         <p className="max-w-[65ch]">{infoArea.descripcion}</p>
                     </div>
 
