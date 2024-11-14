@@ -37,7 +37,7 @@ Este diseño ilustra la interacción entre el actor y casos de uso, resaltando c
 
 Sea el Administrador una persona especialista de la salud o a fin, responsable del uso de la aplicación ARETEO.
 
-## Arquitectura Utilizada
+## Arquitectura utilizada
 
 
 Este diseño ilustra la interacción entre el cliente y la aplicación que alberga las vistas de interfaz y la base de datos. La aplicación se despliega con una arquitectura de tipo monolito utilizando el framework Tauri para desarrollar aplicaciones de escritorio, junto con la librería React y React Router Dom para las interfaces. Este enfoque permite el renderizado de la interfaz del lado nativo en la aplicación de escritorio y la exposición de funciones con el lenguaje Rust a bajo nivel para implementar una arquitectura similar a la de cliente-servidor. Esto proporciona los beneficios de consultar la base de datos y renderizar los datos de inmediato en el cliente. Se utiliza una base de datos local con SQLite para almacenar y recuperar datos con una latencia muy baja, además de bibliotecas con funciones intuitivas del framework que interactúan con las APIs nativas de aplicaciones de escritorio, en este caso Windows 10/11.
