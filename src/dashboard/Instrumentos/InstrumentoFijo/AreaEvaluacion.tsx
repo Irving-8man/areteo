@@ -24,7 +24,7 @@ export default function AreaEvaluacion() {
 
     const [respuestas, setRespuestas] = useState<{ [key: number]: string }>(
         quests.reduce((acc, pregunta) => {
-            acc[pregunta.orden] = "0"; // Inicializar todas las respuestas como string "0"
+            acc[pregunta.orden] = ""; // Inicializar todas las respuestas como string "0"
             return acc;
         }, {} as { [key: number]: string })
     );
@@ -66,7 +66,7 @@ export default function AreaEvaluacion() {
             // Verificar que el nombre del evaluador no esté vacío si no es aplicado por el admin
             if (!aplicadoPorAdmin && (!nombreEvaluador || nombreEvaluador.trim() === "")) {
                 throw new Error("El nombre del evaluador es obligatorio cuando no es aplicado por el administrador.");
-            }   
+            }
 
             const data = {
                 nombreEvaluado,
@@ -82,11 +82,11 @@ export default function AreaEvaluacion() {
                 orden: parseInt(orden),
                 respuesta: parseInt(valor)
             }));
-            const datosEnvio = { id, nombreEvaluado, nombreEvaluador : data.nombreEvaluador, aplicadoPorAdmin, respuestasPuntos }
-            
+            const datosEnvio = { id, nombreEvaluado, nombreEvaluador: data.nombreEvaluador, aplicadoPorAdmin, respuestasPuntos }
+
             const res = await crearRegiACIC(datosEnvio);
             if (res) {
-                
+
                 setIsSubmitting(false);
                 setResultados(res);
                 alert("Evaluación registrada, revise sus resultados.")
@@ -230,6 +230,9 @@ export default function AreaEvaluacion() {
                                                 value={respuestas[pregunta.orden]}
                                                 disabled={isSubmitting || !!resultados}
                                             >
+                                                <option value="">
+                                                    Calificar
+                                                </option>
                                                 {[...Array(12)].map((_, index) => (
                                                     <option key={index} value={index}>
                                                         {index}
