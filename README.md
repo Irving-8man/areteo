@@ -63,7 +63,7 @@ Por favor instalar `Rust` & `NodeJS` siguiendo los pasos de los sitios web ofici
 - [Node.js](https://nodejs.org/en/)
 
 **NOTA IMPORTANTE**
-ARETEO utiliza Tauri v1, en el momento que estes leyendo esto, ya ha sido actulizada la documentación oficial la versión 2, las cuales difieren significativamente.
+ARETEO utiliza Tauri v1, en el momento que estes leyendo esto, ya ha sido actulizada la documentación oficial a la versión 2, las cuales difieren significativamente.
 
 
 #### Clonar respositorio
