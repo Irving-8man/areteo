@@ -50,7 +50,14 @@ Este diseño ilustra la interacción entre el cliente y la aplicación que alber
 
 Plataformas Soportadas:
 
-- **Windows**: [Windows 10/11](https://github.com/Irving-8man/areteo/releases/tag/feeback)
+
+- **Windows**: [Windows 10/11](https://github.com/Irving-8man/areteo/releases/tag/Beta_ARETEO_0.5.0)
+
+
+## Manual de uso
+
+[Manual ARETEO en Español](/github/ARETEO_Manual%20de%20usuario_0.5.0v.pdf)
+
 
 
 ## Desarrollo de la aplicación
