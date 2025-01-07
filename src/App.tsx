@@ -29,6 +29,9 @@ import Perfil from './dashboard/Perfil';
 import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
 import { SesionProvider } from './context/SesionContext';
+import Analiticas from './dashboard/Analiticas';
+import ListaInstrumAnalitic from './dashboard/Analiticas/ListaIntrumAnalitic';
+import GraficasAnaliticas from './dashboard/Analiticas/GraficasAnaliticas';
 
 
 
@@ -56,9 +59,14 @@ export default function App() {
                 <Route path='resultados/:areaId/:respID' element={<AreaRespuesta />} />
               </Route>
             </Route>
+
+            <Route path='analiticas' element={<Analiticas />} >
+              <Route index element={<ListaInstrumAnalitic />} />
+              <Route path=':instrumentoId' element={<GraficasAnaliticas />} />
+            </Route>
             <Route path='perfil' element={<Perfil />} />
           </Route>
-          
+
         </Routes>
       </SesionProvider>
     </>
