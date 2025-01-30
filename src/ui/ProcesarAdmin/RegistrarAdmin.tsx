@@ -4,12 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { formSchemaAdminRegistro } from "@/schemas/formSchemaAdmin";
 import { PersonRegular, PasswordRegular } from "@fluentui/react-icons";
-import { registrarAdmin } from "@/services/AdminController";
+//import { registrarAdmin } from "@/services/AdminController";
 import { Admin } from "@/models/types";
 import { useNavigate } from "react-router-dom";
 import useRedirecSesion from "@/hooks/useRedirecSesion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
+import { AdminRepository } from "@/services/repository/AdminRepositoy";
+import { SqliteDatabase } from "@/services/repository/DatabaseSingle";
 
 
 const useStyles = makeStyles({
@@ -37,9 +39,11 @@ export default function RegistrarAdmin() {
     const onSubmit = async (data: z.infer<typeof Schema>) => {
         const dataAdim: Admin = (({ nombreComple, nombreUsuario, contrasenia }) => ({ nombreComple, nombreUsuario, contrasenia }))(data);
         setIsSubmitting(true);
+        const db = await SqliteDatabase.getInstance();
+        const adminRepo = new AdminRepository(db);
         try {
             // Aquí llamas a registrarAdmin solo para hacer una verificación
-            const isRegistrado = await registrarAdmin(dataAdim);
+            const isRegistrado = await adminRepo.registrarAdmin(dataAdim);
 
             if (isRegistrado) {
                 reset();

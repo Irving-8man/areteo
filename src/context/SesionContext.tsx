@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useState } from 'react';
-import { actualizarAdminNombres, actualizarContra, verificarAdmin } from '../services/AdminController';
+import { actualizarAdminNombres, actualizarContra } from '../services/AdminController';
+import { AdminRepository } from "@/services/repository/AdminRepositoy";
+import { SqliteDatabase } from "@/services/repository/DatabaseSingle";
 import { useNavigate } from 'react-router-dom';
 import { AdminLogin, AdminRegistrado } from '@/models/types';
 
@@ -20,10 +22,14 @@ export function SesionProvider({ children }: { children: ReactNode }) {
     const [isAutenticado, setIsAutenticado] = useState<boolean>(false);
     const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null);
     const navigate = useNavigate();
+    
 
     const login = async (data: AdminLogin): Promise<boolean> => {
+        const db = await SqliteDatabase.getInstance();
+        const adminRepo = new AdminRepository(db);
+
         try {
-            const admin = await verificarAdmin(data);
+            const admin = await adminRepo.verificarAdmin(data);
             if (admin) {
                 setIsAutenticado(true);
                 setAdmin(admin);
