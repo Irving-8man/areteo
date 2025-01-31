@@ -7,7 +7,7 @@ export default function Analiticas() {
     const pathName = location.pathname;
 
     return (
-          <main className="min-h-full relative">
+        <main className="min-h-full relative">
             <header className="sticky top-0 px-[30px] bg-white border border-y-slate-300 text-black z-[2] py-3">
                 <ul className="flex flex-row gap-12 items-center justify-start">
                     <li>

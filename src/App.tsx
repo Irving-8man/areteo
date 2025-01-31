@@ -3,28 +3,28 @@ import { Route, Routes } from 'react-router-dom';
 //Home
 import Bienvendida from './ui/Bienvenida';
 //Inicio
-import Dashboard from './dashboardViews/Dashboard';
-import Inicio from './dashboardViews/Inicio';
+import Dashboard from './appViews/DashboardView';
+import Inicio from './appViews/InicioView';
 //Pacientes
-import Pacientes from './dashboardViews/Pacientes';
-import ListaPacientes from './dashboardViews/Pacientes/ListaPacientes';
-import VisualizarPaciente from './dashboardViews/Pacientes/VisualizarPaciente';
-import DatosPacientes from './dashboardViews/Pacientes/DatosPacientes';
-import VerResulRegistro from './dashboardViews/Pacientes/VerResulRegistro';
-import CrearRegistro from './dashboardViews/Pacientes/CrearRegistro';
+import Pacientes from './appViews/PacientesView';
+import ListaPacientes from './appViews/PacientesViews/ListaPacientesView';
+import VisualizarPaciente from './appViews/PacientesViews/VisualizarPacienteView';
+import DatosPacientes from './appViews/PacientesViews/DatosPacientesView';
+import VerResulRegistro from './appViews/PacientesViews/VerResulRegistroView';
+import CrearRegistro from './appViews/PacientesViews/CrearRegistroView';
 //Instrumentos
-import Instrumentos from './dashboardViews/Instrumentos';
-import ListaInstrumentos from './dashboardViews/Instrumentos/ListaInstrumentos';
+import Instrumentos from './appViews/InstrumentosView';
+import ListaInstrumentos from './appViews/InstrumentosViews/ListaInstrumentosView';
 //Instrumento fijo
-import InstrumentoFijo from './dashboardViews/Instrumentos/InstrumentoFijo/InstrumentoFijo';
-import AreaEvaluacion from './dashboardViews/Instrumentos/InstrumentoFijo/AreaEvaluacion';
-import AreaRespuesta from './dashboardViews/Instrumentos/InstrumentoFijo/AreaRespuesta';
-import OpcionesInstrumento from './dashboardViews/Instrumentos/InstrumentoFijo/OpcionesInstrumento';
-import AreaListEval from './dashboardViews/Instrumentos/InstrumentoFijo/AreaListEval';
+import InstrumentoFijo from './appViews/InstrumentosViews/InstrumentoFijoViews/InstrumentoFijoView';
+import AreaEvaluacion from './appViews/InstrumentosViews/InstrumentoFijoViews/AreaEvaluacionView';
+import AreaRespuesta from './appViews/InstrumentosViews/InstrumentoFijoViews/AreaRespuestaView';
+import OpcionesInstrumento from './appViews/InstrumentosViews/InstrumentoFijoViews/OpcionesInstrumentoView';
+import AreaListEval from './appViews/InstrumentosViews/InstrumentoFijoViews/AreaListEvalView';
 //Analiticas
 //import Analiticas from './dashboard/Analiticas';
 //Perfil
-import Perfil from './dashboardViews/Perfil';
+import Perfil from './appViews/PerfilView';
 //Proteccion de rutas
 import RutaProtegida from './ui/RutaProtegida';
 //Contexto login
