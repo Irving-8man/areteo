@@ -1,8 +1,9 @@
 import { Button } from "@fluentui/react-components";
 import { ArrowDownload20Regular } from "@fluentui/react-icons";
 import { RegistroEvalACIC_Area1, RegistroEvalACIC_Area2, RegistroEvalACIC_Area3, RegistroEvalACIC_Area4, RegistroEvalACIC_Area5, RegistroEvalACIC_Area6 } from '@/models/typesFijo';
-import { getRegEvalACICAREA } from '@/services/InstACICController';
 import { generarExcelArea1, generarExcelArea2 } from '@/InstFijoDiabetes/ExcelFijos';
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { ACICRepository } from "@/services/repositorios/InstruACICRepository";
 
 
 
@@ -12,7 +13,9 @@ import { generarExcelArea1, generarExcelArea2 } from '@/InstFijoDiabetes/ExcelFi
 export default function ButtonExportExcelAreasE({ area_id }: { area_id: number }) {
     const crearExcel = async () => {
         try {
-            const evaluaciones_area = await getRegEvalACICAREA(area_id);
+            const db = await SqliteDatabase.getInstance();
+            const acicRepo = new ACICRepository(db);
+            const evaluaciones_area = await acicRepo.getRegEvalACICAREA(area_id);
             if (evaluaciones_area) {
                 switch (area_id) {
                     case 1:

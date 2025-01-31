@@ -1,5 +1,4 @@
 import { RegistroMedicoList } from '@/models/types';
-//import { getRegistrosPaciente } from '@/services/RegistrosMedicoController';
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { FixedSizeList, FixedSizeListProps } from 'react-window';
 import ItemRegistroList from '@/componets/ItemRegistroList';

@@ -1,4 +1,3 @@
-import { eliminarRegEvalACIC, getRegEvalACICComp } from "@/services/InstACICController";
 import { Button, Card } from "@fluentui/react-components";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -9,7 +8,8 @@ import { AREASFIJAS } from "@/InstFijoDiabetes/Const";
 import { ProcesarRespACIC } from "@/utils/ProcesarRespACIC";
 import ButtonDocxResEvalAC from "@/Docx/DatosPaciente/ButtonDocxResEvalAC";
 import DialogDeleteEvalACIC from "@/ui/DialogDeleteEvalACIC";
-
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { ACICRepository } from "@/services/repositorios/InstruACICRepository";
 
 export default function AreaRespuesta() {
     const { respID, areaId } = useParams();
@@ -20,7 +20,9 @@ export default function AreaRespuesta() {
     const { data: evalResACICData, isError } = useQuery({
         queryKey: ['evalResACIC', respIDSafe],
         queryFn: async () => {
-            const res = await getRegEvalACICComp(respIDSafe);
+            const db = await SqliteDatabase.getInstance();
+            const acicRepo = new ACICRepository(db);
+            const res = await acicRepo.getRegEvalACICComp(respIDSafe);
             return res || null;
         },
         refetchOnWindowFocus: false
@@ -53,7 +55,9 @@ export default function AreaRespuesta() {
             return;
         }
         try {
-            const res = await eliminarRegEvalACIC(respIDSafe);
+            const db = await SqliteDatabase.getInstance();
+            const acicRepo = new ACICRepository(db);
+            const res = await acicRepo.eliminarRegEvalACIC(respIDSafe);
             if (res) {
                 alert("Registro de Evaluación Eliminado")
                 navigate(`/dashboard/instrumentos/instrumentoFijo/area/${String(areaIdSafe)}`);

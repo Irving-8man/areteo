@@ -6,10 +6,11 @@ import { Link, useParams } from "react-router-dom";
 import { z } from 'zod';
 import { ArrowLeft20Filled, ArrowRight20Filled } from "@fluentui/react-icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { crearRegiACIC } from "@/services/InstACICController";
 import { formSchemaFijo } from "@/schemas/formSchemaFijo";
 import ButtonDocxPostRes from "@/Docx/DatosPaciente/ButtonDocxPostRes";
 import { useSesion } from "@/hooks/useSesion";
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { ACICRepository } from "@/services/repositorios/InstruACICRepository";
 
 
 export default function AreaEvaluacion() {
@@ -83,8 +84,9 @@ export default function AreaEvaluacion() {
                 respuesta: parseInt(valor)
             }));
             const datosEnvio = { id, nombreEvaluado, nombreEvaluador: data.nombreEvaluador, aplicadoPorAdmin, respuestasPuntos }
-
-            const res = await crearRegiACIC(datosEnvio);
+            const db = await SqliteDatabase.getInstance();
+            const acicRepo = new ACICRepository(db);
+            const res = await acicRepo.crearRegiACIC(datosEnvio);
             if (res) {
 
                 setIsSubmitting(false);
