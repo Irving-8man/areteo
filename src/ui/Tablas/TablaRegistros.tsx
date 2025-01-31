@@ -1,8 +1,10 @@
 import { RegistroMedicoList } from '@/models/types';
-import { getRegistrosPaciente } from '@/services/RegistrosMedicoController';
+//import { getRegistrosPaciente } from '@/services/RegistrosMedicoController';
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { FixedSizeList, FixedSizeListProps } from 'react-window';
 import ItemRegistroList from '@/componets/ItemRegistroList';
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { RegistroMedicoRepository } from '@/services/repositorios/RegistrosMedicoRepository';
 
 
 
@@ -93,7 +95,9 @@ export default function TablaRegistros(props: Props) {
     useEffect(() => {
         const fetchData = async () => {
             if (props.id) {
-                const registros = await getRegistrosPaciente(props.id); // Suponiendo que esta función obtiene los datos
+                const db = await SqliteDatabase.getInstance();
+                const registrosRepo = new RegistroMedicoRepository(db);
+                const registros = await registrosRepo.getRegistrosPaciente(props.id); // Suponiendo que esta función obtiene los datos
                 setRegistrosCarga(registros);
             }
         };

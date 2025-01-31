@@ -1,6 +1,4 @@
 import { PacienteRegistrado, RegistroMedicoDB } from "@/models/types";
-import { getPaciente } from "@/services/PacienteController";
-import { borrarRegistroMedico, getRegistroMedico, getTratamientoInyectable, getTratamientoOral } from "@/services/RegistrosMedicoController";
 import { Button, Card } from "@fluentui/react-components";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -9,6 +7,11 @@ import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
 import ButtonDocxReEx from "@/Docx/DatosPaciente/ButtonDocxReEx";
 import DialogDeleteRegistro from "@/ui/ProcesarPacientes/DialogDeleteRegistro";
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { RegistroMedicoRepository } from '@/services/repositorios/RegistrosMedicoRepository';
+import { PacienteRepository } from "@/services/repositorios/PacienteRepository";
+
+
 
 export default function VerResulRegistro() {
     const { id, idRegis } = useParams();
@@ -22,10 +25,13 @@ export default function VerResulRegistro() {
         {
             queryKey: ['registro', idSafe, idRegiSafe],
             queryFn: async () => {
+                const db = await SqliteDatabase.getInstance();
+                const registrosRepo = new RegistroMedicoRepository(db);
+                const pacienteRepo = new PacienteRepository(db);
                 let inyectable = null;
                 let oral = null;
-                const registro = await getRegistroMedico(idRegiSafe);
-                const pacienteDB = await getPaciente(idSafe);
+                const registro = await registrosRepo.getRegistroMedico(idRegiSafe);
+                const pacienteDB = await pacienteRepo.getPaciente(idSafe);
 
 
                 if (registro[unico] && pacienteDB[unico]) {
@@ -35,17 +41,17 @@ export default function VerResulRegistro() {
                     const usaTratamientoOral = registroMedico.usaTratamientoOral === "true";
 
                     if (usaTratamientoInyectable && usaTratamientoOral) {
-                        inyectable = await getTratamientoInyectable(idRegiSafe);
-                        oral = await getTratamientoOral(idRegiSafe);
+                        inyectable = await registrosRepo.getTratamientoInyectable(idRegiSafe);
+                        oral = await registrosRepo.getTratamientoOral(idRegiSafe);
 
                         return { pacienteConRe: { ...paciente }, registro: { ...registroMedico }, trataInyec: inyectable[unico], trataOral: oral[unico] };
-                        
+
                     } else if (usaTratamientoInyectable) {
-                        inyectable = await getTratamientoInyectable(idRegiSafe);
+                        inyectable = await registrosRepo.getTratamientoInyectable(idRegiSafe);
                         return { pacienteConRe: { ...paciente }, registro: { ...registroMedico }, trataInyec: inyectable[unico] };
 
                     } else if (usaTratamientoOral) {
-                        oral = await getTratamientoOral(idRegiSafe);
+                        oral = await registrosRepo.getTratamientoOral(idRegiSafe);
                         return { pacienteConRe: { ...paciente }, registro: { ...registroMedico }, trataOral: oral[unico] };
                     } else {
                         return { pacienteConRe: { ...paciente }, registro: { ...registroMedico } };
@@ -75,7 +81,10 @@ export default function VerResulRegistro() {
             return;
         }
         try {
-            const res = await borrarRegistroMedico(idRegiSafe);
+            const db = await SqliteDatabase.getInstance();
+            const registrosRepo = new RegistroMedicoRepository(db);
+
+            const res = await registrosRepo.borrarRegistroMedico(idRegiSafe);
             if (res) {
                 alert("Registro eliminado")
                 navigate(`/dashboard/pacientes/${String(idSafe)}`);

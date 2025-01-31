@@ -7,11 +7,17 @@ import { useForm } from "react-hook-form"
 import { formSchemaCrearRegistro } from "@/schemas/formSchemaRegistro";
 import { useEffect, useState } from "react";
 import { PacienteRegistrado } from "@/models/types";
-import { getPaciente } from "@/services/PacienteController";
 import { calcularEdad } from "@/utils/CalcularEdad";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { crearRegistrosPaciente } from "@/services/RegistrosMedicoController";
 import { useNavigate } from 'react-router-dom';
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { RegistroMedicoRepository } from '@/services/repositorios/RegistrosMedicoRepository';
+import { PacienteRepository } from "@/services/repositorios/PacienteRepository";
+
+
+
+
+
 
 const NIVEL_ESTUDIO = [
     {
@@ -112,8 +118,10 @@ export default function CrearRegistro() {
     useEffect(() => {
         const fetchData = async () => {
             const unico = 0
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
             try {
-                const res = await getPaciente(String(id))
+                const res = await pacienteRepo.getPaciente(String(id))
                 if (res) {
                     setPaciente(res[unico])
                     const data = calcularEdad(res[unico].fechaNacimiento);
@@ -177,7 +185,9 @@ export default function CrearRegistro() {
         data.educacion = textoEducacion;
         data.estadoCivil = textEstadoCivil;
         try {
-            const registrado = await crearRegistrosPaciente(data);
+            const db = await SqliteDatabase.getInstance();
+            const registrosRepo = new RegistroMedicoRepository(db);
+            const registrado = await registrosRepo.crearRegistrosPaciente(data);
             if (registrado) {
                 alert("Registro médico agregado")
             } else {
@@ -187,8 +197,6 @@ export default function CrearRegistro() {
             navigate(`/dashboard/pacientes/${id}`);
         } catch (error) {
             alert(`Error durante el registro:${error}`);
-        } finally {
-            console.log("Registro Finalizado")
         }
     };
 

@@ -1,4 +1,3 @@
-//import { actualizarPaciente } from "@/services/PacienteController";
 import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
 import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
@@ -31,7 +30,7 @@ export default function VisualizarPaciente() {
                 const pacienteRepo = new PacienteRepository(db);
                 const result = await pacienteRepo.getPaciente(String(id));
 
-                if (result) {
+                if (result.length !== unico) {
                     return { paciente: { ...result[unico] }, existe: true };
                 } else {
                     return { paciente: null, existe: false };
@@ -124,12 +123,10 @@ export default function VisualizarPaciente() {
         }
     };
 
+
     if (isLoading) return <div>Cargando...</div>;
     if (isError) return <div>Error al cargar datos.</div>;
 
-    if (!pacienteData.existe) {
-        navigate(`/dashboard/pacientes/`);
-    }
 
     return (
         <>

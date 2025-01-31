@@ -11,8 +11,8 @@ import { format } from "@formkit/tempo";
 interface DocxButtonProps {
     paciente: PacienteRegistrado;
     registro: RegistroMedicoDB;
-    tratInye: TratamientoInyectableDB | null;
-    trataOral: TratamientoOralDB | null;
+    tratInye: TratamientoInyectableDB | undefined;
+    trataOral: TratamientoOralDB | undefined;
 }
 
 const ButtonDocxReEx: React.FC<DocxButtonProps> = ({ paciente, registro, tratInye, trataOral }) => {

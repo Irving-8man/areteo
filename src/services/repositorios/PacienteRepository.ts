@@ -2,7 +2,7 @@ import { Count, InterDatabase } from "@/models/interfaceModul";
 import { Paciente, PacienteActualizar, PacienteRegistrado } from "@/models/types";
 import { generarID } from "@/utils/GenerarID";
 
-const PACIENTES_POR_PAGINA = 4;
+const PACIENTES_POR_PAGINA = 10;
 
 export class PacienteRepository {
     private db: InterDatabase;
@@ -11,7 +11,7 @@ export class PacienteRepository {
         this.db = db;
     }
 
-    async getAllPacientesRegistrados(): Promise<PacienteRegistrado[]> {
+    public async getAllPacientesRegistrados(): Promise<PacienteRegistrado[]> {
         try {
             const pacientes: PacienteRegistrado[] = await this.db.select("SELECT * FROM Paciente");
             return pacientes.length > 0 ? pacientes : [];
@@ -21,17 +21,17 @@ export class PacienteRepository {
         }
     }
 
-    async getPaciente(id: string): Promise<PacienteRegistrado[] | null> {
+    public async getPaciente(id: string): Promise<PacienteRegistrado[]> {
         try {
             const paciente: PacienteRegistrado[] = await this.db.select("SELECT * FROM Paciente WHERE id = $1", [id]);
-            return paciente ? paciente : null;
+            return paciente
         } catch (error) {
             console.error("Error al consultar la base de datos:", error);
-            return null;
+            return [];
         }
     }
 
-    async registrarPaciente(data: Paciente): Promise<PacienteRegistrado | null> {
+    public async registrarPaciente(data: Paciente): Promise<PacienteRegistrado | null> {
         try {
             const nuevoID = generarID();
             const horaRegistro = new Date();
@@ -65,7 +65,7 @@ export class PacienteRepository {
         }
     }
 
-    async actualizarPaciente(data: PacienteActualizar): Promise<boolean> {
+    public async actualizarPaciente(data: PacienteActualizar): Promise<boolean> {
         try {
             const fechaNacimientoISO = new Date(data.fechaNacimiento).toISOString();
 
@@ -89,7 +89,7 @@ export class PacienteRepository {
         }
     }
 
-    async getPacientesFiltradoPaginado(query: string, currentPage: number): Promise<PacienteRegistrado[]> {
+    public async getPacientesFiltradoPaginado(query: string, currentPage: number): Promise<PacienteRegistrado[]> {
         const offset = (currentPage - 1) * PACIENTES_POR_PAGINA;
         const normalizedQuery = query.toLowerCase();
 
@@ -113,7 +113,7 @@ export class PacienteRepository {
         }
     }
 
-    async paginasPacientes(query: string): Promise<number> {
+    public async paginasPacientes(query: string): Promise<number> {
         const normalizedQuery = query.toLowerCase();
 
         try {
@@ -137,7 +137,7 @@ export class PacienteRepository {
         }
     }
 
-    async eliminarPaciente(id: string): Promise<boolean> {
+    public async eliminarPaciente(id: string): Promise<boolean> {
         try {
             const resultado = await this.db.execute("DELETE FROM Paciente WHERE id = $1", [id]);
             return resultado;

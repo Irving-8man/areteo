@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { PacienteRegistrado, Paciente } from "@/models/types";
-//import { eliminarPaciente,  } from "@/services/PacienteController";
 import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
 import { PacienteRepository } from "@/services/repositorios/PacienteRepository";
 

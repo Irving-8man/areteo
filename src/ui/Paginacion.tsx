@@ -1,7 +1,6 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { generarPaginacion } from '@/utils/GenerarPaginacion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-//import { paginasPacientes } from '@/services/PacienteController';
 import { usePacienteStore } from '@/store/storePacientes';
 import { useNavigate } from 'react-router-dom';
 import { PaginationArrow, PaginationNumber } from './ButtonsPagination';

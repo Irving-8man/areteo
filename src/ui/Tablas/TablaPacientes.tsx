@@ -1,5 +1,4 @@
 import { PacienteRegistrado } from '@/models/types';
-//import { getPacientesFiltradoPaginado } from '@/services/PacienteController';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ItemPacienteList from '@/componets/ItemPacienteList';

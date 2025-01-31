@@ -75,10 +75,10 @@ export default function ItemRegistroList(props: RowProps) {
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
-                            <MenuItem icon={<CopyEye />} onClick={()=>{navigate(`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`)}}>
+                            <MenuItem icon={<CopyEye />} onClick={() => { navigate(`/dashboard/pacientes/${props.paciente_id}/result-registro/${props.registro.id}`) }}>
                                 Ver Registro
                             </MenuItem>
-                            <MenuItem icon={<ArrowDownload20Regular />} onClick={()=>{generarDocxRegistroMedico(props.paciente_id,props.registro.id)}} >
+                            <MenuItem icon={<ArrowDownload20Regular />} onClick={() => { generarDocxRegistroMedico(props.paciente_id, props.registro.id) }} >
                                 Descargar Registro
                             </MenuItem>
                         </MenuList>
