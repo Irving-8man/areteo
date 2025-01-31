@@ -6,7 +6,7 @@ import { format } from "@formkit/tempo";
 import { useMemo } from "react";
 import { AREASFIJAS } from "@/InstFijoDiabetes/Const";
 import { ProcesarRespACIC } from "@/utils/ProcesarRespACIC";
-import ButtonDocxResEvalAC from "@/Docx/DatosPaciente/ButtonDocxResEvalAC";
+import ButtonDocxResEvalAC from "@/Docx/ACIC/ButtonDocxResEvalAC";
 import DialogDeleteEvalACIC from "@/ui/DialogDeleteEvalACIC";
 import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
 import { ACICRepository } from "@/services/repositorios/InstruACICRepository";

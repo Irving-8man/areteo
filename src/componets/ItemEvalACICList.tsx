@@ -17,7 +17,7 @@ import {
 import { ResEvalACICList } from "@/models/typesFijo";
 import { format } from "@formkit/tempo";
 import { Link, useNavigate } from "react-router-dom";
-import { generarDocxRegEvalPost } from "@/Docx/DatosPaciente/FucGenRegEvalPost";
+import { generarDocxRegEvalPost } from "@/Docx/FucGenRegEvalPost";
 
 const CopyEye = bundleIcon(EyeFilled, EyeRegular);
 

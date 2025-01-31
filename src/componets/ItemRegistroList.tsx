@@ -17,7 +17,7 @@ import {
 import { RegistroMedicoList } from "@/models/types";
 import { format } from "@formkit/tempo";
 import { Link, useNavigate } from "react-router-dom";
-import { generarDocxRegistroMedico } from "@/Docx/DatosPaciente/FucGenRegistroMedico";
+import { generarDocxRegistroMedico } from "@/Docx/FucGenRegistroMedico";
 
 
 const CopyEye = bundleIcon(EyeFilled, EyeRegular);

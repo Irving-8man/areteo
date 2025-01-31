@@ -8,7 +8,7 @@ import { AvatarPaciente } from "@/componets/AvatarPaciente";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PacienteActualizar } from "@/models/types";
 import DialogActualiPaciente from "@/ui/ProcesarPacientes/DialogActualiPaciente";
-import ButtonDocxPaciente from "@/Docx/DatosPaciente/ButtonDocxPaciente";
+import ButtonDocxPaciente from "@/Docx/Pacientes/ButtonDocxPaciente";
 import DialogDeletePaciente from "@/ui/ProcesarPacientes/DialogDeletePaciente";
 import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
 import { PacienteRepository } from '@/services/repositorios/PacienteRepository';

@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft20Filled } from "@fluentui/react-icons";
 import { format } from "@formkit/tempo";
 import { calcularEdad } from "@/utils/CalcularEdad";
-import ButtonDocxReEx from "@/Docx/DatosPaciente/ButtonDocxReEx";
+import ButtonDocxRegistroMedico from "@/Docx/RegistrosMedicos/ButtonDocxRegistroMedico";
 import DialogDeleteRegistro from "@/ui/ProcesarPacientes/DialogDeleteRegistro";
 import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
 import { RegistroMedicoRepository } from '@/services/repositorios/RegistrosMedicoRepository';
@@ -109,7 +109,7 @@ export default function VerResulRegistro() {
                             <h1 className="font-bold text-2xl underline">Registro Médico</h1>
                         </div>
                         <div className="flex justify-center items-center gap-6 my-5">
-                            <ButtonDocxReEx paciente={pacienteConRe} registro={registro} trataOral={trataOral} tratInye={trataInyec} />
+                            <ButtonDocxRegistroMedico paciente={pacienteConRe} registro={registro} trataOral={trataOral} tratInye={trataInyec} />
                             <DialogDeleteRegistro eliminar={handleDeleteRegistro} />
                         </div>
 
