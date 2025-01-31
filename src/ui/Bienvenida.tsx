@@ -1,4 +1,3 @@
-//import { getAdmin } from "@/services/AdminController";
 import { useEffect, useState } from "react";
 import { Admin } from "@/models/types";
 import RegistrarAdmin from "./ProcesarAdmin/RegistrarAdmin";

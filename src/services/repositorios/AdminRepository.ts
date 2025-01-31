@@ -76,12 +76,11 @@ export class AdminRepository {
         }
     }
 
-    public async actualizarContra(id: string, nuevaContra: string): Promise<boolean> {
+    public async actualizarContra(contra: string, id: string ): Promise<boolean> {
         try {
-            const contraHash = await hashPass(nuevaContra);
             const actualizado = await this.db.execute(
                 "UPDATE Administrador SET contrasenia = $1 WHERE id = $2",
-                [contraHash, id]
+                [contra, id]
             );
             return actualizado;
         } catch (error) {

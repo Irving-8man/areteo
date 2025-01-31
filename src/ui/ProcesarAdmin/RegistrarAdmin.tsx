@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { formSchemaAdminRegistro } from "@/schemas/formSchemaAdmin";
 import { PersonRegular, PasswordRegular } from "@fluentui/react-icons";
-//import { registrarAdmin } from "@/services/AdminController";
 import { Admin } from "@/models/types";
 import { useNavigate } from "react-router-dom";
 import useRedirecSesion from "@/hooks/useRedirecSesion";
