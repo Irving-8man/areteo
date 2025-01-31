@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Admin } from "@/models/types";
 import RegistrarAdmin from "./ProcesarAdmin/RegistrarAdmin";
 import LoginAdmin from "./ProcesarAdmin/LoginAdmin";
-import { AdminRepository } from "@/services/repository/AdminRepositoy";
-import { SqliteDatabase } from "@/services/repository/DatabaseSingle";
+import { AdminRepository } from "@/services/repositorios/AdminRepository";
+import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
 
 export default function Bienvendida() {
     const [admin, setAdmin] = useState<Admin | null>(null);

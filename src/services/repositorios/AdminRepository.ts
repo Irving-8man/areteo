@@ -27,7 +27,7 @@ export class AdminRepository {
             const nuevoID = generarID();
             const contraseniaHashed = await hashPass(data.contrasenia);
 
-            const registrado =  await this.db.execute(
+            const registrado = await this.db.execute(
                 "INSERT INTO Administrador (id, nombreComple, nombreUsuario, contrasenia) VALUES ($1, $2, $3, $4)",
                 [nuevoID, data.nombreComple, data.nombreUsuario, contraseniaHashed]
             );
@@ -41,7 +41,7 @@ export class AdminRepository {
 
     public async verificarAdmin(data: AdminLogin): Promise<AdminRegistrado | null> {
         const adminRegistrado = 1;
-        const adminIdx= 0;
+        const adminIdx = 0;
 
         try {
             const admins: AdminRegistrado[] = await this.db.select("SELECT * FROM Administrador");

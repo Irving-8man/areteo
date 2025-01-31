@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 import useRedirecSesion from "@/hooks/useRedirecSesion";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
-import { AdminRepository } from "@/services/repository/AdminRepositoy";
-import { SqliteDatabase } from "@/services/repository/DatabaseSingle";
+import { AdminRepository } from "@/services/repositorios/AdminRepository";
+import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
 
 
 const useStyles = makeStyles({

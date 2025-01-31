@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from 'react';
 import { actualizarAdminNombres, actualizarContra } from '../services/AdminController';
-import { AdminRepository } from "@/services/repository/AdminRepositoy";
-import { SqliteDatabase } from "@/services/repository/DatabaseSingle";
+import { AdminRepository } from "@/services/repositorios/AdminRepository";
+import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
 import { useNavigate } from 'react-router-dom';
 import { AdminLogin, AdminRegistrado } from '@/models/types';
 
