@@ -1,4 +1,4 @@
-import { actualizarPaciente, eliminarPaciente, getPaciente } from "@/services/PacienteController";
+//import { actualizarPaciente } from "@/services/PacienteController";
 import { Button, Card, Toast, ToastTitle, ToastTrigger, useId, useToastController, Link } from "@fluentui/react-components";
 import { Link as LinkR, useNavigate, useParams } from "react-router-dom"
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
@@ -11,6 +11,9 @@ import { PacienteActualizar } from "@/models/types";
 import DialogActualiPaciente from "@/ui/ProcesarPacientes/DialogActualiPaciente";
 import ButtonDocxPaciente from "@/Docx/DatosPaciente/ButtonDocxPaciente";
 import DialogDeletePaciente from "@/ui/ProcesarPacientes/DialogDeletePaciente";
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { PacienteRepository } from '@/services/repositorios/PacienteRepository';
+
 
 
 export default function VisualizarPaciente() {
@@ -20,11 +23,14 @@ export default function VisualizarPaciente() {
     const unico = 0
     const navigate = useNavigate();
 
-    const { data: pacienteData, isError, isLoading} = useQuery(
+    const { data: pacienteData, isError, isLoading } = useQuery(
         {
             queryKey: ['paciente', id],
             queryFn: async () => {
-                const result = await getPaciente(String(id));
+                const db = await SqliteDatabase.getInstance();
+                const pacienteRepo = new PacienteRepository(db);
+                const result = await pacienteRepo.getPaciente(String(id));
+
                 if (result) {
                     return { paciente: { ...result[unico] }, existe: true };
                 } else {
@@ -52,7 +58,11 @@ export default function VisualizarPaciente() {
 
     // Mutación para actualizar paciente
     const mutation = useMutation({
-        mutationFn: (nuevoPaciente: PacienteActualizar) => actualizarPaciente(nuevoPaciente),
+        mutationFn: async (nuevoPaciente: PacienteActualizar) => {
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
+            return pacienteRepo.actualizarPaciente(nuevoPaciente);
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["paciente", id] });
         },
@@ -100,7 +110,9 @@ export default function VisualizarPaciente() {
             return;
         }
         try {
-            const res = await eliminarPaciente(pacienteData.paciente.id);
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
+            const res = await pacienteRepo.eliminarPaciente(pacienteData.paciente.id);
             if (res) {
                 notify(`Paciente ${pacienteData.paciente.primerNombre} eliminado`, "success");
                 navigate(`/dashboard/pacientes/`);
@@ -115,64 +127,78 @@ export default function VisualizarPaciente() {
     if (isLoading) return <div>Cargando...</div>;
     if (isError) return <div>Error al cargar datos.</div>;
 
+    if (!pacienteData.existe) {
+        navigate(`/dashboard/pacientes/`);
+    }
+
     return (
         <>
-            <section className="flex justify-start">
-                <LinkR to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Pacientes</Button></LinkR>
+            {
+                pacienteData.paciente ? (
+                    <>
+                        <section className="flex justify-start">
+                            <LinkR to="/dashboard/pacientes"><Button icon={<ArrowLeft20Filled />}>Pacientes</Button></LinkR>
+                        </section>
 
-            </section>
+                        <section className="pt-10">
+                            <article>
+                                <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }} className="shadow-sm">
+                                    <ul className="text-base capitalize">
+                                        <li className="flex gap-4 items-center">
+                                            <AvatarPaciente edad={calcularEdad(pacienteData.paciente.fechaNacimiento).valor}
+                                                label={`${pacienteData.paciente.primerNombre} ${pacienteData.paciente.apellidoPaterno}`}
+                                                tamanio="45px"
+                                            />
+                                            <h1 className="text-3xl font-semibold normal-case">{pacienteData.paciente.primerNombre} {pacienteData.paciente.segundoNombre} {pacienteData.paciente.apellidoPaterno} {pacienteData.paciente.apellidoMaterno}</h1>
+                                        </li>
 
-            <section className="pt-10">
-                <article>
-                    <Card style={{ padding: "20px", display: "flex", flexFlow: "row wrap", justifyContent: "space-between" }} className="shadow-sm">
-                        <ul className="text-base capitalize">
-                            <li className="flex gap-4 items-center">
-                                <AvatarPaciente edad={calcularEdad(pacienteData.paciente.fechaNacimiento).valor}
-                                    label={`${pacienteData.paciente.primerNombre} ${pacienteData.paciente.apellidoPaterno}`}
-                                    tamanio="45px"
-                                />
-                                <h1 className="text-3xl font-semibold normal-case">{pacienteData.paciente.primerNombre} {pacienteData.paciente.segundoNombre} {pacienteData.paciente.apellidoPaterno} {pacienteData.paciente.apellidoMaterno}</h1>
-                            </li>
+                                        <li className="mt-4">
+                                            <h2 className="font-semibold">Fecha de registro: <span className="font-normal normal-case">{format(pacienteData.paciente.fechaRegistro, "long")}</span> </h2>
+                                        </li>
 
-                            <li className="mt-4">
-                                <h2 className="font-semibold">Fecha de registro: <span className="font-normal normal-case">{format(pacienteData.paciente.fechaRegistro, "long")}</span> </h2>
-                            </li>
+                                        <li className="grid grid-cols-2 gap-10 mt-4">
+                                            <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal normal-case">{format(pacienteData.paciente.fechaNacimiento, "long")}</span></h2>
+                                            <h2 className="font-semibold">Edad: <span className="font-normal">{calcularEdad(pacienteData.paciente.fechaNacimiento).texto}</span></h2>
+                                        </li>
 
-                            <li className="grid grid-cols-2 gap-10 mt-4">
-                                <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal normal-case">{format(pacienteData.paciente.fechaNacimiento, "long")}</span></h2>
-                                <h2 className="font-semibold">Edad: <span className="font-normal">{calcularEdad(pacienteData.paciente.fechaNacimiento).texto}</span></h2>
-                            </li>
+                                        <li>
+                                            <h2 className="font-semibold">Sexo: <span className="font-normal normal-case">{pacienteData.paciente.sexo}</span></h2>
+                                        </li>
+                                    </ul>
 
-                            <li>
-                                <h2 className="font-semibold">Sexo: <span className="font-normal normal-case">{pacienteData.paciente.sexo}</span></h2>
-                            </li>
-                        </ul>
+                                    <ul className="flex flex-col gap-3 justify-center">
+                                        <li>
+                                            <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
+                                        </li>
 
-                        <ul className="flex flex-col gap-3 justify-center">
-                            <li>
-                                <DialogActualiPaciente paciente={pacienteData.paciente} actualizar={handleActualizarPaciente} />
-                            </li>
+                                        <li>
+                                            <ButtonDocxPaciente paciente={pacienteData.paciente} />
+                                        </li>
+                                        <li>
+                                            <DialogDeletePaciente eliminar={handleDeletePaciente} />
+                                        </li>
+                                    </ul>
+                                </Card>
+                            </article>
+                        </section>
+                        <section className="mt-10">
+                            <div className="flex justify-end">
+                                {pacienteData.existe && (
+                                    <LinkR to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
+                                        <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
+                                    </LinkR>
+                                )}
+                            </div>
+                            <TablaRegistros id={safeId} />
+                        </section>
+                    </>
+                ) : (
+                    <section className="min-h-[50vh] grid place-content-center">
+                        <h2 className="text-xl text-center font-medium">No existe el paciente, recargue la aplicación o regrese a Pacientes</h2>
+                    </section>
+                )
+            }
 
-                            <li>
-                                <ButtonDocxPaciente paciente={pacienteData.paciente} />
-                            </li>
-                            <li>
-                                <DialogDeletePaciente eliminar={handleDeletePaciente} />
-                            </li>
-                        </ul>
-                    </Card>
-                </article>
-            </section>
-            <section className="mt-10">
-                <div className="flex justify-end">
-                    {pacienteData.existe && (
-                        <LinkR to={`/dashboard/pacientes/${String(id)}/crear-registro`}>
-                            <Button appearance="primary" icon={<Add20Filled />}>Crear Registro</Button>
-                        </LinkR>
-                    )}
-                </div>
-                <TablaRegistros id={safeId} />
-            </section>
         </>
     );
 }

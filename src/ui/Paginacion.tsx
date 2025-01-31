@@ -1,10 +1,12 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { generarPaginacion } from '@/utils/GenerarPaginacion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { paginasPacientes } from '@/services/PacienteController';
+//import { paginasPacientes } from '@/services/PacienteController';
 import { usePacienteStore } from '@/store/storePacientes';
 import { useNavigate } from 'react-router-dom';
 import { PaginationArrow, PaginationNumber } from './ButtonsPagination';
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { PacienteRepository } from '@/services/repositorios/PacienteRepository';
 
 export default function Paginacion() {
     const [searchParams] = useSearchParams();
@@ -32,7 +34,9 @@ export default function Paginacion() {
     // Cada vez que cambian los searchParams o pacientes, se ejecuta la búsqueda
     useEffect(() => {
         const fetchData = async () => {
-            const pages = await paginasPacientes(query); // Pide a la base de datos
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
+            const pages = await pacienteRepo.paginasPacientes(query); // Pide a la base de datos
             setNumPages(pages);
         };
         fetchData();
