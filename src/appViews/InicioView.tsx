@@ -1,6 +1,18 @@
+import { AREASFIJAS } from "@/InstFijoDiabetes/Const";
+import { usePacienteStore } from "@/store/storePacientes";
+import { Card } from "@fluentui/react-components";
+import { useEffect } from "react";
 
 
 export default function Inicio() {
+    const cargarTodosPacientes = usePacienteStore((state) => state.cargarTodosPacientes);
+    const todosPacientes = usePacienteStore((state) => state.pacientes);
+
+    useEffect(() => {
+        cargarTodosPacientes();
+    }, [cargarTodosPacientes]);
+
+
 
     return (
         <main className="min-h-full">
@@ -9,41 +21,51 @@ export default function Inicio() {
             </header>
 
 
-            <section className="border px-[30px] py-[30px]">
+            <section className="border min-h-[60vh] px-[30px] py-[30px]">
                 <article>
                     <p className="text-8xl">ARETEO</p>
+                    <p className="max-w-[70ch] text-lg mt-10">Apoyo para especialistas y personal de la salud en la gestión de pacientes e instrumentos para la evaluación y control.</p>
                 </article>
 
-                <article className="mt-10">
-                    <p className="max-w-[70ch] text-lg">Apoyo para especialistas y personal de la salud en la gestión de pacientes e instrumentos para la evaluación y control.</p>
-                </article>
+                <article className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Card: Total de pacientes */}
+                    <Card className="max-w-[360px] max-h-[150px]" style={{ padding: "20px" }}>
+                        <header className="text-lg font-medium">
+                            <p className="capitalize">Total de pacientes registrados</p>
+                        </header>
+                        <p className="text-2xl font-bold mt-2">{todosPacientes.length}</p>
+                    </Card>
 
-                <article className="mt-20">
-                    <div className="mt-10">
-                        <h2 className="text-xl font-semibold">Desarrollo</h2>
-                        <ul className="list-disc text-base">
-                            <li className="text-base">Lider de proyecto: Br. Irving Geyler Cupul Uc</li>
-                            <li className="text-base">Br. Joar Ruiz Peraza</li>
-                            <li className="">Br. Jesus Be hau</li>
-                            <li className="">Br. Didier Tec Ezquivel</li>
-                            <li className="">Br. Juan Carlos Conde </li>
+                    {/* Card: Último paciente registrado */}
+                    <Card className="max-w-[360px]" style={{ padding: "20px" }}>
+                        <header className="text-lg font-medium">
+                            <p>Evaluaciones ACIC Disponibles</p>
+                        </header>
+                        <ul className="text-base">
+                            {AREASFIJAS.map((area) => (
+                                <li key={area.id}>
+                                    <p><span className="font-semibold">Área {area.id}:</span> {area.nombre}</p>
+                                </li>
+                            ))}
                         </ul>
-                    </div>
+                    </Card>
+
+                    {/* Card: Total de evaluaciones */}
+                    <Card className="max-w-[360px] max-h-[200px]" style={{ padding: "20px" }}>
+                        <header className="text-lg font-medium">
+                            <p>Desarrollo</p>
+                        </header>
+                        <ul className="text-base">
+                            <li >Br. Irving Geyler Cupul Uc</li>
+                            <li >Br. Joar Ruiz Peraza</li>
+                            <li >Br. Jesus Be hau</li>
+                            <li >Br. Didier Tec Ezquivel</li>
+                            <li >Br. Juan Carlos Conde </li>
+                        </ul>
+                    </Card>
 
                 </article>
             </section>
         </main>
     )
 }
-
-/**
- * 
- * 
- *   <section className="min-h-[100vh]">
-                <div className="grid grid-cols-2 gap-[20px] relative">
-                    <ChartExporter title="Primer Gráfico">
-                        <FirstChart />
-                    </ChartExporter>
-                </div>
-            </section>
- */

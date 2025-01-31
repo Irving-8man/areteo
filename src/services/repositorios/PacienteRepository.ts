@@ -31,6 +31,24 @@ export class PacienteRepository {
         }
     }
 
+    public async getPacienteReciente():Promise<PacienteRegistrado[]> {
+        try {
+            const sqlQuery = `
+                    SELECT * 
+                    FROM Paciente 
+                    ORDER BY fechaRegistro ASC 
+                    LIMIT 1;
+            `;
+            // Ejecutar la consulta
+            const resultados:PacienteRegistrado[] = await this.db.select(sqlQuery);
+            return resultados;
+        } catch (error) {
+            console.error('Database Error:', error);
+            return [];
+        }
+    }
+
+
     public async registrarPaciente(data: Paciente): Promise<PacienteRegistrado | null> {
         try {
             const nuevoID = generarID();
