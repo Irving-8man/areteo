@@ -22,6 +22,25 @@ export class AdminRepository {
     }
 
 
+    public async getAdminBase(): Promise<AdminRegistrado | null> {
+        const adminUnico = 1;
+        try {
+            const adminArray: AdminRegistrado[] = await this.db.select("SELECT * FROM Administrador");
+
+            if (adminArray.length == adminUnico) {
+                const admin = adminArray[0];
+                return admin ? admin: null;
+            } else {
+                console.log("Administrador no registrado");
+                return null;
+            }
+        } catch (error) {
+            console.error("Error al consultar la base de datos:", error);
+            return null;
+        }
+    }
+
+
     public async registrarAdmin(data: Admin): Promise<boolean> {
         try {
             const nuevoID = generarID();
@@ -76,7 +95,7 @@ export class AdminRepository {
         }
     }
 
-    public async actualizarContra(contra: string, id: string ): Promise<boolean> {
+    public async actualizarContra(contra: string, id: string): Promise<boolean> {
         try {
             const actualizado = await this.db.execute(
                 "UPDATE Administrador SET contrasenia = $1 WHERE id = $2",

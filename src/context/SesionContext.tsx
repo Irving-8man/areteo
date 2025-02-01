@@ -93,7 +93,6 @@ export function SesionProvider({ children }: { children: ReactNode }) {
             const db = await SqliteDatabase.getInstance();
             const adminRepo = new AdminRepository(db);
             const adminBase = await adminRepo.getAdminBase();
-            console.log(adminBase)
             if (adminBase) {
                 setAdmin(adminBase)
             }
