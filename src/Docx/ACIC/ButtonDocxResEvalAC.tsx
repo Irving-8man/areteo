@@ -6,7 +6,7 @@ import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 import { format } from "@formkit/tempo";
 import { RegistroEvalACIRegis, respuestaACIC } from "@/models/typesFijo";
 import { ArrowDownload20Regular } from "@fluentui/react-icons";
-import { generarDocumentoEvalACIC } from "./FormatoDatosEvalACIC";
+import { generarDocumentoEvalACIC } from "@/Docx/FormatoDatosEvalACIC";
 
 
 interface DocxButtonProps {

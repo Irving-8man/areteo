@@ -1,19 +1,24 @@
-import { getAdmin } from "@/services/AdminController";
 import { useEffect, useState } from "react";
 import { Admin } from "@/models/types";
 import RegistrarAdmin from "./ProcesarAdmin/RegistrarAdmin";
 import LoginAdmin from "./ProcesarAdmin/LoginAdmin";
-
+import { AdminRepository } from "@/services/repositorios/AdminRepository";
+import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
 
 export default function Bienvendida() {
-    //Reconocer la existencia de un Admin en db
     const [admin, setAdmin] = useState<Admin | null>(null);
     useEffect(() => {
-        getAdmin().then((admin) => {
-            if (admin) {
-                setAdmin(admin);
-            }
-        });
+        async function fetchAdmin() {
+            const db = await SqliteDatabase.getInstance();
+            const adminRepo = new AdminRepository(db);
+            adminRepo.getAdmin().then((admin) => {
+                if (admin) {
+                    setAdmin(admin)
+                }
+            });
+        }
+
+        fetchAdmin()
     }, []);
 
     return (

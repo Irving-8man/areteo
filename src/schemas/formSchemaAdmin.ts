@@ -3,19 +3,19 @@ import { z } from "zod";
 export const formSchemaAdminRegistro = z.object({
     nombreComple: z.string().min(3, {
         message: "El Nombre completo debe tener mínimo 3 caracteres.",
-    })
-        .max(60, {
-            message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
-        })
-        .refine(
-            val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
-            {
-                message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
-            }
-        ),
+    }).max(60, {
+        message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
+    }).refine(
+        val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
+        {
+            message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
+        }
+    ),
 
     nombreUsuario: z.string().min(3, {
         message: "El Nombre de usuario debe tener mínimo 3 caracteres.",
+    }).max(60, {
+        message: "El Nombre de usuario debe tene no puede tener más de 60 caracteres",
     }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {
         message: "El apellido materno solo puede contener letras y acentos, sin espacios ni puntuación.",
     }),
@@ -48,13 +48,13 @@ export const formSchemaActualizarNombres = z.object({
     nombreComple: z.string().min(3, {
         message: "El Nombre completo debe tener mínimo 3 caracteres.",
     })
-    .max(60, {
+        .max(60, {
             message: "El Nombre completo debe tene no puede tener más de 60 caracteres",
-    })
-    .refine(val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
+        })
+        .refine(val => /^[\p{L}\p{M}\s.,'-]+$/u.test(val),
             {
                 message: "El nombre solo puede contener letras (incluyendo acentos), espacios, puntos, comas, apóstrofes y guiones",
-    }),
+            }),
     nombreUsuario: z.string().min(3, {
         message: "El Nombre de usuario debe tener mínimo 3 caracteres.",
     }).refine(val => !val || /^[\p{L}ÁÉÍÓÚáéíóúÑñÜü]+$/u.test(val), {

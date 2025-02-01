@@ -2,7 +2,7 @@
 import { Button } from "@fluentui/react-components";
 import { PacienteRegistrado, RegistroMedicoDB, TratamientoInyectableDB, TratamientoOralDB, } from "@/models/types";
 import { ArrowDownload20Regular } from "@fluentui/react-icons";
-import { generarDocumentoRegistroMedico } from "./FormatoDatosRegistro";
+import { generarDocumentoRegistroMedico } from "../FormatoDatosRegistro";
 import { Packer } from "docx";
 import { dialog } from '@tauri-apps/api';
 import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
@@ -11,11 +11,11 @@ import { format } from "@formkit/tempo";
 interface DocxButtonProps {
     paciente: PacienteRegistrado;
     registro: RegistroMedicoDB;
-    tratInye: TratamientoInyectableDB | null;
-    trataOral: TratamientoOralDB | null;
+    tratInye: TratamientoInyectableDB | undefined;
+    trataOral: TratamientoOralDB | undefined;
 }
 
-const ButtonDocxReEx: React.FC<DocxButtonProps> = ({ paciente, registro, tratInye, trataOral }) => {
+const ButtonDocxRegistroMedico: React.FC<DocxButtonProps> = ({ paciente, registro, tratInye, trataOral }) => {
 
     const generarDocumento = async () => {
         let doc;
@@ -37,4 +37,4 @@ const ButtonDocxReEx: React.FC<DocxButtonProps> = ({ paciente, registro, tratIny
     return <Button onClick={generarDocumento} appearance="primary" icon={<ArrowDownload20Regular />}>Descargar Registro</Button>;
 };
 
-export default ButtonDocxReEx;
+export default ButtonDocxRegistroMedico;

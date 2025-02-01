@@ -3,12 +3,15 @@ import { dialog } from '@tauri-apps/api';
 import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 import { format } from "@formkit/tempo";
 import { generarDocumentoEvalACIC } from "./FormatoDatosEvalACIC";
-import { getRegEvalACICComp } from "@/services/InstACICController";
 import { ProcesarRespACIC } from "@/utils/ProcesarRespACIC";
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { ACICRepository } from "@/services/repositorios/InstruACICRepository";
 
 
 export async function generarDocxRegEvalPost( evalRegi_id: string) {
-    const evalACIC = await getRegEvalACICComp(evalRegi_id);
+    const db = await SqliteDatabase.getInstance();
+    const acicRepo = new ACICRepository(db);
+    const evalACIC = await acicRepo.getRegEvalACICComp(evalRegi_id);
 
     if (!evalACIC) {
         throw new Error('Failed to fetch total number of pacientes.');

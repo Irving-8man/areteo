@@ -34,9 +34,10 @@ El objetivo de este proyecto es crear una aplicación de escritorio que sirva de
 Este diseño ilustra la interacción entre el actor y casos de uso, resaltando cómo el usuario interactúa con la aplicación de escritorio.
 
 ![Diagrama de caso de uso](/github/caso_uso_ARETEO.png)
+
 Sea el Administrador una persona especialista de la salud o a fin, responsable del uso de la aplicación ARETEO.
 
-## Arquitectura Utilizada
+## Arquitectura utilizada
 
 
 Este diseño ilustra la interacción entre el cliente y la aplicación que alberga las vistas de interfaz y la base de datos. La aplicación se despliega con una arquitectura de tipo monolito utilizando el framework Tauri para desarrollar aplicaciones de escritorio, junto con la librería React y React Router Dom para las interfaces. Este enfoque permite el renderizado de la interfaz del lado nativo en la aplicación de escritorio y la exposición de funciones con el lenguaje Rust a bajo nivel para implementar una arquitectura similar a la de cliente-servidor. Esto proporciona los beneficios de consultar la base de datos y renderizar los datos de inmediato en el cliente. Se utiliza una base de datos local con SQLite para almacenar y recuperar datos con una latencia muy baja, además de bibliotecas con funciones intuitivas del framework que interactúan con las APIs nativas de aplicaciones de escritorio, en este caso Windows 10/11.
@@ -49,7 +50,14 @@ Este diseño ilustra la interacción entre el cliente y la aplicación que alber
 
 Plataformas Soportadas:
 
-- **Windows**: [Windows 10/11]()
+
+- **Windows**: [Windows 10/11](https://github.com/Irving-8man/areteo/releases/tag/Beta_ARETEO_0.5.0)
+
+
+## Manual de uso
+
+[Manual ARETEO en Español](/github/ARETEO_Manual%20de%20usuario_0.5.0v.pdf)
+
 
 
 ## Desarrollo de la aplicación
@@ -62,7 +70,7 @@ Por favor instalar `Rust` & `NodeJS` siguiendo los pasos de los sitios web ofici
 - [Node.js](https://nodejs.org/en/)
 
 **NOTA IMPORTANTE**
-ARETEO utiliza Tauri v1, en el momento que estes leyendo esto, ya ha sido actulizada la documentación oficial la versión 2, las cuales difieren significativamente.
+ARETEO utiliza Tauri v1, en el momento que estes leyendo esto, ya ha sido actulizada la documentación oficial a la versión 2, las cuales difieren significativamente.
 
 
 #### Clonar respositorio

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { PacienteRegistrado, Paciente } from "@/models/types";
-import { eliminarPaciente, getAllPacientesRegistrados,  registrarPaciente } from "@/services/PacienteController";
+import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
+import { PacienteRepository } from "@/services/repositorios/PacienteRepository";
 
 interface PacienteState {
     pacientes: PacienteRegistrado[];
@@ -12,8 +13,10 @@ interface PacienteState {
 export const usePacienteStore = create<PacienteState>((set) => ({
     pacientes: [],
     cargarTodosPacientes: async () => {
+        const db = await SqliteDatabase.getInstance();
+        const pacienteRepo = new PacienteRepository(db);
         try {
-            const pacientes: PacienteRegistrado[] = await getAllPacientesRegistrados();
+            const pacientes: PacienteRegistrado[] = await pacienteRepo.getAllPacientesRegistrados();
             if (pacientes.length < 0) {
                 set({ pacientes: [] });
             }
@@ -26,7 +29,9 @@ export const usePacienteStore = create<PacienteState>((set) => ({
     // Registrar un nuevo paciente
     registrarPaciente: async (nuevoPaciente: Paciente) => {
         try {
-            const pacienteRegistrado: PacienteRegistrado | null = await registrarPaciente(nuevoPaciente);
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
+            const pacienteRegistrado: PacienteRegistrado | null = await pacienteRepo.registrarPaciente(nuevoPaciente);
             if (pacienteRegistrado) {
                 set((state) => ({
                     pacientes: [...state.pacientes, pacienteRegistrado],
@@ -45,7 +50,9 @@ export const usePacienteStore = create<PacienteState>((set) => ({
     // Eliminar paciente por ID
     eliminarPaciente: async (id: string) => {
         try {
-            const pacienteEliminado = await eliminarPaciente(id);
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
+            const pacienteEliminado = await pacienteRepo.eliminarPaciente(id);
             if (pacienteEliminado) {
                 set((state) => ({
                     pacientes: state.pacientes.filter((p) => p.id !== id),
@@ -55,6 +62,4 @@ export const usePacienteStore = create<PacienteState>((set) => ({
             console.error("Error al eliminar paciente:", error);
         }
     },
-
-   
 }));

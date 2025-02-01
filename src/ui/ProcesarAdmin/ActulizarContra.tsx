@@ -26,7 +26,12 @@ export default function ActualizarContra() {
     const { isAdmin, cambiarContrasenia } = useSesion();
 
     if (!isAdmin) {
-        return (<p>no hay</p>)
+        return (
+            <div className="">
+
+                <h3 className="text-2xl">No existe administrador</h3>
+            </div>
+        )
     }
 
     // Procesar el formulario

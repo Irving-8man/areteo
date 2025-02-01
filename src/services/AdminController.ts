@@ -63,7 +63,7 @@ export async function verificarAdmin(data: AdminLogin): Promise<AdminRegistrado 
         const db = await getDb;
         const adminArray: AdminRegistrado[] = await db.select("SELECT * FROM Administrador");
 
-        if (adminArray.length == adminUnico) {
+        if (adminArray.length === adminUnico) {
             const admin = adminArray[0];
 
             //Comprueba el nombre
@@ -79,6 +79,8 @@ export async function verificarAdmin(data: AdminLogin): Promise<AdminRegistrado 
             } else {
                 return null
             }
+
+            
         } else {
             console.log("Administrador no registrado");
             return null;

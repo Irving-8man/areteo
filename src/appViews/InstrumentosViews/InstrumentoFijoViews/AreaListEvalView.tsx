@@ -4,12 +4,12 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Add20Filled, ArrowLeft20Filled } from "@fluentui/react-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { eliminarRegEvalACICAREA, getRegistrosACIC } from "@/services/InstACICController";
 import ListEvalPagAcord from "@/ui/ProcesarEvalACIC/ListEvalPagAcord";
 import { FiltEvalPag } from "@/ui/ProcesarEvalACIC/FiltEvalPag";
 import DialogDeleteEvalACICAREA from "@/ui/ProcesarEvalACIC/DialogDeleteAllEvalACIC";
 import ButtonExportExcelAreasE from "@/ui/ProcesarEvalACIC/ButtonExportExcelAREA";
-
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { ACICRepository } from "@/services/repositorios/InstruACICRepository";
 
 
 export default function AreaListEval() {
@@ -21,7 +21,9 @@ export default function AreaListEval() {
         {
             queryKey: ['Evaluaciones', areaIdSafe],
             queryFn: async () => {
-                const result = await getRegistrosACIC(areaIdSafe);
+                const db = await SqliteDatabase.getInstance();
+                const acicRepo = new ACICRepository(db);
+                const result = await acicRepo.getRegistrosACIC(areaIdSafe);
                 return result || [];
             },
             refetchOnWindowFocus: false,
@@ -32,7 +34,9 @@ export default function AreaListEval() {
 
     const deleteMutation = useMutation({
         mutationFn: async () => {
-            return await eliminarRegEvalACICAREA(areaIdSafe);
+            const db = await SqliteDatabase.getInstance();
+            const acicRepo = new ACICRepository(db);
+            return await acicRepo.eliminarRegEvalACICAREA(areaIdSafe);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['Evaluaciones', areaIdSafe] });

@@ -132,7 +132,7 @@ CREATE INDEX IF NOT EXISTS index_id_ResEvalACIC ON ResEvalACIC(id);
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, _, cwd| {
             Notification::new(&app.config().tauri.bundle.identifier)
-                .title("El programa ya esta iniciado. Por favor, no comenzar otro.")
+                .title("ARETEO ya ha sido iniciado.")
                 .body(cwd)
                 
                 .show()
