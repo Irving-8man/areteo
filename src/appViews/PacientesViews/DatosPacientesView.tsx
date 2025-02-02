@@ -10,13 +10,13 @@ export default function DatosPacientes() {
             <p className="text-xl">Exportar <span className="font-semibold">solo los datos personales</span> de todos los pacientes</p>
             <article className="columns-3 mt-10">
                 <div>
-                    <Card >
+                    <Card style={{minHeight:"150px"}} className="flex flex-col justify-center">
                         <p className="text-base">Descargar datos en archivo XLXS</p>
                         <ButtonExportExcel />
                     </Card>
                 </div>
                 <div>
-                    <Card >
+                    <Card style={{minHeight:"150px"}} className="flex flex-col justify-center">
                         <p className="text-base">Descargar datos archivo CSV, con separador ";"</p>
                         <ButtonExportCSVDialog />
                     </Card>

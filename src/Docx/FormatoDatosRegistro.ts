@@ -10,8 +10,8 @@ import { calcularEdad } from "@/utils/CalcularEdad";
 export function generarDocumentoRegistroMedico(
     paciente: PacienteRegistrado,
     registroMedico: RegistroMedicoDB,
-    tratamientoInyectable: TratamientoInyectableDB | null,
-    tratamientoOral: TratamientoOralDB | null
+    tratamientoInyectable: TratamientoInyectableDB | undefined,
+    tratamientoOral: TratamientoOralDB | undefined
 ): Document {
     const sections = [];
 

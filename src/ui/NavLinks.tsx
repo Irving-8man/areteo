@@ -8,7 +8,6 @@ const links = [
     { name: 'Inicio', href: `/dashboard`, icon: Home24Regular },
     { name: 'Pacientes', href: `/dashboard/pacientes`, icon: PeopleCommunity24Regular },
     { name: 'Instrumentos', href: `/dashboard/instrumentos`, icon: TextBulletListSquareEdit24Regular },
-   // { name: 'Analíticas', href: `/dashboard/analiticas`, icon: DataArea24Filled DataArea24Filled},
 ];
 
 

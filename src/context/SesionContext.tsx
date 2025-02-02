@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from 'react';
-import { actualizarAdminNombres, actualizarContra, verificarAdmin } from '../services/AdminController';
+import { AdminRepository } from "@/services/repositorios/AdminRepository";
+import { SqliteDatabase } from "@/services/repositorios/DatabaseSingle";
 import { useNavigate } from 'react-router-dom';
 import { AdminLogin, AdminRegistrado } from '@/models/types';
 
@@ -21,9 +22,13 @@ export function SesionProvider({ children }: { children: ReactNode }) {
     const [isAdmin, setAdmin] = useState<AdminRegistrado | null>(null);
     const navigate = useNavigate();
 
+
     const login = async (data: AdminLogin): Promise<boolean> => {
+        const db = await SqliteDatabase.getInstance();
+        const adminRepo = new AdminRepository(db);
+
         try {
-            const admin = await verificarAdmin(data);
+            const admin = await adminRepo.verificarAdmin(data);
             if (admin) {
                 setIsAutenticado(true);
                 setAdmin(admin);
@@ -48,7 +53,9 @@ export function SesionProvider({ children }: { children: ReactNode }) {
     // Función para actualizar solo el nombre completo
     const actualizarNombres = async (nuevoNomusuario: string, nuevoNomCom: string) => {
         if (isAdmin) {
-            const res = await actualizarAdminNombres(nuevoNomusuario, nuevoNomCom, isAdmin.id)
+            const db = await SqliteDatabase.getInstance();
+            const adminRepo = new AdminRepository(db);
+            const res = await adminRepo.actualizarAdminNombres(nuevoNomusuario, nuevoNomCom, isAdmin.id)
             if (res) {
                 setAdmin({
                     ...isAdmin,
@@ -65,7 +72,9 @@ export function SesionProvider({ children }: { children: ReactNode }) {
     // Función para cambiar la contraseña
     const cambiarContrasenia = async (nuevaContra: string) => {
         if (isAdmin) {
-            const res = await actualizarContra(nuevaContra, isAdmin.id)
+            const db = await SqliteDatabase.getInstance();
+            const adminRepo = new AdminRepository(db);
+            const res = await adminRepo.actualizarContra(nuevaContra, isAdmin.id)
             if (res) {
                 setAdmin({
                     ...isAdmin,

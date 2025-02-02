@@ -131,3 +131,6 @@ export interface QuestArea {
 }
 
 
+
+
+//Graficas

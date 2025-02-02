@@ -86,7 +86,7 @@ export async function registrarPaciente(data: Paciente): Promise<PacienteRegistr
 }
 
 
-export async function actualizarPaciente(data:PacienteActualizar): Promise<boolean> {
+export async function actualizarPaciente(data: PacienteActualizar): Promise<boolean> {
     try {
         const db = await getDb;
 

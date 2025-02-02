@@ -1,9 +1,10 @@
 import { PacienteRegistrado } from '@/models/types';
-import { getPacientesFiltradoPaginado } from '@/services/PacienteController';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ItemPacienteList from '@/componets/ItemPacienteList';
 import { usePacienteStore } from '@/store/storePacientes';
+import { SqliteDatabase } from '@/services/repositorios/DatabaseSingle';
+import { PacienteRepository } from '@/services/repositorios/PacienteRepository';
 
 export default function TablaPacientes() {
     const [pacientesCarga, setPacientesCarga] = useState<PacienteRegistrado[]>([]);
@@ -15,7 +16,9 @@ export default function TablaPacientes() {
     // Cada vez que cambian los searchParams, se ejecuta la búsqueda
     useEffect(() => {
         const fetchData = async () => {
-            const pacientes = await getPacientesFiltradoPaginado(query, currentPage)
+            const db = await SqliteDatabase.getInstance();
+            const pacienteRepo = new PacienteRepository(db);
+            const pacientes = await pacienteRepo.getPacientesFiltradoPaginado(query, currentPage)
             setPacientesCarga(pacientes);
         };
         fetchData();
@@ -51,7 +54,7 @@ export default function TablaPacientes() {
                         </thead>
                         <tbody className="bg-white">
                             {pacientesCarga.length > 0 ? (
-                                pacientesCarga?.map((paciente,idx) => (
+                                pacientesCarga?.map((paciente, idx) => (
                                     <ItemPacienteList key={paciente.id} paciente={paciente} num={idx}></ItemPacienteList>
                                 ))
                             ) : (
