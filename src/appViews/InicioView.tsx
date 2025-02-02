@@ -39,7 +39,7 @@ export default function Inicio() {
                     {/* Card: Último paciente registrado */}
                     <Card className="max-w-[360px]" style={{ padding: "20px" }}>
                         <header className="text-lg font-medium">
-                            <p>Evaluaciones ACIC Disponibles</p>
+                            <p>Áreas ACIC Disponibles</p>
                         </header>
                         <ul className="text-base">
                             {AREASFIJAS.map((area) => (
