@@ -31,7 +31,7 @@ const ButtonDocxPaciente: React.FC<DocxButtonProps> = ({ paciente }) => {
 
     };
 
-    return <Button onClick={generarDocumento} icon={<ArrowDownload20Regular />}>Datos personales</Button>;
+    return <Button onClick={generarDocumento} icon={<ArrowDownload20Regular />}>Datos Personales</Button>;
 };
 
 export default ButtonDocxPaciente;

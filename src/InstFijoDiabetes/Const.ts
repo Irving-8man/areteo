@@ -9,19 +9,19 @@ import { QuestArea6 } from "./ResArea6";
 
 export const CRITERIOS = [
     {
-        rango: "Promedio obtendio entre 0 - 2",
+        rango: "Promedio obtenido entre 0 - 2",
         descripcion: "Soporte limitado para el cuidado de enfermedades crónicas."
     },
     {
-        rango: "Promedio obtendio entre 3 - 5",
+        rango: "Promedio obtenido entre 3 - 5",
         descripcion: "Soporte básico para el cuidado de enfermedades crónicas."
     },
     {
-        rango: "Promedio obtendio entre 6 - 8",
+        rango: "Promedio obtenido entre 6 - 8",
         descripcion: "Soporte razonablemente bueno para el cuidado de enfermedades crónicas."
     },
     {
-        rango: "Promedio obtendio entre 9 - 11",
+        rango: "Promedio obtenido entre 9 - 11",
         descripcion: "Soporte completamente desarrollado para el cuidado de enfermedades crónicas."
     }
 ]

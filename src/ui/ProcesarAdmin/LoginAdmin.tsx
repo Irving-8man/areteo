@@ -53,7 +53,7 @@ export default function Login() {
                 <div className="flex flex-col items-center gap-[25px]" ref={parent}>
 
                     <div className="flex-col">
-                        <InfoLabel className="block font-medium">Usuario</InfoLabel>
+                        <InfoLabel className="block font-medium" required>Usuario</InfoLabel>
                         <Input disabled={isSubmitting} appearance="underline" className="min-w-[300px]" required contentBefore={<PersonRegular />} placeholder="Fabian" {...register("nombreUsuario")} />
                         {errors.nombreUsuario && <p className="max-w-[25ch] text-sm">{errors.nombreUsuario.message}</p>}
                     </div>

@@ -59,7 +59,7 @@ export default function DialogDeleteRegistro({ eliminar }: {  eliminar: () => Pr
                                 </span>
                             </DialogTitle>
                             <DialogContent className={styles.content} >
-                                <p className="text-base">Al eliminar este Registro Médico se borrara del historial del paciente, junto a los datos de los tratamientos, ¿Desea continuar?</p>
+                                <p className="text-base">Al eliminar este Registro Médico se borrara del historial del paciente, junto a los datos de los tratamientos. ¿Desea continuar?</p>
                             </DialogContent>
 
                             <DialogActions className="mt-4">
