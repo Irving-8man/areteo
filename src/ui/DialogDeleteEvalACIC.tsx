@@ -64,7 +64,7 @@ export default function DialogDeleteEvalACIC({ eliminar }: {  eliminar: () => Pr
                                 </span>
                             </DialogTitle>
                             <DialogContent className={styles.content} >
-                                <p className="text-base">Al eliminar este Registro  de Evaluación ACIC de su Área, se borraran todas las respuestas y este afectará a los datos de las gráficas, ¿Desea continuar?</p>
+                                <p className="text-base">Al eliminar este Registro  de Evaluación ACIC de su Área, se borraran todas las respuestas y este afectará a los datos del área. ¿Desea continuar?</p>
                             </DialogContent>
 
                             <DialogActions className="mt-4">

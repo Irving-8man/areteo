@@ -92,7 +92,7 @@ export default function AreaListEval() {
 
                     <div>
                         <div className="mb-10 font-semibold text-lg">
-                            <p>Total de evaluaciones registradas:</p>
+                            <p>Total de Evaluaciones Registradas:</p>
                             <p className="text-red-600">
                                 {RegistrosEval ? (<span>{RegistrosEval.length}</span>) : (<span>Recargar ARETEO</span>)}
                             </p>

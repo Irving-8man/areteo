@@ -58,7 +58,7 @@ export default function Inicio() {
                         <ul className="text-base">
                             <li >Br. Irving Geyler Cupul Uc</li>
                             <li >Br. Joar Ruiz Peraza</li>
-                            <li >Br. Jesus Be hau</li>
+                            <li >Br. Jesús Be hau</li>
                             <li >Br. Didier Tec Ezquivel</li>
                             <li >Br. Juan Carlos Conde </li>
                         </ul>

@@ -61,11 +61,11 @@ export default function DialogDeleteEvalACICAREA({ eliminar }: {  eliminar: () =
                                 }
                             >
                                 <span className="text-zinc-600">
-                                    Eliminar Evaluación
+                                    Eliminar Evaluaciones
                                 </span>
                             </DialogTitle>
                             <DialogContent className={styles.content} >
-                                <p className="text-base">Esta a punto de borrar todos los Registros de Evaluación ACIC de esta Área, se borraran todas las respuestas y este afectará a los datos de las gráficas, ¿Desea continuar?</p>
+                                <p className="text-base">Esta a punto de borrar todos los Registros de Evaluación ACIC de esta Área, se borraran definitivamente todas las respuestas. ¿Desea continuar?</p>
                             </DialogContent>
 
                             <DialogActions className="mt-4">

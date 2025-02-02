@@ -9,7 +9,7 @@ export default function ListaInstrumentos() {
         <section className="min-h-[80vh]">
             <article className="mb-20">
                 <Card style={{padding:"25px"}}>
-                    <h1 className="font-semibold text-2xl">Instrumento Disponibles</h1>
+                    <h1 className="font-semibold text-2xl">Instrumentos Disponibles</h1>
                     <ul className="mt-6">
                         <li>
                             <Link to="/dashboard/instrumentos/instrumentoFijo" className="w-full border py-6 px-6 text-sm hover:bg-gray-200 flex gap-2 hover:underline">

@@ -80,7 +80,7 @@ const ESTADO_CIVIL = [
 ];
 
 
-const estadoCivilMapping: { [key: string]: string }  = {
+const estadoCivilMapping: { [key: string]: string } = {
     0: "Soltero",
     1: "Casado",
     2: "Unión libre",
@@ -88,13 +88,13 @@ const estadoCivilMapping: { [key: string]: string }  = {
     4: "Viudo"
 }
 
-const antecedentesMapping:{ [key: string]: string }  = {
+const antecedentesMapping: { [key: string]: string } = {
     0: "No",
     1: "Sí",
     2: "Desconozco"
 };
 
-const diagnosticoMapping:{ [key: string]: string }  = {
+const diagnosticoMapping: { [key: string]: string } = {
     0: "0 a 5 años",
     1: "6 a 10 años",
     2: "Más de 10 años",
@@ -234,32 +234,20 @@ export default function CrearRegistro() {
                         {/**Peso */}
                         <li>
                             <div className="flex flex-col max-w-[400px]" ref={parent}>
-                                <Field label={
-                                    <InfoLabel info="en kg">
-                                        <Label htmlFor="peso" className="font-bold" style={{ fontSize: "16px" }} required>Peso </Label>
-                                    </InfoLabel>
-                                }>
-
-                                    <Input required min={0} max={200} step={0.01} type="number" id="peso"  {...register("peso", { valueAsNumber: true })} />
-                                </Field>
+                                <Label htmlFor="peso" className="font-bold mb-1" style={{ fontSize: "16px" }} required>Peso <span className="font-normal text-gray-500 normal-case">(en kg)</span></Label>
+                                <Input required min={0} max={300} step={0.01} type="number" id="peso"  {...register("peso", { valueAsNumber: true })} />
                                 {errors.peso && (
-                                    <p className="text-sm text-red-600">{errors.peso.message}</p>
+                                    <p className="text-sm text-red-600 mt-2">{errors.peso.message}</p>
                                 )}
                             </div>
                         </li>
                         {/**Estatura */}
                         <li>
                             <div className="flex flex-col max-w-[400px]" ref={parent}>
-                                <Field label={
-                                    <InfoLabel info="En cm">
-                                        <Label htmlFor="estatura" className="font-bold" required>Estatura</Label>
-                                    </InfoLabel>
-                                }>
-
-                                    <Input required min={0} max={300} type="number" id="estatura" {...register("estatura", { valueAsNumber: true })} />
-                                </Field>
+                                <Label htmlFor="estatura" className="font-bold mb-1" required>Estatura <span className="font-normal text-gray-500 normal-case">(en cm)</span></Label>
+                                <Input required min={0} max={300} type="number" id="estatura" {...register("estatura", { valueAsNumber: true })} />
                                 {errors.estatura && (
-                                    <p className="text-sm text-red-600">{errors.estatura.message}</p>
+                                    <p className="text-sm text-red-600 mt-2">{errors.estatura.message}</p>
                                 )}
                             </div>
                         </li>
@@ -390,7 +378,7 @@ export default function CrearRegistro() {
                                 <Field label={
                                     <Label className="font-bold" required>TGC, últimos 6 meses</Label>
                                 }>
-                                    <Input  required min={0} max={999} step={0.01} type="number" {...register("tgc", { valueAsNumber: true })} />
+                                    <Input required min={0} max={999} step={0.01} type="number" {...register("tgc", { valueAsNumber: true })} />
                                 </Field>
                                 {errors.tgc && (
                                     <p className="text-sm text-red-600 ">{errors.tgc.message}</p>
@@ -402,7 +390,7 @@ export default function CrearRegistro() {
                             <div className="flex flex-row min-w-[400px] max-w-[900px] gap-10" ref={parent}>
                                 <div className="flex flex-col min-w-[400px]">
                                     <Label className="font-semibold" required>Nivel de educación</Label>
-                                    <Select {...register("educacion")}  required>
+                                    <Select {...register("educacion")} required>
                                         {
                                             NIVEL_ESTUDIO.map(({ value, estudio }) => (
                                                 <option key={value} value={value}>{estudio}</option>
@@ -505,13 +493,13 @@ export default function CrearRegistro() {
                         </li>
                     </ul>
                     <div className="mt-20 flex gap-5 items-center justify-center">
-                        <Button type="submit" appearance="primary" style={{width:"500px"}}>
+                        <Button type="submit" appearance="primary" style={{ width: "500px" }}>
                             Crear Registro
                         </Button>
-                        <Link to={`/dashboard/pacientes/${String(id)}`}><Button style={{width:"500px"}} >Cancelar</Button></Link>
+                        <Link to={`/dashboard/pacientes/${String(id)}`}><Button style={{ width: "500px" }} >Cancelar</Button></Link>
                     </div>
                 </form>
             </section>
-        </div>
+        </div >
     )
 }
