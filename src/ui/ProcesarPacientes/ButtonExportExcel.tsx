@@ -36,7 +36,7 @@ const schema: Schema<PacienteRegistrado> = [
     {
         column: 'Fecha de Nacimiento',
         type:String,
-        value: paciente => format(new Date(paciente.fechaNacimiento), "DD-MM-YYYY")
+        value: paciente => format(paciente.fechaNacimiento, "DD-MM-YYYY")
     },
     {
         column: 'Edad',
