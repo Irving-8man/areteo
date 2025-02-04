@@ -40,10 +40,10 @@ export default function ItemPacienteList(props: propsI) {
                 <p><span>{calcularEdad(props.paciente.fechaNacimiento).texto}</span></p>
             </td>
             <td className="whitespace-nowrap px-3 py-3">
-                <p>{format(new Date(props.paciente.fechaNacimiento), "short")}</p>
+                <p>{format(props.paciente.fechaNacimiento, "short")}</p>
             </td>
             <td className="whitespace-nowrap px-3 py-3">
-                <p>{format(new Date(props.paciente.fechaRegistro), "medium")}</p>
+                <p>{format(props.paciente.fechaRegistro, "medium")}</p>
             </td>
             <td className="whitespace-nowrap py-3 pl-6 pr-3">
                 <div className="flex justify-end gap-3">
