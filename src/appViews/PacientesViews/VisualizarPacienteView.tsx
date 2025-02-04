@@ -154,7 +154,7 @@ export default function VisualizarPaciente() {
                                         </li>
 
                                         <li className="grid grid-cols-2 gap-10 mt-4">
-                                            <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal normal-case">{format({date: pacienteData.paciente.fechaNacimiento + "T00:00:00Z",format: "long",tz: "UTC"})}</span></h2>
+                                            <h2 className="font-semibold">Fecha nacimiento:  <span className="font-normal normal-case">{format(pacienteData.paciente.fechaNacimiento,"long")}</span></h2>
                                             <h2 className="font-semibold">Edad: <span className="font-normal">{calcularEdad(pacienteData.paciente.fechaNacimiento).texto}</span></h2>
                                         </li>
 
