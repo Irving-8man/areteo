@@ -76,7 +76,6 @@ export default function DialogActualiPaciente({ paciente, actualizar }: { pacien
 
     // Procesar información
     const onSubmit = async (data: z.infer<typeof Schema>) => {
-        data.fechaNacimiento = new Date(data.fechaNacimiento).toISOString();
         const dataPaciente: PacienteActualizar = data;
         try {
             setLoading(true);

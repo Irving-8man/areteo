@@ -53,12 +53,12 @@ export class PacienteRepository {
         try {
             const nuevoID = generarID();
             const horaRegistro = new Date();
-            const fechaNacimientoISO = new Date(data.fechaNacimiento).toISOString();
+            const fechaNacimientoForm =  data.fechaNacimiento
 
             const nuevoPaciente: PacienteRegistrado = {
                 id: nuevoID,
                 ...data,
-                fechaNacimiento: fechaNacimientoISO,
+                fechaNacimiento: fechaNacimientoForm,
                 fechaRegistro: horaRegistro.toISOString(),
             };
 
@@ -85,8 +85,6 @@ export class PacienteRepository {
 
     public async actualizarPaciente(data: PacienteActualizar): Promise<boolean> {
         try {
-            const fechaNacimientoISO = new Date(data.fechaNacimiento).toISOString();
-
             const actualizado = await this.db.execute(
                 "UPDATE Paciente SET primerNombre = $1, segundoNombre = $2, apellidoPaterno = $3, apellidoMaterno = $4, fechaNacimiento = $5, sexo = $6 WHERE id = $7",
                 [
@@ -94,7 +92,7 @@ export class PacienteRepository {
                     data.segundoNombre || null,
                     data.apellidoPaterno,
                     data.apellidoMaterno || null,
-                    fechaNacimientoISO,
+                    data.fechaNacimiento,
                     data.sexo,
                     data.id,
                 ]
