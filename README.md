@@ -51,7 +51,7 @@ Este diseño ilustra la interacción entre el cliente y la aplicación que alber
 Plataformas Soportadas:
 
 
-- **Windows**: [Windows 10/11](https://github.com/Irving-8man/areteo/releases/tag/Beta_ARETEO_0.5.0)
+- **Windows**: [Windows 10/11](https://github.com/Irving-8man/areteo/releases/tag/ARETEO_1.1.0)
 
 
 ## Manual de uso
